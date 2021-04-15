@@ -42,7 +42,9 @@ if ( typeof billInfo.notes !== 'string' ) {
  // console.log(billInfo);
   try {
     const newBill = await billData.addNewBill(billInfo);
-    res.json(newBill);
+    res.render('posts/new-bill',{
+      title:"New Bill"
+     });
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: 'Post not found' });
