@@ -1,50 +1,249 @@
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
-const userData = data.users;
+//const { checkUserByName, checkUserByMail } = require('../data/users');
+const users = data.users;
 
-// sign up
-router.post('/signUp', async (req, res) => {
-  const userInfo = req.body
-  console.log(userInfo)
-  try {
-    let user = await userData.signUp(userInfo);
-    res.json(user);
-  } catch (e) {
-    res.status(404).json({ error: e });
-  }
-});
+
+
+// router.get('/', async(req, res) => {
+//     try {
+//         let user = await users.getAll();
+//         res.json(user);
+//     } catch (e) {
+//         res.status(404).json({ message: e });
+//     }
+// });
+
 
 // login
-router.post('/login', async (req, res) => {
-  const userInfo = req.body
-  try {
-    let user = await userData.getUserByName(userInfo.userName);
-    if(userInfo.passWord === user.passWord){
-      res.json({
-        code: 200,
-        msg: 'Login Success'
-      })
-    }else{
-      res.json({
-        code: 403,
-        msg: 'Error'
-      });
+router.post('/login', async(req, res) => {
+    let userInfo = req.body
+    if (!userInfo.Username || typeof userInfo.Username != 'string' || userInfo.Username == null || userInfo.Username == "") {
+        res.status(400).json({ error: 'Username is null or Username is not string' });
+        return;
     }
-  } catch (e) {
-    res.status(404).json({ error: e });
-  }
+
+    if (!userInfo.Password || typeof userInfo.Password != 'string' || userInfo.Password == null || userInfo.Password == "") {
+        res.status(400).json({ error: 'Password is null or Password is not string' });
+        return;
+    }
+    try {
+        let user = await users.getUserByName(userInfo.Username);
+        if (user === null) {
+            res.status(404).json({ error: 'Not that user' });
+            return;
+        }
+
+        if (userInfo.Password === user.Password) {
+            res.json({
+                code: 200,
+                msg: 'Login Success'
+            })
+        } else {
+            res.json({
+                code: 403,
+                msg: 'Error'
+            });
+        }
+    } catch (e) {
+        res.status(404).json({ error: e });
+    }
+});
+
+
+// change password
+router.post('/password', async(req, res) => {
+    let userInfo = req.body
+
+    if (!userInfo.Mail || !userInfo.Mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/) || userInfo.Mail == null) {
+        res.status(400).json({ error: 'Mail is not a Mail format or Mail is null' });
+        return;
+    }
+
+    if (!userInfo.Password || typeof userInfo.Password != 'string' || userInfo.Password == null || userInfo.Password == "") {
+        res.status(400).json({ error: 'Password is null or Password is not string' });
+        return;
+    }
+
+    try {
+        let user = await users.getUserByMail(userInfo.Mail);
+        if (user === null) {
+            res.status(404).json({ error: 'Not that user' });
+            return;
+        }
+        if (userInfo.Mail === user.Mail) {
+            await users.patchUserByMail(user.Mail, userInfo.Password);
+            res.json({
+                code: 200,
+                msg: 'change Success'
+            })
+        } else {
+            res.json({
+                code: 403,
+                msg: 'Error, no such mail'
+            });
+        }
+    } catch (e) {
+        res.status(404).json({ error: e });
+    }
+});
+
+//get infor
+router.get('/:id', async(req, res) => {
+    let id = req.params.id;
+    if (!id.match(/^([0-9a-fA-F]{24})$/)) {
+        res.status(400).json({ message: 'id format error' });
+        return;
+    }
+    try {
+        let gbookid = await users.getUserById(id);
+        res.json(gbookid);
+    } catch (e) {
+        res.status(404).json({ message: e });
+    }
+});
+
+
+// sign up
+router.post('/signUp', async(req, res) => {
+    let newuser = req.body;
+
+    if (newuser == null || typeof newuser != "object") {
+        res.status(400).json({ error: 'It is null or It is not object' });
+        return;
+    }
+
+    if (!newuser.Username || typeof newuser.Username != 'string' || newuser.Username == null || newuser.Username == "") {
+        res.status(400).json({ error: 'Username is null or Username is not string' });
+        return;
+    } else if (await users.checkUserByName(newuser.Username)) {
+        res.status(400).json({ error: 'Username is exit' });
+        return;
+    }
+
+    if (!newuser.Password || typeof newuser.Password != 'string' || newuser.Password == null || newuser.Password == "") {
+        res.status(400).json({ error: 'Password is null or Password is not string' });
+        return;
+    }
+
+    if (!newuser.FirstName || typeof newuser.FirstName != 'string' || newuser.FirstName == null || newuser.FirstName == "") {
+        res.status(400).json({ error: 'FirstName is null or FirstName is not string' });
+        return;
+    }
+
+    if (!newuser.LastName || typeof newuser.LastName != 'string' || newuser.LastName == null || newuser.LastName == "") {
+        res.status(400).json({ error: 'LastName is null or LastName is not string' });
+        return;
+    }
+
+    if (!newuser.age || typeof newuser.age != 'number' || newuser.age == null || newuser.age == "") {
+        res.status(400).json({ error: 'age is null or age is not number' });
+        return;
+    }
+
+    if (!newuser.Mail || !newuser.Mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/) || newuser.Mail == null) {
+        res.status(400).json({ error: 'Mail is not a Mail format or Mail is null' });
+        return;
+    }
+    //|| !newuser.Phone.match(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/)
+    if (!newuser.Phone || newuser.Phone == null) {
+        res.status(400).json({ error: 'Phone is not a Phone format or Phone is null' });
+        return;
+    }
+
+    if (await users.checkUserByMail(newuser.Mail, newuser.Phone)) {
+        res.status(400).json({ error: 'Mial or phone is exit' });
+        return;
+    }
+
+    let { Username, Password, FirstName, LastName, age, Mail, Phone } = newuser;
+    let pouserid = await users.addPost(Username, Password, FirstName, LastName, age, Mail, Phone);
+    res.json(pouserid);
+
+    // try {
+    //     let { Username, Password, FirstName, LastName, age, Mail, Phone } = newuser;
+    //     let pouserid = await users.addPost(Username, Password, FirstName, LastName, age, Mail, Phone);
+    //     res.json(pouserid);
+    // } catch (e) {
+    //     res.status(404).json({ message: e });
+    // }
 });
 
 
 
+//change infor
+router.patch('/:id', async(req, res) => {
+    let userpa = req.body;
+    let id = req.params.id;
 
+    if (userpa.hasOwnProperty("Username")) {
+        if (!userpa.Username || typeof userpa.Username != 'string' || userpa.Username == null || userpa.Username == "") {
+            res.status(400).json({ error: 'Username is null or Username is not string' });
+            return;
+        } else if (await users.checkUserByName(userpa.Username)) {
+            res.status(400).json({ error: 'Username is exit' });
+            return;
+        }
+    }
 
+    if (userpa.hasOwnProperty("FirstName")) {
+        if (!userpa.FirstName || typeof userpa.FirstName != 'string' || userpa.FirstName == null || userpa.FirstName == "") {
+            res.status(400).json({ error: 'FirstName is null or FirstName is not string' });
+            return;
+        }
+    }
 
+    if (userpa.hasOwnProperty("LastName")) {
+        if (!userpa.LastName || typeof userpa.LastName != 'string' || userpa.LastName == null || userpa.LastName == "") {
+            res.status(400).json({ error: 'LastName is null or LastName is not string' });
+            return;
+        }
+    }
 
+    if (userpa.hasOwnProperty("age")) {
+        if (!userpa.age || typeof userpa.age != 'number' || userpa.age == null || userpa.age == "") {
+            res.status(400).json({ error: 'age is null or age is not number' });
+            return;
+        }
+    }
 
+    if (id == null || !id || id == "") {
+        res.status(400).json({ message: 'id is null' });
+        return;
+    }
 
+    if (!id.match(/^([0-9a-fA-F]{24})$/)) {
+        res.status(400).json({ message: 'id format error' });
+        return;
+    }
 
+    // try {
+    let pauserid = await users.patchUserById(id, userpa);
+    res.json(pauserid);
+    // } catch (e) {
+    //     res.status(404).json({ message: e });
+    // }
+});
 
+router.get('*', async(req, res) => {
+    res.status(404).json({ error: 'Not found' });
+});
+
+router.put('*', async(req, res) => {
+    res.status(404).json({ error: 'Not found' });
+});
+
+router.post('*', async(req, res) => {
+    res.status(404).json({ error: 'Not found' });
+});
+
+router.patch('*', async(req, res) => {
+    res.status(404).json({ error: 'Not found' });
+});
+
+router.delete('*', async(req, res) => {
+    res.status(404).json({ error: 'Not found' });
+});
 
 module.exports = router;
