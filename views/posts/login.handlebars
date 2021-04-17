@@ -2,21 +2,21 @@
     <p class='logo' style="text-align: left;">logo</p>
 </div>
 <div class="mainbody middle">
-    <form class="form-box front">
+    <form class="form-box front"  action="/api/users/login"  method="POST">
         <div>
             <h1>Login</h1>
         </div>
         <div>
-            <input class="input-normal-l" type="text" placeholder="UserName" />
-            <input class="input-normal-l" type="password" placeholder="PassWord" />
+            <input class="input-normal-l" type="text" name="Username"placeholder="UserName" />
+            <input class="input-normal-l" type="password" name="Password" placeholder="PassWord" />
 
             <button class="btn-submit" type="submit">LOGIN</button>
         </div>
         <div>
             <p style="margin-top: 40px">If you don't have account.Please</p>
             <p>Click here to <a id="signin" href="register">Sign Up</a></p>
-        </div>
-
+        </div> 
+</form>
 </div>
 <div>
     <footer>

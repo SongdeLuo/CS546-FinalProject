@@ -19,6 +19,8 @@ const users = data.users;
 // login
 router.post('/login', async(req, res) => {
     let userInfo = req.body
+    console.log("我被请求了");
+    //console.log(userInfo.Password);
     if (!userInfo.Username || typeof userInfo.Username != 'string' || userInfo.Username == null || userInfo.Username == "") {
         res.status(400).json({ error: 'Username is null or Username is not string' });
         return;
@@ -36,10 +38,11 @@ router.post('/login', async(req, res) => {
         }
 
         if (userInfo.Password === user.Password) {
-            res.json({
-                code: 200,
-                msg: 'Login Success'
-            })
+            // res.json({
+            //     code: 200,
+            //     msg: 'Login Success'
+            // })
+         res.render('posts/new-bill',{});
         } else {
             res.json({
                 code: 403,
@@ -108,6 +111,8 @@ router.get('/:id', async(req, res) => {
 // sign up
 router.post('/signUp', async(req, res) => {
     let newuser = req.body;
+    console.log("我被请求了");
+    console.log(req.body);
 
     if (newuser == null || typeof newuser != "object") {
         res.status(400).json({ error: 'It is null or It is not object' });
@@ -127,20 +132,21 @@ router.post('/signUp', async(req, res) => {
         return;
     }
 
-    if (!newuser.FirstName || typeof newuser.FirstName != 'string' || newuser.FirstName == null || newuser.FirstName == "") {
-        res.status(400).json({ error: 'FirstName is null or FirstName is not string' });
-        return;
-    }
+    // if (!newuser.FirstName || typeof newuser.FirstName != 'string' || newuser.FirstName == null || newuser.FirstName == "") {
+    //     res.status(400).json({ error: 'FirstName is null or FirstName is not string' });
+    //     return;
+    // }
+    //我看前端网页的注册界面只要填账户，密码，邮箱，电话，暂时先把名字啥的注释掉  到时候再看 ---罗松德
 
-    if (!newuser.LastName || typeof newuser.LastName != 'string' || newuser.LastName == null || newuser.LastName == "") {
-        res.status(400).json({ error: 'LastName is null or LastName is not string' });
-        return;
-    }
+    // if (!newuser.LastName || typeof newuser.LastName != 'string' || newuser.LastName == null || newuser.LastName == "") {
+    //     res.status(400).json({ error: 'LastName is null or LastName is not string' });
+    //     return;
+    // }
 
-    if (!newuser.age || typeof newuser.age != 'number' || newuser.age == null || newuser.age == "") {
-        res.status(400).json({ error: 'age is null or age is not number' });
-        return;
-    }
+    // if (!newuser.age || typeof newuser.age != 'number' || newuser.age == null || newuser.age == "") {
+    //     res.status(400).json({ error: 'age is null or age is not number' });
+    //     return;
+    // }
 
     if (!newuser.Mail || !newuser.Mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/) || newuser.Mail == null) {
         res.status(400).json({ error: 'Mail is not a Mail format or Mail is null' });
@@ -157,8 +163,10 @@ router.post('/signUp', async(req, res) => {
         return;
     }
 
-    let { Username, Password, FirstName, LastName, age, Mail, Phone } = newuser;
-    let pouserid = await users.addPost(Username, Password, FirstName, LastName, age, Mail, Phone);
+    //let { Username, Password, FirstName, LastName, age, Mail, Phone } = newuser;
+    let { Username, Password, Mail, Phone } = newuser;   //这里也相应把名字啥的注释掉了 ---罗松德
+    //let pouserid = await users.addPost(Username, Password, FirstName, LastName, age, Mail, Phone);
+    let pouserid = await users.addPost(Username, Password, Mail, Phone);
     res.json(pouserid);
 
     // try {

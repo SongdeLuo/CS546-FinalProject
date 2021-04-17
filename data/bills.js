@@ -15,10 +15,10 @@ const exportedMethods = {
       throw `You must provide a bill date and it must be a string`;
       return;
     }
-    if (!billInfo.userId || typeof billInfo.userId !== 'string') {
-      throw `You must provide a userId and it must be a string`;
-      return;
-    }
+    // if (!billInfo.userId || typeof billInfo.userId !== 'string') {
+    //   throw `You must provide a userId and it must be a string`;
+    //   return;
+    // }
     if (typeof billInfo.food !== 'number') {
       throw `type of food  must be a number`;
       return;
@@ -50,7 +50,7 @@ const exportedMethods = {
       transportation: billInfo.transportation,
       other: billInfo.other,
       total: billInfo.food + billInfo.entertainment + billInfo.other + billInfo.transportation,
-      notes: "meixianghao notes"
+      notes: billInfo.notes
     });
 
     return newBill;

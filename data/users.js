@@ -4,7 +4,7 @@ const uuid = require('uuid/v4');
 
 let exportedMethods = {
 
-    async addPost(Username, Password, FirstName, LastName, age, Mail, Phone) {
+    async addPost(Username, Password, Mail, Phone) {
         let userCollection = await users();
         if (!Username || typeof Username != 'string' || Username == null || Username == "") {
             throw 'Username is null or Username is not string';
@@ -12,13 +12,18 @@ let exportedMethods = {
             throw 'Username is exit';
         } else if (!Password || typeof Password != 'string' || Password == null || Password == "") {
             throw 'Password is null or Password is not string';
-        } else if (!FirstName || typeof FirstName != 'string' || FirstName == null || FirstName == "") {
-            throw 'FirstName is null or FirstName is not string';
-        } else if (!LastName || typeof LastName != 'string' || LastName == null || LastName == "") {
-            throw 'LastName is null or LastName is not string';
-        } else if (!age || typeof age != 'number' || age == null || age == "") {
-            throw 'age is null or age is not number';
-        } else if (!Mail || !Mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/) || Mail == null) {
+        }
+        //  else if (!FirstName || typeof FirstName != 'string' || FirstName == null || FirstName == "") {
+        //     throw 'FirstName is null or FirstName is not string';
+        // } else if (!LastName || typeof LastName != 'string' || LastName == null || LastName == "") {
+        //     throw 'LastName is null or LastName is not string';
+        // } else if (!age || typeof age != 'number' || age == null || age == "") {
+        //     throw 'age is null or age is not number';
+        // }
+       
+        else if ( Mail == null) {
+            
+            //|| !Mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/)  在测试邮箱的时候出错我先把这个拿掉 --罗松德
             throw 'Mail is not a Mail format or Mail is null';
         } else if (!Phone || Phone == null) {
             throw 'Phone is not a Phone format or Phone is null';
@@ -29,9 +34,9 @@ let exportedMethods = {
         let newPost = {
             Username: Username,
             Password: Password,
-            FirstName: FirstName,
-            LastName: LastName,
-            age: age,
+           // FirstName: FirstName,
+           // LastName: LastName,
+           //age: age,
             Mail: Mail,
             Phone: Phone,
             bills: []
