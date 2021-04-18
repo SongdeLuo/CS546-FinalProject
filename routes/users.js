@@ -20,7 +20,7 @@ const saltRounds = 10;
 // login
 router.post('/login', async(req, res) => {
     let userInfo = req.body
-    console.log("我被请求了");
+   // console.log("我被请求了");
     //console.log(userInfo.Password);
     if (!userInfo.Username || typeof userInfo.Username != 'string' || userInfo.Username == null || userInfo.Username == "") {
         res.status(400).json({ error: 'Username is null or Username is not string' });
@@ -217,7 +217,7 @@ router.post('/signUp', async(req, res) => {
     let { Username, Password, Mail, Phone } = newuser;   //这里也相应把名字啥的注释掉了 ---罗松德
     //let pouserid = await users.addPost(Username, Password, FirstName, LastName, age, Mail, Phone);
     let pouserid = await users.addPost(Username, Password, Mail, Phone);
-    res.json(pouserid);
+    res.redirect('login');
 
     // try {
     //     let { Username, Password, FirstName, LastName, age, Mail, Phone } = newuser;

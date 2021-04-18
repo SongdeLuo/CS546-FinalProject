@@ -37,12 +37,12 @@ let exportedMethods = {
         let newPost = {
             Username: Username,
             Password: Password,
-           // FirstName: FirstName,
-           // LastName: LastName,
-           //age: age,
+            FirstName: null,
+            LastName: null,
+            age: null,
             Mail: Mail,
             Phone: Phone,
-            bills: []
+            
         };
         let insertInfo = await userCollection.insertOne(newPost);
         if (insertInfo.insertedCount === 0) {

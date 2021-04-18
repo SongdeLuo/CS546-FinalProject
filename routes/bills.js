@@ -11,8 +11,8 @@ router.post('/newBill', async (req, res) => {
   billInfo.entertainment = parseInt( billInfo.entertainment);
   billInfo.transportation = parseInt( billInfo.transportation);
   billInfo.other = parseInt( billInfo.other);
- 
- 
+  billInfo.userId = req.session.user.userId;
+  billInfo.userName = req.session.user.username;
  
   if (!billInfo ) {
     res.status(400).json({ error: 'cannot receive any data ' });

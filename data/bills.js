@@ -40,8 +40,8 @@ const exportedMethods = {
       return;
     }
     const newBill = await billCollection.insertOne({
-      _id: uuid(),
-      userId: "zanding",
+      
+      userId: billInfo.userId,
       date: billInfo.date,
       dateTs: new Date(billInfo.date).getTime(),
       createTime: new Date().getTime(),

@@ -1,7 +1,5 @@
 (function ($) {
 
-
-
     //点击新建bill界面下面的add 按钮发送ajax请求，把bill数据加到数据库
     $('#new-bill-addbtn').click(function (event) {
         let newbill_date = $('#new-bill-date');
@@ -10,7 +8,6 @@
         let newbill_transition = $('#new-bill-transition');
         let newbill_other = $('#new-bill-other');
         let newbill_note = $('#new-bill-note');
-
 
         let requestConfig = {
             method: 'POST',
@@ -27,9 +24,13 @@
         };
 
         $.ajax(requestConfig).then(function(responseMessage) {
-            // alert("看看ajax请求发送了没");
-            // console.log("看看ajax请求发送了没");
-           
+           alert("添加成功！！！");
+            newbill_date.val(''),
+            newbill_food.val(''),
+            newbill_entertainment.val(''),
+           newbill_transition.val(''),
+           newbill_other.val(''),
+           newbill_note.val('')
         });
        
     });
