@@ -28,27 +28,27 @@ router.post('/newBill', async (req, res) => {
 // }
 //先注释掉，目前还没想怎么获取到用户id --罗松德
 if ( typeof billInfo.food !== 'number' ) {
-  console.log("food 错");
+  
   res.status(400).json({ error: 'type of food  must be a number ' });
   return;
 }
 if ( typeof billInfo.entertainment !== 'number' ) {
-  console.log("enter 错");
+ 
   res.status(400).json({ error: 'type of entertainment  must be a number ' });
   return;
 }
 if ( typeof billInfo.transportation !== 'number' ) {
-  console.log("交通 错");
+  
   res.status(400).json({ error: 'type of transportation  must be a number ' });
   return;
 }
 if ( typeof billInfo.other !== 'number' ) {
-  console.log("other 错");
+ 
   res.status(400).json({ error: 'type of other  must be a number ' });
   return;
 }
 if ( typeof billInfo.notes !== 'string' ) {
-  console.log("note 错");
+ 
   res.status(400).json({ error: 'type of notes  must be a string ' });
   return;
 }
@@ -58,6 +58,7 @@ if ( typeof billInfo.notes !== 'string' ) {
     // res.render('posts/new-bill',{
     //   title:"New Bill"
     //  });
+    res.send("asadasd");
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: 'Post not found' });

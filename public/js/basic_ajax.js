@@ -11,7 +11,7 @@
         let newbill_other = $('#new-bill-other');
         let newbill_note = $('#new-bill-note');
 
-        
+
         let requestConfig = {
             method: 'POST',
             url: '/api/bills/newBill',
@@ -27,8 +27,8 @@
         };
 
         $.ajax(requestConfig).then(function(responseMessage) {
-            alert("看看ajax请求发送了没");
-            console.log("看看ajax请求发送了没");
+            // alert("看看ajax请求发送了没");
+            // console.log("看看ajax请求发送了没");
            
         });
        

@@ -3,7 +3,8 @@ const router = express.Router();
 const data = require('../data');
 //const { checkUserByName, checkUserByMail } = require('../data/users');
 const users = data.users;
-
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 
 // router.get('/', async(req, res) => {
@@ -36,13 +37,19 @@ router.post('/login', async(req, res) => {
             res.status(404).json({ error: 'Not that user' });
             return;
         }
-
-        if (userInfo.Password === user.Password) {
+        
+        let compareToMerlin = false;
+        compareToMerlin = await bcrypt.compare(userInfo.Password, user.Password);
+        if (compareToMerlin) {
             // res.json({
             //     code: 200,
             //     msg: 'Login Success'
             // })
-         res.render('posts/new-bill',{});
+            req.session.user ={
+               userId:user._id,
+               username:userInfo.Username
+            }
+            res.redirect('new-bill');
         } else {
             res.json({
                 code: 403,
@@ -50,10 +57,53 @@ router.post('/login', async(req, res) => {
             });
         }
     } catch (e) {
+    //    console.log(e);
         res.status(404).json({ error: e });
     }
 });
 
+router.get('/login',(req, res) =>{
+    //console.log(req.session.user);
+    if (req.session.user) {
+      res.redirect('new-bill');
+    } else{
+      res.render('posts/login',{
+        title:'LOGIN'
+      });
+    }
+    
+  });
+  router.get('/register',(req, res) =>{
+    res.render('posts/register',{
+      title:'Register'
+    });
+  });
+
+  router.get('/mycenter',(req, res) =>{
+    res.render('posts/mycenter',{
+      title:'My Center'
+    });
+  });
+
+  router.get('/new-bill',(req, res) =>{
+    
+    res.render('posts/new-bill',{
+      title:'New Bill'
+    });
+  });
+
+  router.get('/allbills',(req, res) =>{
+    res.render('posts/allbills',{
+      title:'All Bills'
+    });
+  });
+
+  router.get('/logout',(req, res) =>{
+    res.clearCookie('AuthCookie');
+    res.render('posts/login',{
+      title:'All Bills'
+    });
+  });
 
 // change password
 router.post('/password', async(req, res) => {

@@ -1,6 +1,8 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
 const uuid = require('uuid/v4');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 
 let exportedMethods = {
 
@@ -31,6 +33,7 @@ let exportedMethods = {
             throw 'Mial or phone is exit';
         } //!Phone.match(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/) ||
 
+        Password = await bcrypt.hash(Password,saltRounds);
         let newPost = {
             Username: Username,
             Password: Password,
