@@ -24,6 +24,7 @@
         };
 
         $.ajax(requestConfig).then(function(responseMessage) {
+           
            alert("添加成功！！！");
             newbill_date.val(''),
             newbill_food.val(''),
@@ -35,11 +36,28 @@
        
     });
 
+   
+    // $('#btn-login').click(function (event) {
 
+    //     let verification_date = $('#text-verification');
+    //     let requestConfig = {
+    //         method: 'POST',
+    //         url: '/api/users/verify_code',
+    //         contentType: 'application/json',
+    //         data: JSON.stringify({
+    //             verificationcode:verification_date.val()
+    //         })
+    //     };
+    //     $.ajax(requestConfig).then(function(responseMessage) {
+    //        if(responseMessage !== null){
+    //            alert("验证码错误");
+    //        }
+           
+    //      });
 
+    //   });
 
-
-
+   
 
 
 

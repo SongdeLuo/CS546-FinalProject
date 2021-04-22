@@ -4,6 +4,7 @@ const data = require('../data');
 //const { checkUserByName, checkUserByMail } = require('../data/users');
 const users = data.users;
 const bcrypt = require('bcryptjs');
+const svgCaptcha = require("svg-captcha")
 const saltRounds = 10;
 
 
@@ -17,11 +18,32 @@ const saltRounds = 10;
 // });
 
 
+
+// router.post('/verify_code', async(req, res) => {
+//     //console.log("我又被访问吗");
+//     const {verificationcode} = req.body;
+//     if(verificationcode.toLocaleUpperCase() !== req.session.img_code) {
+//         res.send("Verification code error");
+//     }
+// });
+
+
 // login
 router.post('/login', async(req, res) => {
-    let userInfo = req.body
-   // console.log("我被请求了");
-    //console.log(userInfo.Password);
+    let userInfo = req.body;
+    
+    const {VerificationCode} = req.body;
+    if(VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
+        
+        res.render('posts/login',{
+            title:'LOGIN',
+            warn:'验证码错误请重试'
+          });
+       
+        
+    }
+   
+    //console.log(userInfo);
     if (!userInfo.Username || typeof userInfo.Username != 'string' || userInfo.Username == null || userInfo.Username == "") {
         res.status(400).json({ error: 'Username is null or Username is not string' });
         return;
@@ -73,6 +95,21 @@ router.get('/login',(req, res) =>{
     }
     
   });
+
+  //获取验证码的接口
+router.get('/login_img_code', (req, res) => {
+   
+	const captcha = svgCaptcha.create({
+		noise: 3, // 干扰线条的数量
+        background: '#ff5033' // 背景颜色
+	});
+	// 将图片的验证码存入到 session 中
+	req.session.img_code = captcha.text.toLocaleUpperCase() // 将验证码装换为大写
+	res.type('svg');
+	res.status(200).send(captcha.data);
+});
+
+
   router.get('/register',(req, res) =>{
     res.render('posts/register',{
       title:'Register'
@@ -283,6 +320,9 @@ router.patch('/:id', async(req, res) => {
     //     res.status(404).json({ message: e });
     // }
 });
+
+
+
 
 router.get('*', async(req, res) => {
     res.status(404).json({ error: 'Not found' });

@@ -58,7 +58,7 @@ if ( typeof billInfo.notes !== 'string' ) {
     // res.render('posts/new-bill',{
     //   title:"New Bill"
     //  });
-    res.send("asadasd");
+    //res.send("asadasd");
   } catch (e) {
     console.log(e);
     res.status(404).json({ error: 'Post not found' });
