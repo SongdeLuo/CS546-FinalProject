@@ -1,0 +1,167 @@
+<script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+var posList = [
+    'left', 'right', 'top', 'bottom',
+    'inside',
+    'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
+    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+];
+
+app.configParameters = {
+    rotate: {
+        min: -90,
+        max: 90
+    },
+    align: {
+        options: {
+            left: 'left',
+            center: 'center',
+            right: 'right'
+        }
+    },
+    verticalAlign: {
+        options: {
+            top: 'top',
+            middle: 'middle',
+            bottom: 'bottom'
+        }
+    },
+    position: {
+        options: posList.reduce(function (map, pos) {
+            map[pos] = pos;
+            return map;
+        }, {})
+    },
+    distance: {
+        min: 0,
+        max: 100
+    }
+};
+
+app.config = {
+    rotate: 90,
+    align: 'left',
+    verticalAlign: 'middle',
+    position: 'insideBottom',
+    distance: 15,
+    onChange: function () {
+        var labelOption = {
+            normal: {
+                rotate: app.config.rotate,
+                align: app.config.align,
+                verticalAlign: app.config.verticalAlign,
+                position: app.config.position,
+                distance: app.config.distance
+            }
+        };
+        myChart.setOption({
+            series: [{
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }, {
+                label: labelOption
+            }]
+        });
+    }
+};
+
+
+var labelOption = {
+    show: true,
+    position: app.config.position,
+    distance: app.config.distance,
+    align: app.config.align,
+    verticalAlign: app.config.verticalAlign,
+    rotate: app.config.rotate,
+    formatter: '{c}  {name|{a}}',
+    fontSize: 16,
+    rich: {
+        name: {
+        }
+    }
+};
+
+option = {
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'shadow'
+        }
+    },
+    legend: {
+        data: ['Food', 'Entertainment', 'Transition', 'Other']
+    },
+    toolbox: {
+        show: true,
+        orient: 'vertical',
+        left: 'right',
+        top: 'center',
+        feature: {
+            mark: {show: true},
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar', 'stack', 'tiled']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    },
+    xAxis: [
+        {
+            type: 'category',
+            axisTick: {show: false},
+            data: ['2012', '2013', '2014', '2015', '2016']//这里的数据需要更改，调用当前需要现显示的时间
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value'
+        }
+    ],
+    series: [
+        {
+            name: 'Food',
+            type: 'bar',
+            barGap: 0,
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [320, 332, 301, 334, 390]//这里的数据需要更改，调用当前需要现显示的数据
+        },
+        {
+            name: 'Entertainment',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [220, 182, 191, 234, 290]//这里的数据需要更改，调用当前需要现显示的数据
+        },
+        {
+            name: 'Transition',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [150, 232, 201, 154, 190]//这里的数据需要更改，调用当前需要现显示的数据
+        },
+        {
+            name: 'Other',
+            type: 'bar',
+            label: labelOption,
+            emphasis: {
+                focus: 'series'
+            },
+            data: [98, 77, 101, 99, 40]//这里的数据需要更改，调用当前需要现显示的数据
+        }
+    ]
+};
+
+ myChart.setOption(option);
+    </script>
