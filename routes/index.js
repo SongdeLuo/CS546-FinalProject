@@ -9,19 +9,13 @@ const constructorMethod = (app) => {
     if (req.session.user) {
       res.redirect('/api/users/new-bill');
     } else{
-       res.render('posts/mainpage',{
+      res.render('posts/mainpage',{
       title:'Main page'
     });
     }
-   
+
   });
 
-  
-
- 
-
-  
-  
   app.get('/400',(req, res) =>{
     res.render('posts/400',{
       title:'400 Error'

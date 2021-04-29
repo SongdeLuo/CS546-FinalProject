@@ -1,5 +1,9 @@
 <h1 style='text-align: center'>New Bill</h1>
 
+<div class="outer_container">
+
+<div class="left_free">
+
     <div class="nav">
         <ul>
             <li><a href="mycenter">My Center</a></li>
@@ -7,26 +11,36 @@
             <li><a href="allbills">All Bills</a></li>
         </ul>
     </div>
-    
+
     <div class="billdiv">
         <div class="create-info">
-           
-                <label class="label-info" for="new-bill-date">Date</label>
-                <input class="input-info" type="date" name="user_date" id="new-bill-date" required /><br>
-                <label class="label-info" for="new-bill-food">Food</label>
-                <input class="input-info" type="number" name="user_food" id="new-bill-food" /><br>
-                <label class="label-info" for="new-bill-entertainment">Entertainment</label>
-                <input class="input-info" type="number" name="user_entertainment" id="new-bill-entertainment" /><br>
-                <label class="label-info" for="new-bill-transition">Transition</label>
-                <input class="input-info" type="number" name="user_transition" id="new-bill-transition"/><br>
-                <label class="label-info" for="new-bill-other">Other</label>
-                <input class="input-info" type="number" name="user_other"  id="new-bill-other"/><br>
-                <label class="label-info" for="new-bill-note">Note</label>
-                <input class="input-info" type="text" name="user_note" id="new-bill-note"><br>
-                <button class="addbutton1" type="botton" id="new-bill-addbtn">add</button>
-                {{!-- <button class="addbutton2" type="submit"> Click To Add Test Data</button> --}}
-            
+
+            <label class="label-info" for="new-bill-date">Date</label>
+            <input class="input-info" type="date" name="user_date" id="new-bill-date" required /><br>
+            <label class="label-info" for="new-bill-food">Food</label>
+            <input class="input-info" type="number" name="user_food" id="new-bill-food" /><br>
+            <label class="label-info" for="new-bill-entertainment">Entertainment</label>
+            <input class="input-info" type="number" name="user_entertainment" id="new-bill-entertainment" /><br>
+            <label class="label-info" for="new-bill-transition">Transition</label>
+            <input class="input-info" type="number" name="user_transition" id="new-bill-transition" /><br>
+            <label class="label-info" for="new-bill-other">Other</label>
+            <input class="input-info" type="number" name="user_other" id="new-bill-other" /><br>
+            <label class="label-info" for="new-bill-note">Note</label>
+            <input class="input-info" type="text" name="user_note" id="new-bill-note"><br>
+            <button class="addbutton1" type="botton" id="new-bill-addbtn">add</button>
+            {{!-- <button class="addbutton2" type="submit"> Click To Add Test Data</button> --}}
+
         </div>
-        <div class="echarts">echarts</div>
-      
+
+</div>
+
+</div>
+<script src="../public/js/echarts.min.js"></scripts>
+<div class="right_free">
+    <div class="echarts" id="main1" style="width:800px; height:600px">
     </div>
+</div>
+    
+
+</div>
+</div>

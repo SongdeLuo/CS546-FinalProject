@@ -1,7 +1,8 @@
 const mongoCollections = require('../config/mongoCollections');
 const users = mongoCollections.users;
-const uuid = require('uuid/v4');
+const uuid = require('uuid/v1');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto-js');
 const saltRounds = 10;
 
 let exportedMethods = {

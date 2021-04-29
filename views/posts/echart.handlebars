@@ -1,13 +1,13 @@
 <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('main'));
+var myChart = echarts.init(document.getElementById('main1'));
 
         // 指定图表的配置项和数据
 var posList = [
     'left', 'right', 'top', 'bottom',
     'inside',
     'insideTop', 'insideLeft', 'insideRight', 'insideBottom',
-    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight'
+    'insideTopLeft', 'insideTopRight', 'insideBottomLeft', 'insideBottomRight' 
 ];
 
 app.configParameters = {
@@ -83,6 +83,7 @@ var labelOption = {
     fontSize: 16,
     rich: {
         name: {
+
         }
     }
 };
@@ -163,5 +164,5 @@ option = {
     ]
 };
 
- myChart.setOption(option);
-    </script>
+myChart.setOption(option);
+</script>

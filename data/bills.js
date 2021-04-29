@@ -1,7 +1,7 @@
 const mongoCollections = require('../config/mongoCollections');
 const bills = mongoCollections.bills;
 const users = require('./users');
-const uuid = require('uuid/v4');
+const uuid = require('uuid/v1');
 
 const exportedMethods = {
 
@@ -87,16 +87,20 @@ const exportedMethods = {
         const deleteInfo = await billCollection.deleteOne({ date: date });
     },
 
+
     async getBillday() {
         //这里需要写方法，获取近三天账单数据
+
     },
     async getBillmonth() {
         //这里需要写方法，获取近一个月账单数据
+
     },
 
 
     async getBillyear() {
         //这里需要写方法，获取近一年账单数据
+        
     },
 };
 
