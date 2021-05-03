@@ -43,9 +43,7 @@ router.post("/login", async (req, res) => {
     userInfo.Username == null ||
     userInfo.Username == ""
   ) {
-    res
-      .status(400)
-      .json({ error: "Username is null or Username is not string" });
+    res.status(400).json({ error: "Username is null or Username is not string" });
     return;
   }
 

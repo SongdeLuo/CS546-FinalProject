@@ -23,7 +23,8 @@ let exportedMethods = {
         // } else if (!age || typeof age != 'number' || age == null || age == "") {
         //     throw 'age is null or age is not number';
         // }
-       
+
+        
         else if ( Mail == null) {
             
             //|| !Mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/)  在测试邮箱的时候出错我先把这个拿掉 --罗松德

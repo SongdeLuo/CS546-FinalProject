@@ -127,6 +127,7 @@ router.get('/getBillday', async(req, res) => {
     }
 });
 
+
 router.get('/getBillmonth', async(req, res) => {
     try {
         const monthbill = await billData.getBillmonth();
@@ -135,6 +136,7 @@ router.get('/getBillmonth', async(req, res) => {
         res.status(404).json({ error: e });
     }
 });
+
 
 router.get('/getBillyear', async(req, res) => {
     try {

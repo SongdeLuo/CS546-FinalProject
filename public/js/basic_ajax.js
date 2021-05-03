@@ -91,42 +91,6 @@
             billshow.append(newElement);
         });
     });
-
-//切换三个不同的图表，ajax向后台请求数据，展示在三个不同的图表中。
-    $("#heart").on("click", function() {
- 
-        $('.heart-car').show();
-        $('.sleep-car').hide();
-        $('.breathe-car').hide();
-        $('.sport-car').hide();
- 
-    });
- 
-    $("#breathe").on("click", function() {
- 
-        $('.heart-car').hide();
-        $('.sleep-car').hide();
-        $('.breathe-car').show();
-        $('.sport-car').hide();
-    });
-    $("#sport").on("click", function() {
- 
-        $('.heart-car').hide();
-        $('.sleep-car').hide();
-        $('.breathe-car').hide();
-        $('.sport-car').show();
- 
-    });
-    $("#sleep").on("click", function() {
- 
-        $('.heart-car').hide();
-        $('.sleep-car').show();
-        $('.breathe-car').hide();
-        $('.sport-car').hide();
- 
-    });
-
-
-    
+  
 
 })(window.jQuery);
