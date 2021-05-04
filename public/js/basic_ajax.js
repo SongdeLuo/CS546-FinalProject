@@ -51,8 +51,56 @@
             let newElement = $(responseMessage);
             if (newElement) {
                 billshow.empty();
+                echarts.init(document.getElementById('main')).setOption({     
+                    legend: {},
+                         tooltip: {},
+                         dataset: {          // 提供一份数据。        
+                        // source: [             
+                        //     ['bill', 'first day', 'second day', 'third day'],              
+                        //     ['Food', 43.3, 85.8, 93.7],              
+                        //     ['Entertainment', 83.1, 73.4, 55.1],              
+                        //     ['Transition', 86.4, 65.2, 82.5],              
+                        //     ['Other', 72.4, 53.9, 39.1]         
+                        // ]
+                        source: [             
+                            ['bill', 'Food', 'Entertainment', 'Transition', 'Other'],              
+                            newElement[0],
+                            //['一月', 43.3, 85.8, 93.7,0],            
+                            newElement[1],
+                            //['二月', 83.1, 73.4,0, 55.1],              
+                            newElement[2],
+                            //['third day', 86.4, 65.2, 78,82.5],            
+                            newElement[3],
+                            //['first day', 43.3, 85.8, 93.7,0],            
+                            newElement[4],
+                            //['second day', 83.1, 73.4,0, 55.1],              
+                            newElement[5],
+                            //['third day', 86.4, 65.2, 78,82.5],  
+                            newElement[6],
+                            //['first day', 43.3, 85.8, 93.7,0],            
+                            newElement[7],
+                            //['second day', 83.1, 73.4,0, 55.1],              
+                            newElement[8],
+                            //['third day', 86.4, 65.2, 78,82.5],  
+                            newElement[9],
+                            //['first day', 43.3, 85.8, 93.7,0],            
+                            newElement[10],
+                            //['second day', 83.1, 73.4,0, 55.1],              
+                            newElement[11],
+                            //['third day', 86.4, 65.2, 78,82.5],  
+                        ]     
+                    },
+                          // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+                         xAxis: { type: 'category' },
+                          // 声明一个 Y 轴，数值轴。
+                         yAxis: {},
+                          // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+                         series: [         { type: 'bar' },           { type: 'bar' },           { type: 'bar' },
+                        { type: 'bar' }     
+                    ]       
+                });
             }
-            billshow.append(newElement);
+
         });
     });
 
@@ -69,8 +117,40 @@
             let newElement = $(responseMessage);
             if (newElement) {
                 billshow.empty();
+                echarts.init(document.getElementById('main')).setOption({     
+                    legend: {},
+                         tooltip: {},
+                         dataset: {          // 提供一份数据。        
+                        // source: [             
+                        //     ['bill', 'first day', 'second day', 'third day'],              
+                        //     ['Food', 43.3, 85.8, 93.7],              
+                        //     ['Entertainment', 83.1, 73.4, 55.1],              
+                        //     ['Transition', 86.4, 65.2, 82.5],              
+                        //     ['Other', 72.4, 53.9, 39.1]         
+                        // ]
+                        source: [             
+                            ['bill', 'Food', 'Entertainment', 'Transition', 'Other'],              
+                            newElement[0],
+                            //['first week', 43.3, 85.8, 93.7,0],            
+                            newElement[1],
+                            //['second week', 83.1, 73.4,0, 55.1],              
+                            newElement[2],
+                            //['third week', 86.4, 65.2, 78,82.5], 
+                            newElement[3],
+                            //['forth week', 86.4, 65.2, 78,82.5],           
+                        ]     
+                    },
+                          // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+                         xAxis: { type: 'category' },
+                          // 声明一个 Y 轴，数值轴。
+                         yAxis: {},
+                          // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+                         series: [         { type: 'bar' },           { type: 'bar' },           { type: 'bar' },
+                        { type: 'bar' }     
+                    ]       
+                });
             }
-            billshow.append(newElement);
+
         });
     });
 
@@ -86,11 +166,40 @@
             // console.log(responseMessage);
             let newElement = $(responseMessage);
             if (newElement) {
-                billshow.empty();
+                billshow.empty(); 
+                echarts.init(document.getElementById('main')).setOption({     
+                    legend: {},
+                         tooltip: {},
+                         dataset: {          // 提供一份数据。        
+                        // source: [             
+                        //     ['bill', 'first day', 'second day', 'third day'],              
+                        //     ['Food', 43.3, 85.8, 93.7],              
+                        //     ['Entertainment', 83.1, 73.4, 55.1],              
+                        //     ['Transition', 86.4, 65.2, 82.5],              
+                        //     ['Other', 72.4, 53.9, 39.1]         
+                        // ]
+                        source: [             
+                            ['bill', 'Food', 'Entertainment', 'Transition', 'Other'],              
+                            newElement[0],
+                            //['first day', 43.3, 85.8, 93.7,0],            
+                            newElement[1],
+                            //['second day', 83.1, 73.4,0, 55.1],              
+                            newElement[2],
+                            //['third day', 86.4, 65.2, 78,82.5],            
+                        ]     
+                    },
+                          // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+                         xAxis: { type: 'category' },
+                          // 声明一个 Y 轴，数值轴。
+                         yAxis: {},
+                          // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+                         series: [         { type: 'bar' },           { type: 'bar' },           { type: 'bar' },
+                        { type: 'bar' }     
+                    ]       
+                });
             }
-            billshow.append(newElement);
         });
     });
-  
+
 
 })(window.jQuery);

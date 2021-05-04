@@ -121,7 +121,7 @@ router.delete('/delete', async(req, res) => {
 router.get('/getBillday', async(req, res) => {
     try {
         const daybill = await billData.getBillday();
-        res.render('posts/echart', { layout: null, showlisteach2: daybill });
+        res.status(400).json(daybill);
     } catch (e) {
         res.status(404).json({ error: e });
     }
@@ -131,7 +131,7 @@ router.get('/getBillday', async(req, res) => {
 router.get('/getBillmonth', async(req, res) => {
     try {
         const monthbill = await billData.getBillmonth();
-        res.render('posts/echart', { layout: null, showlisteach2: monthbill });
+        res.status(400).json(monthbill);
     } catch (e) {
         res.status(404).json({ error: e });
     }
@@ -141,7 +141,7 @@ router.get('/getBillmonth', async(req, res) => {
 router.get('/getBillyear', async(req, res) => {
     try {
         const yearbill = await billData.getBillyear();
-        res.render('posts/echart', { layout: null, showlisteach2: yearbill });
+        res.status(400).json(yearbill);
     } catch (e) {
         res.status(404).json({ error: e });
     }

@@ -89,8 +89,17 @@ const exportedMethods = {
 
 
     async getBillday() {
+        //获取当前时间
+        //计算范围
+        let bill = this.getBill(id);
         //这里需要写方法，获取近三天账单数据
-
+        //获取日期并判断
+        for (let i = 0; i < bill.length(); i++) {
+            //由于日期是2020-05-05这种格式，所以需要提取需要的字段
+            bill[i].data;
+            if (bill.data) {}
+        }
+        //将其存为数组，格式为['日期', 数据1, 数据2,数据3]，这样的四组数据，对应'Food', 'Entertainment', 'Transition', 'Other',再将这四组数据存入一个数组中
     },
     async getBillmonth() {
         //这里需要写方法，获取近一个月账单数据
@@ -100,7 +109,7 @@ const exportedMethods = {
 
     async getBillyear() {
         //这里需要写方法，获取近一年账单数据
-        
+
     },
 };
 
