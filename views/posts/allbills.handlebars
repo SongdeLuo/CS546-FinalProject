@@ -65,116 +65,38 @@
             </table>
         </div>
         <div class="right-container-table">
-            <div ref="chartContainer" class="chartContainer" />
+            <div ref="chartContainer" class="chartContainer"></div>
+            <div id="main" style="width: 600px;height:400px;"></div>
         </div>
     </div>
 
 
 <script>
+    console.log('1111111')
+     // 基于准备好的dom，初始化echarts实例
+    window.myChart = echarts.init(document.getElementById('main'));
 
-    export default {
-        name: 'BillList',
-        props: {
-            chartData: {
-                default: () => { },
-                type: Array
-            }
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: 'ECharts 入门示例'
         },
-        //告诉view 组件里声明的变量 对vue进行追踪 
-        data() {
-            return {
-                myChart: null,
-                tableData: [],
-                dataMap: {}
-            }
+        tooltip: {},
+        legend: {
+            data:['销量']
         },
+        xAxis: {
+            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+        },
+        yAxis: {},
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20]
+        }]
+    };
 
-        watch: {
-            chartData: {
-                handler(newValue, oldValue) {
-                    this.tableData = newValue.map(item => {
-                        item && (this.dataMap[item._id] = {
-                            ...item
-                        })
-                        return {
-                            ...item
-                        }
-                    })
-                    this.setChart()
-                },
-                deep: true
-            }
-        },
-        //mounted vue组件进行加载的时候 挂载vue  会自动执行mounted里面的东西  变量
-        mounted() {
-            //echart
-            this.myChart = this.$echarts.init(this.$refs.chartContainer)
-            // this.getBillChart()
-            //chartdata 服务端拿到的 tabledata是table用到的数据
-            this.tableData = this.chartData.map(item => {
-                item && (this.dataMap[item._id] = {
-                    ...item
-                })
-                return {
-                    ...item
-                }
-            })
-        },
-        //setchart里面写的是组件所用用到的方法  函数 封装了一个函数  传入一个id 渲染对应的图像
-        methods: {
-            onDetail(row) {
-                this.setChart(row._id)
-            },
-            //查看某个图片setchart
-            setChart(id) {
-                let option
-                //很多地方默认加载今天 会很多地方用到  不传id  【0】第一项 是今天  
-                //55行 没穿id 75行传了id
-                if (!id) {
-                    id = this.chartData[0]._id
-                }
-                const temp = this.dataMap[id]
-                const data = [
-                    { value: temp.food, name: 'Food' },
-                    { value: temp.entertainment, name: 'Entertainment' },
-                    { value: temp.transition, name: 'Transition' },
-                    { value: temp.other, name: 'Other' }
-                ]
-                this.myChart.clear()
-                //setOption 的意义
-                this.myChart.setOption({
-                    title: {
-                        text: `Bill On ${temp.date}`,
-                        left: 'center',
-                        top: 20,
-                        textStyle: {
-                            color: '#ccc'
-                        }
-                    },
-                    tooltip: {
-                        trigger: 'item'
-                    },
-                    legend: {
-                        orient: 'vertical',
-                        left: 20,
-                        top: 20,
-                        bottom: 20
-                    },
-                    series: [
-                        {
-                            name: '',
-                            type: 'pie',
-                            avoidLabelOverlap: false,
-                            label: {
-                                show: false,
-                                position: 'center'
-                            },
-                            data
-                        }
-                    ]
-                })
-            }
-        }
-    }
+    // 使用刚指定的配置项和数据显示图表。
+    window.myChart.setOption(option);
 </script>
 
