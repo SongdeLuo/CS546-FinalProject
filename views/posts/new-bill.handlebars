@@ -1,8 +1,8 @@
 <h1 style='text-align: center'>New Bill</h1>
 
-<div class="outer_container">
+<link rel="stylesheet" href="public/js/echarts.min.css">
 
-<div class="left_free">
+
 
     <div class="nav">
         <ul>
@@ -11,36 +11,230 @@
             <li><a href="allbills">All Bills</a></li>
         </ul>
     </div>
+    <div class="layout-border-top">
 
-    <div class="billdiv">
-        <div class="create-info">
 
-            <label class="label-info" for="new-bill-date">Date</label>
-            <input class="input-info" type="date" name="user_date" id="new-bill-date" required /><br>
-            <label class="label-info" for="new-bill-food">Food</label>
-            <input class="input-info" type="number" name="user_food" id="new-bill-food" /><br>
-            <label class="label-info" for="new-bill-entertainment">Entertainment</label>
-            <input class="input-info" type="number" name="user_entertainment" id="new-bill-entertainment" /><br>
-            <label class="label-info" for="new-bill-transition">Transition</label>
-            <input class="input-info" type="number" name="user_transition" id="new-bill-transition" /><br>
-            <label class="label-info" for="new-bill-other">Other</label>
-            <input class="input-info" type="number" name="user_other" id="new-bill-other" /><br>
-            <label class="label-info" for="new-bill-note">Note</label>
-            <input class="input-info" type="text" name="user_note" id="new-bill-note"><br>
-            <button class="addbutton1" type="botton" id="new-bill-addbtn">add</button>
-            {{!-- <button class="addbutton2" type="submit"> Click To Add Test Data</button> --}}
+        <div class="layout-newbills">
+            <div class="left-container-createInfo">
 
+                <label class="label-info" for="new-bill-date">Date</label>
+                <input class="input-info" type="date" name="user_date" id="new-bill-date" required /><br>
+                <label class="label-info" for="new-bill-food">Food</label>
+                <input class="input-info" type="number" name="user_food" id="new-bill-food" /><br>
+                <label class="label-info" for="new-bill-entertainment">Entertainment</label>
+                <input class="input-info" type="number" name="user_entertainment" id="new-bill-entertainment" /><br>
+                <label class="label-info" for="new-bill-transition">Transition</label>
+                <input class="input-info" type="number" name="user_transition" id="new-bill-transition" /><br>
+                <label class="label-info" for="new-bill-other">Other</label>
+                <input class="input-info" type="number" name="user_other" id="new-bill-other" /><br>
+                <label class="label-info" for="new-bill-note">Note</label>
+                <input class="input-info" type="text" name="user_note" id="new-bill-note"><br>
+
+                <div>
+                    <button class="addbutton1" type="botton" id="new-bill-addbtn" @click="onCreateBill">add</button>
+                    <button class="addbutton2" type="submit" @click="onAddTestData"> Click To Add Test Data</button>
+                </div>
+            </div>
+
+            <div>
+                <div class="right-contontainer-chart">
+
+                    <div class="select-container">
+                        <select @change="onChangeTimeFrame">
+
+                            <option value="week">LAST WEEK</option>
+                            <option value="month">LAST MONTH</option>
+                            <option value="year">LAST YEAR</option>
+                        </select>
+                        <select @change="onChangeType">
+                            <option value="line">LINE CHART</option>
+                            <option value="bar">BAR CHART</option>
+                            <option value="stack">STACK CHART</option>
+                        </select>
+                    </div>
+
+                    <div ref="chartContainer01" class="chartContainer01" />
+                </div>
+            </div>
         </div>
 
-</div>
+        <script src="../public/js/echarts.min.js"></scripts>
 
-</div>
-<script src="../public/js/echarts.min.js"></scripts>
-<div class="right_free">
-    <div class="echarts" id="main1" style="width:800px; height:600px">
+
+export default {
+  name: 'CreateBill',
+  props: {
+    chartData: {
+      default: () => {},
+      type: Array
+    }
+  },
+  data() {
+    return {
+      myChart: null,
+      names: ['food', 'entertainment', 'transition', 'other', 'total'],
+      newBillForm: {
+        date: '',
+        food: 0,
+        entertainment: 0,
+        transition: 0,
+        other: 0,
+        note: ''
+      },
+      timeFrameOptions: [
+        { value: 'week', label: 'LAST WEEK' },
+        { value: 'month', label: 'LAST MONTH' },
+        { value: 'year', label: 'LAST YEAR' }
+      ],
+      chartTypeoptions: [
+        { value: 'line', label: 'LINE CHART' },
+        { value: 'bar', label: 'BAR CHART' },
+        { value: 'stack', label: 'STACK CHART' }
+      ],
+      timeFrame: 'week',
+      chartType: 'line',
+      rules: {
+        date: [
+          { type: 'date', required: true, message: 'Please select date', trigger: 'change' }
+        ],
+        food: [
+          { type: 'number', message: 'Must be Number', trigger: 'change' }
+        ],
+        entertainment: [
+          { type: 'number', message: 'Must be Number', trigger: 'change' }
+        ],
+        transition: [
+          { type: 'number', message: 'Must be Number', trigger: 'change' }
+        ],
+        other: [
+          { type: 'number', message: 'Must be Number', trigger: 'change' }
+        ]
+      }
+    }
+  },
+  mounted() {
+    this.myChart = this.$echarts.init(this.$refs.chartContainer01)
+  },
+  methods: {
+    onAddTestData() {
+      const userId = this.$store.state.userId
+      const sopeRandom = (min, max) => {
+        if (!max) {
+          return Math.round(Math.random() * min)
+        } else {
+          return (Math.random() * (max - min)) + min
+        }
+      }
+      const today = new Date().getTime()
+      const lastTwoMonth = today - 24 * 60 * 3600 * 1000 * 2
+      const newBillList = [...Array(10).keys()].map((item, index) => {
+        return {
+          userId,
+          date: this.$moment(sopeRandom(lastTwoMonth, today)).format('YYYY-MM-DD'),
+          food: sopeRandom(100),
+          entertainment: sopeRandom(100),
+          transition: sopeRandom(100),
+          other: sopeRandom(100),
+          note: `This is a random record ${index}`
+        }
+      })
+      this.API.newBill(newBillList).then(() => {
+        this.$message({
+          message: 'success!',
+          type: 'success'
+        })
+        this.$refs.newBillForm.resetFields()
+        this.onChangeTimeFrame('week')
+      })
+    },
+    onCreatBill() {
+      this.$refs.newBillForm.validate((valid) => {
+        if (valid) {
+          const userId = this.$store.state.userId
+          if (!userId) {
+            this.$message.error('please login')
+            return
+          }
+          this.API.newBill({
+            userId,
+            ...this.newBillForm,
+            date: this.$moment(this.newBillForm.date).format('YYYY-MM-DD')
+          }).then(() => {
+            this.$message({
+              message: 'success!',
+              type: 'success'
+            })
+            this.$refs.newBillForm.resetFields()
+            this.onChangeTimeFrame('week')
+          })
+        } else {
+          return false
+        }
+      })
+    },
+    setChart(param) {
+      let chartType = param && param.type
+      let names = [...this.names]
+      if (!chartType) {
+        chartType = 'line'
+      }
+      if (chartType === 'stack' || chartType === 'bar') {
+        names.pop()
+      }
+      const xData = []
+      const series = names.map((item, index) => {
+        return {
+          name: item,
+          type: chartType === 'stack' ? 'bar' : chartType,
+          stack: 'stack',
+          data: []
+        }
+      })
+      this.chartData.forEach((item, outIndex) => {
+        xData.push(item.date)
+        series.forEach((serie, inIndex) => {
+          serie.data.push(item[serie.name])
+          serie.stack = chartType === 'stack' ? 'stack' : outIndex + '' + serie.name + '' + inIndex
+        })
+      })
+      const option = {
+        title: {
+          text: ''
+        },
+        tooltip: {},
+        series,
+        legend: { data: names },
+        yAxis: {},
+        xAxis: { data: xData }
+      }
+      this.myChart.clear()
+      this.myChart.setOption(option)
+    },
+    onChangeTimeFrame(e) {
+      let dateTs = 0
+      const year = new Date().getFullYear()
+      const month = new Date().getMonth() + 1
+      const day = new Date().getDate()
+      if (e === 'week') {
+        dateTs = new Date().getTime() - 24 * 3600 * 1000 * 7
+      } else if (e === 'month') {
+        dateTs = new Date(year + '-' + (month - 1) + '-' + day).getTime()
+      } else if (e === 'year') {
+        dateTs = new Date((year - 1) + '-' + month + '-' + day).getTime()
+      }
+      this.$emit('refresh-data', {
+        dateTs
+      })
+      // this.getBillChart({
+      //   dateTs
+      // })
+    },
+    onChangeType(e) {
+      this.setChart({ type: e })
+    }
+  }
+}
+</script>
+
     </div>
-</div>
-    
 
-</div>
-</div>

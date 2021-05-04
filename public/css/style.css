@@ -96,8 +96,7 @@ body {
 
   .middle-flip .back {
     transform: rotateY(0deg);
-  }
-   
+  } 
 
   p {
     margin: 15px auto;
@@ -139,11 +138,11 @@ li {
 }
 
 .nav {
-  float:left
+  float:left;
   
 }
 .nav ul li{
-  float:left
+  float:left;
   
 }
 a {
@@ -195,7 +194,7 @@ a {
 }
 .rightbody2{
   float:right;
- 
+
   width: 340px;
   height: 400px;
   background-color: white;
@@ -209,22 +208,60 @@ a {
   background-color: white;
 }
 
-.create-info  {
-  line-height: 60px;
+
+/* newbills部分-echart */
+.layout-border-top{
+  background-color: rgb(238, 177, 127);
+  border-top: 3.25rem;
+  margin-top: 3.25rem;
+}
+.layout-newbills{
+  margin-top: .625rem;
+  display: flex;
+  justify-content: space-between;
+  overflow: hidden;
+
+}
+
+.left-container-createInfo  {
+  /* line-height: 60px;
   width: 300px;
   margin-left: 50px;
-  margin-top: 60px;
+  margin-top: 60px; */
+
+    flex: 1;
+    padding: 0 20px;
 }
+
+
 .label-info {
-  float: left;
+  /* float: left; */
+  display: inline-block;
+  width: 100px;
   
 }
 .input-info{
-  float: right;
+  /* float: right;
   width: 170px;
   height: 20px;
-  margin-top: 15px;
+  margin-top: 15px; */
+  display: inline-block;
+  width: 270px;
 
+}
+
+.right-contontainer-chart{
+  flex: 1;
+}
+.select-container{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.chartContainer01{
+  width: calc(100vw - 450px);
+  height: calc(100vh - 100px - 113px);
+  background-color: bisque;
 }
 
 .addbutton1 {
@@ -280,3 +317,31 @@ a {
   background-color:burlywood;
 }
 
+
+
+.el-table__body-wrapper {
+  overflow: auto;
+  height: calc(100% - 70px);
+  height: 100%; 
+}*/
+
+.layout-allbills{
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.left-container-table{
+  flex: 1;
+  padding: 0 20px;
+  width: 50vw;
+  height: calc(100vh - 100px - 71px);
+}
+.right-container-table{
+  flex: 1;
+  
+}
+.chartContainer{
+      width: 50vw;
+      height: calc(100vh - 100px - 71px);
+  }
