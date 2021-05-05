@@ -69,7 +69,7 @@ const exportedMethods = {
         } else if (!params.dateTs && !params.date) {
 
             console.log('case 1');
-            chartBillData = await billCollection.find().toArray();
+            chartBillData = await billCollection.find({userId:params.userId}).toArray();
         } else if (params.dateTs) {
             console.log('case 2')
             const ts = params.dateTs;

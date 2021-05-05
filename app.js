@@ -26,31 +26,40 @@ app.use(
 app.use('/api/users/new-bill', (req, res, next) => {
   //console.log(req.session.user);
   if (req.session.user) {
-     res.render('posts/new-bill');
+      res.render('posts/new-bill');
+      next();
   } else {
     
-     res.redirect('/api/users/login');
-     next();
+      res.redirect('/api/users/login');
+      next();
   }
 });
-// app.use('/api/users/mycenter', (req, res, next) => {
-//   //console.log(req.session.user);
-//   if (req.session.user) {
-//      res.render('posts/mycenter');
-//   } else {
-    
-//      res.redirect('/api/users/login');
-//      next();
-//   }
-// });
-app.use('/api/users/allbills', (req, res, next) => {
+
+app.use('/api/users/mycenter', (req, res, next) => {
   //console.log(req.session.user);
   if (req.session.user) {
-     res.render('posts/allbills');
+      res.render('posts/mycenter');
+      next();
+  } else {
+    
+      res.redirect('/api/users/login');
+      next();
+  }
+});
+
+
+app.use('/api/users/allbills', (req, res, next) => {
+  //console.log(req.session.user);
+    if (req.session.user) {
+      res.render('posts/allbills',{
+        title:"All Bills",
+        userId:req.session.user.userId
+      });
+      next();
   } else {
     //console.log("看看undefined 是不是会进来");
-     res.redirect('/api/users/login');
-     next();
+      res.redirect('/api/users/login');
+      next();
   }
 });
 

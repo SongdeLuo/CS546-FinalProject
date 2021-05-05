@@ -4,7 +4,9 @@
     <ul>
         <li><a href="mycenter">My Center</a></li>
         <li><a href="new-bill">New Bill</a></li>
-        <li><a href="allbills">All Bills</a></li>
+        <li><a href="/api/users/allbills">All Bills</a></li>
+
+        <li><p id="p_userId">{{userId}}</p></li>
     </ul>
 </div>
 
@@ -24,9 +26,9 @@
                 </tr>
 
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th>{{billInfo.date}}</th>
+                    <th>{{billInfo.food}}</th>
+                    <th>{{billInfo.entertainment}}</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -72,31 +74,21 @@
 
 
 <script>
-    console.log('1111111')
-     // 基于准备好的dom，初始化echarts实例
-    window.myChart = echarts.init(document.getElementById('main'));
+    window.onload=function(){
+        let userid_form_page = $("#p_userId");
+        alert(userid_form_page.html());
 
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: 'ECharts 入门示例'
-        },
-        tooltip: {},
-        legend: {
-            data:['销量']
-        },
-        xAxis: {
-            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
-    };
-
-    // 使用刚指定的配置项和数据显示图表。
-    window.myChart.setOption(option);
+        let requestConfig-{
+            method:'GET',
+            url:'/api/bills/getBillChart',
+            contentType:'application/json',
+            data:{
+                userId:userid_form_page.html(),
+            }
+        };
+        $ajax(requestConfig).then(function(responseMessage){
+            
+        });
+    }
 </script>
 

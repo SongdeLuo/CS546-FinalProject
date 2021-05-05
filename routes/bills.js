@@ -92,6 +92,7 @@ router.post('/newBill', async(req, res) => {
 
 router.get('/getBillChart', async(req, res) => {
     const billInfo = req.query
+    console.log(billInfo);
     if (!billInfo) {
         res.status(400).json({ error: 'cannot receive any data ' });
         return;
@@ -101,11 +102,11 @@ router.get('/getBillChart', async(req, res) => {
         return;
     }
 
-    if (typeof billInfo.dateTs !== 'number') {
+    if (billInfo.dataTs && typeof billInfo.dateTs !== 'number') {
         res.status(400).json({ error: 'type of dateTs  must be a number ' });
         return;
     }
-    if (typeof billInfo.date !== 'string') {
+    if (billInfo.date && typeof billInfo.date !== 'string') {
         res.status(400).json({ error: 'type of date  must be a string ' });
         return;
     }
