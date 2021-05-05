@@ -118,22 +118,65 @@ router.get("/register", (req, res) => {
   });
 });
 
-router.get("/mycenter", (req, res) => {
-  res.render("posts/mycenter", {
-    title: "My Center",
+// router.get("/mycenter", (req, res) => {
+//   res.render("posts/mycenter", {
+//     title: "My Center",
+//   });
+// });
+router.get('/mycenter', async(req, res) =>{  
+                                               //ruiqi0505
+  if (req.session.user) {
+    let name  = req.session.user.username;
+    
+    
+    let user = await users.getUserByName(name);
+    res.render('posts/mycenter',{
+      info: user
+    });
+    return;
+  } else{
+     res.render('posts/login',{
+    title:'login'
   });
+  }
+ 
 });
 
-router.get("/new-bill", (req, res) => {
-  res.render("posts/new-bill", {
-    title: "New Bill",
+
+// router.get("/new-bill", (req, res) => {
+//   res.render("posts/new-bill", {
+//     title: "New Bill",
+//   });
+// });
+
+router.get('/new-bill', async(req, res) =>{              //ruiqi0505
+  if (req.session.user) {
+    res.render('posts/new-bill');
+    return;
+  } else{
+     res.render('posts/login',{
+    title:'login'
   });
+  }
+ 
 });
 
-router.get("/allbills", (req, res) => {
-  res.render("posts/allbills", {
-    title: "All Bills",
+// router.get("/allbills", (req, res) => {
+//   res.render("posts/allbills", {
+//     title: "All Bills",
+//   });
+// });
+
+router.get('/allbills', async(req, res) =>{              //ruiqi0505
+  if (req.session.user) {
+    res.render('posts/allbills');
+    return;
+  } else{
+     res.render('posts/login',{
+    title:'login'
   });
+  }
+ 
 });
 
 router.get("/logout", (req, res) => {

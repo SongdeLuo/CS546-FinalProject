@@ -345,3 +345,16 @@ a {
       width: 50vw;
       height: calc(100vh - 100px - 71px);
   }
+
+  .mycenter-content {
+ 
+    max-width: 500px;
+    margin: auto;
+    border: none;
+    border-radius: 50px; 
+    font: 30px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-shadow: 1px 1px 1px #444;
+    color: #D3D3D3;
+    
+  
+  }

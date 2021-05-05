@@ -10,32 +10,45 @@
             <li><a href="allbills">All Bills</a></li>
         </ul>
     </div>
-    <div class="user">
-        <img src="profile picture还没加入" alt="">
-        <div class="signout"><a href="logout">Sign Out</a></div>
-    </div>
 </div>
-<div class='firstlinebody'>
-    <div class="leftbody1">
-        <h1>Total expenditure</h1>
-    </div>
-    <div class="rightbody1">
-        <h1>Personal information</h1>
-  
-    </div>
-</div>
-<div class="secondlinebody">
-    <div class="leftbody2">
-        <h1>Expense management</h1>
-    </div>
-    <div class="rightbody2">
-        <h1>Latest spending</h1>
 
-    </div>
+<div class='mycenter-content'>
+
+    <ul>
+        <li>username: {{info.Username}}</li>
+        <li>email: {{info.Mail}}</li>
+        <li>telephone: {{info.Phone}}</li>
+
+        <form action='mycenter'>
+            <li>
+                <label for="sex">Sex:</label>
+                <label for="male">Male</label>
+                <input type="radio" name="sex" id="male" />
+
+                <label for="female">Female</label>
+                <input type="radio" name="sex" id="female" />
+            </li>
+            <li>
+                <label for="birthday">date of birth：</label><input id="birthday" type="date" />
+            </li>
+
+        </form>
+
+
+    </ul>
+
+
 </div>
-<div class="bottonlinebody">
-    <div class="bottonbody">
-        <h1>Capital flow</h1>
-    </div>
+<div>
+    <input type="reset" value="reset" />
+
+    <input type="submit" value="submit" onclick="reminder()" />
+</div>
+
+<div class="user">
+    <img src="profile picture还没加入" alt="">
+
+
+    <div class="signout"><a href="logout">Sign Out</a></div>
 </div>
 
