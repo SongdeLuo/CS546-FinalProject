@@ -13,7 +13,10 @@ router.post('/newBill', async(req, res) => {
     billInfo.other = parseInt(billInfo.other);
     billInfo.userId = req.session.user.userId;
     billInfo.userName = req.session.user.username;
-
+    
+    console.log('postbill');
+    console.log(billInfo.food);
+    
     if (!billInfo) {
         res.status(400).json({ error: 'cannot receive any data ' });
         return;
@@ -52,20 +55,40 @@ router.post('/newBill', async(req, res) => {
         res.status(400).json({ error: 'type of notes  must be a string ' });
         return;
     }
-    // console.log(billInfo);
+    console.log('58-------58');
+    console.log(billInfo);
     try {
         const newBill = await billData.addNewBill(billInfo);
         // res.render('posts/new-bill',{
         //   title:"New Bill"
         //  });
         // res.send("asadasd");
-        res.render('posts/echart', { layout: null, showlisteach2: newBill });
+        console.log(billInfo.date);
+        res.render('posts/new-bill', { layout: null, showlisteach2: newBill });
     } catch (e) {
         console.log(e);
         res.status(404).json({ error: 'Post not found' });
     }
 });
 
+// router.get('/new-bill', async(req, res) =>{  
+//     console.log('______________');            //ruiqi0505
+//     if (req.session.user) {
+//       let name = req.session.user.userId;
+//       console.log('______________');
+      
+//       let user = await users.getUserByName(name);
+//       res.render('posts/new-bill',{
+//         info: user
+//       });
+//       return;
+//     } else{
+//        res.render('posts/login',{
+//       title:'login'
+//     });
+//     }
+   
+//   });
 
 router.get('/getBillChart', async(req, res) => {
     const billInfo = req.query
@@ -88,7 +111,7 @@ router.get('/getBillChart', async(req, res) => {
     }
     try {
         const billList = await billData.getBill(billInfo);
-        console.log(billList)
+        console.log(billList);
         res.json({
             code: 200,
             data: billList
@@ -105,7 +128,7 @@ router.delete('/delete', async(req, res) => {
         res.status(400).json({ error: 'you must provide date and dateTs to delete a bill ' });
         return;
     }
-    console.log(date, dateTs)
+    console.log(date, dateTs);
     try {
         const deleteRes = await billData.deleteBill(date, dateTs);
         res.json({

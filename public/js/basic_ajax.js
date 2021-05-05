@@ -35,7 +35,7 @@
                 newbill_note.val(''),
                 billshow.empty();
         });
-        billshow.append(newElement);
+        //billshow.append(newElement);
     });
 
     $('#bill-infor-year').click(function(event) {
