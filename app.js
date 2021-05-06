@@ -51,10 +51,11 @@ app.use('/api/users/mycenter', (req, res, next) => {
 app.use('/api/users/allbills', (req, res, next) => {
   //console.log(req.session.user);
     if (req.session.user) {
-      res.render('posts/allbills',{
-        title:"All Bills",
-        userId:req.session.user.userId
-      });
+      res.render('posts/allbills');
+      // ,{
+      //   title:"All Bills",
+      //   userId:req.session.user.userId
+      // });
       next();
   } else {
     //console.log("看看undefined 是不是会进来");

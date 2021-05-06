@@ -344,6 +344,8 @@ a {
 .chartContainer{
       width: 50vw;
       height: calc(100vh - 100px - 71px);
+      overflow: hidden;
+
   }
 
   .mycenter-content {

@@ -53,45 +53,50 @@
         </div>
 
         <div ref="chartContainer01" class="chartContainer01" id="chartContainer01" />
-        <div id="main" style="width: 600px;height:400px;"></div>
 
+
+        <div id="main" class="showchart" style="width: 850px;height:450px; position:absolute"></div>
+
+
+
+        {{!--
         <script type="text/javascript">
-          echarts.init(document.getElementById('main')).setOption({
-            legend: {},
-            tooltip: {},
+          //echarts.init(document.getElementById('main')).setOption({
+          legend: { },
+          tooltip: { },
 
-            dataset: {
-          // 提供一份数据。
-{{!--       source: [
-            ['bill', 'first day', 'second day', 'third day'],
-            ['Food', 43.3, 83.8, 93.7],
-            ['Entertainment', 82.1, 71.4, 55.1],
-            ['Transition', 86.4, 65.2, 82.5],
-            ['Other', 72.4, 53.9, 39.1]
-          ]--}}
+          dataset: {
+            // 提供一份数据。
+            source: [
+              ['bill', 'first day', 'second day', 'third day'],
+              ['Food', 43.3, 83.8, 93.7],
+              ['Entertainment', 82.1, 71.4, 55.1],
+              ['Transition', 86.4, 65.2, 82.5],
+              ['Other', 72.4, 53.9, 39.1]
+            ]
 
             source: [
-            ['bill', 'Food', 'Entertainment', 'Transition', 'Other'],
-            ['first day', 43.3, 85.8, 93.7, 0],
-            ['second day', 83.1, 73.4, 0, 55.1],
-            ['third day', 86.4, 65.2, 78, 82.5],
+              ['bill', 'Food', 'Entertainment', 'Transition', 'Other'],
+              ['first day', 43.3, 85.8, 93.7, 0],
+              ['second day', 83.1, 73.4, 0, 55.1],
+              ['third day', 86.4, 65.2, 78, 82.5],
 
-          ]
+            ]
 
-        // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
-      xAxis: { type: 'category' },
+            // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+            xAxis: { type: 'category' },
             // 声明一个 Y 轴，数值轴。
-            yAxis: {},
-      },
-            // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
-            series: [
+            yAxis: { },
+          },
+          // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+          series: [
             { type: 'bar' },
             { type: 'bar' },
             { type: 'bar' },
             { type: 'bar' }
           ]
                 });
-        </script>
+        </script> --}}
 
 
 
@@ -106,182 +111,10 @@
     </div>
   </div>
 
-  <script src="../public/js/echarts.min.js"></scripts>
+  <script src="../public/js/echarts.min.js"></script>
 
 
-export default {
-  name: 'CreateBill',
-  props: {
-    chartData: {
-      default: () => {},
-      type: Array
-    }
-  },
-  data() {
-    return {
-      myChart: null,
-      names: ['food', 'entertainment', 'transition', 'other', 'total'],
-      newBillForm: {
-        date: '',
-        food: 0,
-        entertainment: 0,
-        transition: 0,
-        other: 0,
-        note: ''
-      },
-      timeFrameOptions: [
-        { value: 'week', label: 'LAST WEEK' },
-        { value: 'month', label: 'LAST MONTH' },
-        { value: 'year', label: 'LAST YEAR' }
-      ],
-      chartTypeoptions: [
-        { value: 'line', label: 'LINE CHART' },
-        { value: 'bar', label: 'BAR CHART' },
-        { value: 'stack', label: 'STACK CHART' }
-      ],
-      timeFrame: 'week',
-      chartType: 'line',
-      rules: {
-        date: [
-          { type: 'date', required: true, message: 'Please select date', trigger: 'change' }
-        ],
-        food: [
-          { type: 'number', message: 'Must be Number', trigger: 'change' }
-        ],
-        entertainment: [
-          { type: 'number', message: 'Must be Number', trigger: 'change' }
-        ],
-        transition: [
-          { type: 'number', message: 'Must be Number', trigger: 'change' }
-        ],
-        other: [
-          { type: 'number', message: 'Must be Number', trigger: 'change' }
-        ]
-      }
-    }
-  },
-  mounted() {
-    this.myChart = this.$echarts.init(this.$refs.chartContainer01)
-  },
-  methods: {
-    onAddTestData() {
-      const userId = this.$store.state.userId
-      const sopeRandom = (min, max) => {
-        if (!max) {
-          return Math.round(Math.random() * min)
-        } else {
-          return (Math.random() * (max - min)) + min
-        }
-      }
-      const today = new Date().getTime()
-      const lastTwoMonth = today - 24 * 60 * 3600 * 1000 * 2
-      const newBillList = [...Array(10).keys()].map((item, index) => {
-        return {
-          userId,
-          date: this.$moment(sopeRandom(lastTwoMonth, today)).format('YYYY-MM-DD'),
-          food: sopeRandom(100),
-          entertainment: sopeRandom(100),
-          transition: sopeRandom(100),
-          other: sopeRandom(100),
-          note: `This is a random record ${index}`
-        }
-      })
-      this.API.newBill(newBillList).then(() => {
-        this.$message({
-          message: 'success!',
-          type: 'success'
-        })
-        this.$refs.newBillForm.resetFields()
-        this.onChangeTimeFrame('week')
-      })
-    },
-    onCreatBill() {
-      this.$refs.newBillForm.validate((valid) => {
-        if (valid) {
-          const userId = this.$store.state.userId
-          if (!userId) {
-            this.$message.error('please login')
-            return
-          }
-          this.API.newBill({
-            userId,
-            ...this.newBillForm,
-            date: this.$moment(this.newBillForm.date).format('YYYY-MM-DD')
-          }).then(() => {
-            this.$message({
-              message: 'success!',
-              type: 'success'
-            })
-            this.$refs.newBillForm.resetFields()
-            this.onChangeTimeFrame('week')
-          })
-        } else {
-          return false
-        }
-      })
-    },
-    setChart(param) {
-      let chartType = param && param.type
-      let names = [...this.names]
-      if (!chartType) {
-        chartType = 'line'
-      }
-      if (chartType === 'stack' || chartType === 'bar') {
-        names.pop()
-      }
-      const xData = []
-      const series = names.map((item, index) => {
-        return {
-          name: item,
-          type: chartType === 'stack' ? 'bar' : chartType,
-          stack: 'stack',
-          data: []
-        }
-      })
-      this.chartData.forEach((item, outIndex) => {
-        xData.push(item.date)
-        series.forEach((serie, inIndex) => {
-          serie.data.push(item[serie.name])
-          serie.stack = chartType === 'stack' ? 'stack' : outIndex + '' + serie.name + '' + inIndex
-        })
-      })
-      const option = {
-        title: {
-          text: ''
-        },
-        tooltip: {},
-        series,
-        legend: { data: names },
-        yAxis: {},
-        xAxis: { data: xData }
-      }
-      this.myChart.clear()
-      this.myChart.setOption(option)
-    },
-    onChangeTimeFrame(e) {
-      let dateTs = 0
-      const year = new Date().getFullYear()
-      const month = new Date().getMonth() + 1
-      const day = new Date().getDate()
-      if (e === 'week') {
-        dateTs = new Date().getTime() - 24 * 3600 * 1000 * 7
-      } else if (e === 'month') {
-        dateTs = new Date(year + '-' + (month - 1) + '-' + day).getTime()
-      } else if (e === 'year') {
-        dateTs = new Date((year - 1) + '-' + month + '-' + day).getTime()
-      }
-      this.$emit('refresh-data', {
-        dateTs
-      })
-      // this.getBillChart({
-      //   dateTs
-      // })
-    },
-    onChangeType(e) {
-      this.setChart({ type: e })
-    }
-  }
-}
-</script>
+
+
 
 </div>
