@@ -5,7 +5,7 @@
         <li><a href="mycenter">My Center</a></li>
         <li><a href="new-bill">New Bill</a></li>
         <li><a href="/api/users/allbills">All Bills</a></li>
-        <li><p id="p_userId">{{userId}}</p></li>
+        <li><p id="p_userId" style="display:none;">{{userId}}</p></li>
     </ul>
 </div>
 
@@ -75,11 +75,17 @@
         myChart.setOption(option);
     }
     window.onload=function(){
+      let userid_form_page = $("#p_userId");
+         alert(userid_form_page.html());
         $.ajax({
             method:'GET',
             url:'/api/bills/getAllBill',
-            contentType:'application/json'
+            contentType:'application/json',
+            data:{
+                userId: userid_form_page.html(),
+            }
         }).then(res => {
+           console.log("后端已经返回数据看看这里拿到了吗");
             console.log(res)
             window.chartData = res
             loadChartById(res[0]._id)
@@ -115,21 +121,7 @@
                 }
             })
         });
-        let userid_form_page = $("#p_userId");
-        // alert(userid_form_page.html());
-
-        let requestConfig = {
-            method:'GET',
-            url:'/api/bills/getBillChart',
-            contentType:'application/json',
-            data:{
-                userId: userid_form_page.html(),
-            }
-        };
-        $.ajax(requestConfig).then(function(responseMessage){
-            console.log('responseMessage')
-            console.log(responseMessage)
-        });
+        
     }
 </script>
 

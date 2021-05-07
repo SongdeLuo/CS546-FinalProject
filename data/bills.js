@@ -189,9 +189,9 @@ const exportedMethods = {
 //   },
 // };
 
-    async getAllBill() {
+    async getAllBill(userId) {
         const billCollection = await bills();
-        return await billCollection.find().toArray();
+        return await billCollection.find({ userId:userId }).toArray();
     },
 };
 module.exports = exportedMethods;

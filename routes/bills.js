@@ -173,7 +173,7 @@ router.get("/getBillChart", async (req, res) => {
     return;
   }
   //billInfo.dataTs && 松德说加在底下的括号里 但我不明白为啥
-  if (typeof billInfo.dateTs !== "number") {
+  if (billInfo.date && typeof billInfo.dateTs !== "number") {
     res.status(400).json({ error: "type of dateTs  must be a number " });
     return;
   }
@@ -183,6 +183,7 @@ router.get("/getBillChart", async (req, res) => {
     return;
   }
   try {
+    
     const billList = await billData.getBill(billInfo);
     console.log(billList);
     res.json({
@@ -241,7 +242,9 @@ router.get("/getBillyear", async (req, res) => {
 
 router.get("/getAllBill", async (req, res) => {
     try {
-      const allBill = await billData.getAllBill();
+      const billInfo = req.query
+     // console.log(billInfo);
+      const allBill = await billData.getAllBill(billInfo.userId);
       console.log('**************')
       console.log(allBill)
       console.log('**************')
