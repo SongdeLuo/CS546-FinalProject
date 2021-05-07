@@ -197,9 +197,7 @@ router.get("/getBillChart", async (req, res) => {
 router.delete("/delete", async (req, res) => {
   const { date, dateTs } = req.query;
   if (!date || !dateTs) {
-    res
-      .status(400)
-      .json({ error: "you must provide date and dateTs to delete a bill " });
+    res.status(400).json({ error: "you must provide date and dateTs to delete a bill " });
     return;
   }
   console.log(date, dateTs);
@@ -239,6 +237,21 @@ router.get("/getBillyear", async (req, res) => {
   } catch (e) {
     res.status(404).json({ error: e });
   }
+});
+
+router.get("/getAllBill", async (req, res) => {
+    try {
+      const allBill = await billData.getAllBill();
+      console.log('**************')
+      console.log(allBill)
+      console.log('**************')
+      console.log(req.params)
+      console.log(req.query)
+
+      res.status(200).json(allBill);
+    } catch (e) {
+      res.status(404).json({ error: e });
+    }
 });
 
 module.exports = router;

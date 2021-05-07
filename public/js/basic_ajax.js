@@ -228,4 +228,5 @@
       }
     });
   });
-})(window.jQuery);
+
+})(window.jQuery)

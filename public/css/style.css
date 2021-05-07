@@ -137,13 +137,9 @@ li {
   
 }
 
-.nav {
-  float:left;
-  
-}
 .nav ul li{
-  float:left;
-  
+  /* float:left; */
+    display: inline-block;
 }
 a {
   text-decoration: none;
@@ -330,24 +326,33 @@ a {
   height: 100%;
   display: flex;
 }
-
 .left-container-table{
+    display: inline-block;
   flex: 1;
   padding: 0 20px;
-  width: 50vw;
+  width: 47vw;
   height: calc(100vh - 100px - 71px);
+  overflow: auto;
+
 }
 .right-container-table{
+display: inline-block;
   flex: 1;
-  
+}
+.all-bill-chart{
+    width: 48vw;
+    height: calc(100vh - 100px - 71px);
 }
 .chartContainer{
-      width: 50vw;
+      width: 48vw;
       height: calc(100vh - 100px - 71px);
       overflow: hidden;
 
   }
-
+.all-bill-table{
+    width: 100%;
+    height: 100%;
+}
   .mycenter-content {
  
     max-width: 500px;

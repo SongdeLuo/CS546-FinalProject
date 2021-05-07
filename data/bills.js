@@ -60,67 +60,67 @@ const exportedMethods = {
     },
 
     async getBill(params) {
-    const billCollection = await bills();
-    let chartBillData;
-    if (!params) {
-        throw `cannot receive any data`;
-        return;
-    }
-    if (!params.userId) {
-        console.log("case 0");
-        throw "userId is required";
-    } else if (!params.dateTs && !params.date) {
-        console.log("case 1");
-        chartBillData = await billCollection
-        .find({ userId: params.userId })
-        .toArray();
-    } else if (params.dateTs) {
-        console.log("case 2");
-        const ts = params.dateTs;
-      const query = { dateTs: { $gte: ts * 1 } };
-        chartBillData = await billCollection.find(query).toArray();
-    } else if (params.date) {
-        chartBillData = await billCollection.findOne({ date: params.date });
-    }
-    return chartBillData;
+        const billCollection = await bills();
+        let chartBillData;
+        if (!params) {
+            throw `cannot receive any data`;
+            return;
+        }
+        if (!params.userId) {
+            console.log("case 0");
+            throw "userId is required";
+        } else if (!params.dateTs && !params.date) {
+            console.log("case 1");
+            chartBillData = await billCollection
+            .find({ userId: params.userId })
+            .toArray();
+        } else if (params.dateTs) {
+            console.log("case 2");
+            const ts = params.dateTs;
+        const query = { dateTs: { $gte: ts * 1 } };
+            chartBillData = await billCollection.find(query).toArray();
+        } else if (params.date) {
+            chartBillData = await billCollection.findOne({ date: params.date });
+        }
+        return chartBillData;
     },
 
     async deleteBill(date, dateTs) {
-    const billCollection = await bills();
-    const deleteInfo = await billCollection.deleteOne({ date: date });
+        const billCollection = await bills();
+        const deleteInfo = await billCollection.deleteOne({ date: date });
     },
 
 
     async formatDate (val) {
-    // 格式化时间
-    let start = new Date(val)
-    let y = start.getFullYear()
-    let m = (start.getMonth() + 1) > 10 ? (start.getMonth() + 1) : '0' + (start.getMonth() + 1)
-    let d = start.getDate() > 10 ? start.getDate() : '0' + start.getDate()
-    return y + '-' + m + '-' + d
+        // 格式化时间
+        let start = new Date(val)
+        let y = start.getFullYear()
+        let m = (start.getMonth() + 1) > 10 ? (start.getMonth() + 1) : '0' + (start.getMonth() + 1)
+        let d = start.getDate() > 10 ? start.getDate() : '0' + start.getDate()
+        return y + '-' + m + '-' + d
     },
 
 
     async mistiming (sDate1, sDate2) {
-    // 计算开始和结束的时间差
-    let aDate, oDate1, oDate2, iDays
-    aDate = sDate1.split('-')
-    oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
-    aDate = sDate2.split('-')
-    oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
-    iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24)
-    return iDays + 1
+        // 计算开始和结束的时间差
+        let aDate, oDate1, oDate2, iDays
+        aDate = sDate1.split('-')
+        oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
+        aDate = sDate2.split('-')
+        oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
+        iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24)
+        return iDays + 1
     },
 
 
     async countDate (start, end) {
-    // 判断开始和结束之间的时间差是否在90天内
-    let days = mistiming(start, end)
-    let stateT = days > 90 ? Boolean(0) : Boolean(1)
-    return {
-        state: stateT,
-        day: days
-    }
+        // 判断开始和结束之间的时间差是否在90天内
+        let days = mistiming(start, end)
+        let stateT = days > 90 ? Boolean(0) : Boolean(1)
+        return {
+            state: stateT,
+            day: days
+        }
     },
 
     async timeForMat (count) {
@@ -166,7 +166,7 @@ const exportedMethods = {
         //获取最近一年
     let timer = timeForMat(365)
     return timer
-    }
+    },
 
 //     //计算范围
 //     let bill = this.getBill(id);
@@ -188,5 +188,10 @@ const exportedMethods = {
 //     //这里需要写方法，获取近一年账单数据
 //   },
 // };
+
+    async getAllBill() {
+        const billCollection = await bills();
+        return await billCollection.find().toArray();
+    },
 };
 module.exports = exportedMethods;
