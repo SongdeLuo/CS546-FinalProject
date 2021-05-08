@@ -76,58 +76,57 @@ router.post("/newBill", async (req, res) => {
 
     var fake_data = [
       [
-        ["bill", "first day", "second day", "third day", "fourth day ", "fifth day", "sixth day", "seventh day"],
-        ["Food", billInfo.food, billInfo.food,billInfo.food,billInfo.food,billInfo.food,billInfo.food,billInfo.food],
-        ["Entertainment", billInfo.entertainment, billInfo.entertainment, billInfo.entertainment,billInfo.entertainment,billInfo.entertainment,billInfo.entertainment,billInfo.entertainment],
-        ["Transition", billInfo.transportation, billInfo.transportation, billInfo.transportation,billInfo.transportation,billInfo.transportation,billInfo.transportation,billInfo.transportation],
-        ["Other", billInfo.other, billInfo.other, billInfo.other,billInfo.other,billInfo.other,billInfo.other,billInfo.other],
+        ["Food", billInfo.food],
+        ["Entertainment", billInfo.entertainment],
+        ["Transition", billInfo.transportation],
+        ["Other", billInfo.other],
       ],
-      [
-        ["bill", "Food", "Entertainment", "Transition", "Other"],
-        [
-          "first day",1,2,3,4
-        //   getBillday().food,
-        //   getBillday().entertainment,
-        //   getBillday().transportation,
-        //   getBillday().other
-        ],
-        ["second day",4,3,2,
-        //  getBillday(),
-        // getBillday(),
-        // getBillday(),
-        // getBillday()
-        ],
-        ["third day",5,6,7
-        // getBillday().food,
-        // getBillday().entertainment,
-        // getBillday().transportation,
-        // getBillday().other
-        ],
-        ["fourth day",5,6,7
-        // getBillday(),
-        // getBillday(),
-        // getBillday(),
-        // getBillday()
-        ],
-        ["fifth day",5,6,7,8,1,2,3
-        // getBillday(),
-        // getBillday(),
-        // getBillday(),
-        // getBillday()
-        ],
-        ["sixth day",5,6,7,8,1,2,3
-        // getBillday(),
-        // getBillday(),
-        // getBillday(),
-        // getBillday()
-        ],
-        ["seventh day",5,6,7,8,1,2,3
-        // getBillday(),
-        // getBillday(),
-        // getBillday(),
-        // getBillday()
-        ]
-    ],
+    //   [
+    //     ["bill", "Food", "Entertainment", "Transition", "Other"],
+    //     [
+    //       "first day",1,2,3,4
+    //     //   getBillday().food,
+    //     //   getBillday().entertainment,
+    //     //   getBillday().transportation,
+    //     //   getBillday().other
+    //     ],
+    //     ["second day",4,3,2,
+    //     //  getBillday(),
+    //     // getBillday(),
+    //     // getBillday(),
+    //     // getBillday()
+    //     ],
+    //     ["third day",5,6,7
+    //     // getBillday().food,
+    //     // getBillday().entertainment,
+    //     // getBillday().transportation,
+    //     // getBillday().other
+    //     ],
+    //     ["fourth day",5,6,7
+    //     // getBillday(),
+    //     // getBillday(),
+    //     // getBillday(),
+    //     // getBillday()
+    //     ],
+    //     ["fifth day",5,6,7,8,1,2,3
+    //     // getBillday(),
+    //     // getBillday(),
+    //     // getBillday(),
+    //     // getBillday()
+    //     ],
+    //     ["sixth day",5,6,7,8,1,2,3
+    //     // getBillday(),
+    //     // getBillday(),
+    //     // getBillday(),
+    //     // getBillday()
+    //     ],
+    //     ["seventh day",5,6,7,8,1,2,3
+    //     // getBillday(),
+    //     // getBillday(),
+    //     // getBillday(),
+    //     // getBillday()
+    //     ]
+    // ],
     ];
     res.send(fake_data);
     return;

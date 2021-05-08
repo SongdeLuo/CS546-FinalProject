@@ -182,52 +182,52 @@
   //   });
   // });
 
-  // $("#bill-infor-days").click(function (event) {
-  //   let requestConfig = {
-  //     method: "GET",
-  //     url: "/api/bills/getBillday",
-  //     contentType: "application/json",
-  //   };
+  $("#bill-infor-weeks").click(function (event) {
+    let requestConfig = {
+      method: "GET",
+      url: "/api/bills/getBillday",
+      contentType: "application/json",
+    };
 
-  //   $.ajax(requestConfig).then(function (responseMessage) {
-  //     // console.log(responseMessage);
-  //     let newElement = $(responseMessage);
-  //     if (newElement) {
-  //       billshow.empty();
-  //       echarts.init(document.getElementById("main")).setOption({
-  //         legend: {},
-  //         tooltip: {},
-  //         dataset: {
-  //           // 提供一份数据。
-  //           // source: [
-  //           //     ['bill', 'first day', 'second day', 'third day'],
-  //           //     ['Food', 43.3, 85.8, 93.7],
-  //           //     ['Entertainment', 83.1, 73.4, 55.1],
-  //           //     ['Transition', 86.4, 65.2, 82.5],
-  //           //     ['Other', 72.4, 53.9, 39.1]
-  //           // ]
-  //           source: [
-  //             ["bill", "Food", "Entertainment", "Transition", "Other"],
-  //             newElement[0],
-  //             //['first day', 43.3, 85.8, 93.7,0],
-  //             newElement[1],
-  //             //['second day', 83.1, 73.4,0, 55.1],
-  //             newElement[2],
-  //             //['third day', 86.4, 65.2, 78,82.5],
-  //           ],
-  //         }, // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
-  //         xAxis: { type: "category" }, // 声明一个 Y 轴，数值轴。
-  //         yAxis: {}, // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
-  //         series: [
-  //           { type: "bar" },
-  //           { type: "bar" },
-  //           { type: "bar" },
-  //           { type: "bar" },
-  //         ],
-  //       });
-  //     }
-  //   });
-  // });
+    $.ajax(requestConfig).then(function (responseMessage) {
+      // console.log(responseMessage);
+      let newElement = $(responseMessage);
+      if (newElement) {
+        billshow.empty();
+        echarts.init(document.getElementById("main")).setOption({
+          legend: {},
+          tooltip: {},
+          dataset: {
+            // 提供一份数据。
+            // source: [
+            //     ['bill',11],
+            //     ['Food', 43.3],
+            //     ['Entertainment', 83.1],
+            //     ['Transition', 86.4],
+            //     ['Other', 72.4]
+            // ]
+            source: [
+              ["bill", "Food", "Entertainment", "Transition", "Other"],
+              newElement[0],
+              //['first day', 43.3, 85.8, 93.7,0],
+              newElement[1],
+              //['second day', 83.1, 73.4,0, 55.1],
+              newElement[2],
+              //['third day', 86.4, 65.2, 78,82.5],
+            ],
+          }, // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
+          xAxis: { type: "category" }, // 声明一个 Y 轴，数值轴。
+          yAxis: {}, // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
+          series: [
+            { type: "bar" },
+            { type: "bar" },
+            { type: "bar" },
+            { type: "bar" },
+          ],
+        });
+      }
+    });
+  });
 
   $('#bill_option').change(function(){
     //console.log(this.value);
@@ -256,7 +256,19 @@
           dateTs: dateTs
       }
   };
-  $.ajax(requestConfig).then(function(responseMessage){
+  $.ajax(requestConfig).then(res =>{
+    // console.log("后端已经返回数据看看这里拿到了吗");
+    // console.log(res)
+    // window.chartData = res
+    // const chart = $('#LAST MONTH')
+    // //let chartCells = ''
+    // res.forEach(item => {
+    //   ['bill', 'Food', 'Entertainment', 'Other'],
+    //   [, 43.3, 85.8, 93.7],
+    //   ['', 83.1, 73.4, 55.1],
+    //   ['Transition', 86.4, 65.2, 82.5],
+    //    ['', 72.4, 53.9, 39.1]
+    // })
    console.log(responseMessage);   //这里的console 是网页控制台打印
 });
 

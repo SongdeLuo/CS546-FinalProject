@@ -51,10 +51,44 @@
 
 
         <div id="main" class="showchart" style="width: 850px;height:450px; position:absolute"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+      const loadChart = id =>{
+        const currentChartData = window.chartData.find(item => {return item._id === id})
+        
+      }
+
+</script> 
+
+
+<script src="../public/js/echarts.min.js"></script>
 
 
 
-        {{!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{!--
         <script type="text/javascript">
           //echarts.init(document.getElementById('main')).setOption({
           legend: { },
@@ -92,29 +126,3 @@
           ]
                 });
         </script> --}}
-
-
-
-
-
-
-
-
-
-
-      </div>
-    </div>
-  </div>
-
-  <script src="../public/js/echarts.min.js"></script>
-
-
-
-
-
-</div>
-
-<script>
-
-
-</script>
