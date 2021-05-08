@@ -5,6 +5,7 @@
     <li><a href="mycenter">My Center</a></li>
     <li><a href="new-bill">New Bill</a></li>
     <li><a href="allbills">All Bills</a></li>
+      <li><p id="p_userId" style="display:none;">{{userId}}</p></li>
   </ul>
 </div>
 <div class="layout-border-top">
@@ -33,7 +34,7 @@
       <div class="right-contontainer-chart">
 
         <div class="select-container">
-          <select @change="onChangeTimeFrame">
+          <select id="bill_option" @change="onChangeTimeFrame">
 
             <option value="week">LAST WEEK</option>
             <option value="month">LAST MONTH</option>
@@ -112,3 +113,8 @@
 
 
 </div>
+
+<script>
+
+
+</script>

@@ -32,7 +32,7 @@ router.post("/newBill", async (req, res) => {
   //   res.status(400).json({ error: 'You must provide a userId and it must be a string ' });
   //   return;
   // }
-  //先注释掉，目前还没想怎么获取到用户id --罗松德
+
   if (typeof billInfo.food !== "number") {
     res.status(400).json({ error: "type of food  must be a number " });
     return;
@@ -55,7 +55,7 @@ router.post("/newBill", async (req, res) => {
     res.status(400).json({ error: "type of notes  must be a string " });
     return;
   }
-  console.log("58-------58");
+ 
   console.log(billInfo);
   try {
     const newBill = await billData.addNewBill(billInfo);
@@ -185,7 +185,7 @@ router.get("/getBillChart", async (req, res) => {
   try {
     
     const billList = await billData.getBill(billInfo);
-    console.log(billList);
+   // console.log(billList);  //是从这里打印出来的！！！！！！！！！---lsd
     res.json({
       code: 200,
       data: billList,

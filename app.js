@@ -26,7 +26,10 @@ app.use(
 app.use('/api/users/new-bill', (req, res, next) => {
   //console.log(req.session.user);
   if (req.session.user) {
-      res.render('posts/new-bill');
+      res.render('posts/new-bill',{
+        title:"new Bills",
+        userId:req.session.user.userId
+      });
       next();
   } else {
     
