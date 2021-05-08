@@ -1,6 +1,5 @@
 (function ($) {
   var billshow = $("#bill-show");
-  var myChart = echarts.init(document.getElementById("main"));
   //点击新建bill界面下面的add 按钮发送ajax请求，把bill数据加到数据库
   $("#new-bill-addbtn").click(function (event) {
     let newbill_date = $("#new-bill-date");
@@ -229,49 +228,87 @@
     });
   });
 
-  $('#bill_option').change(function(){
-    //console.log(this.value);
-    //alert(this.value);
-    if(this.value == 'week'){
-    var  dateTs = Date.parse(new Date()) - 1000*60*60*24*7;
-      //alert(dateTs);
-      //alert("week  check");
-    }else if(this.value == 'month'){
-      var  dateTs = Date.parse(new Date()) - 1000*60*60*24*30;
-     // alert(dateTs);
-     // alert("month check");
-    }else if(this.value == 'year'){
-      var  dateTs = Date.parse(new Date()) - 1000*60*60*24*365;
-      //alert(dateTs);
-     // alert("year check")
-    }
-    let userid_form_page = $("#p_userId");
+  const changeTimeOption = (dateTs) => {
+    const userid_form_page = $("#p_userId");
     alert(userid_form_page.html());
-    let requestConfig = {
-      method:'GET',
-      url:'/api/bills/getBillChart',
-      contentType:'application/json',
-      data:{
-          userId: userid_form_page.html(),
-          dateTs: dateTs
-      }
-  };
-  $.ajax(requestConfig).then(res =>{
-    // console.log("后端已经返回数据看看这里拿到了吗");
-    // console.log(res)
-    // window.chartData = res
-    // const chart = $('#LAST MONTH')
-    // //let chartCells = ''
-    // res.forEach(item => {
-    //   ['bill', 'Food', 'Entertainment', 'Other'],
-    //   [, 43.3, 85.8, 93.7],
-    //   ['', 83.1, 73.4, 55.1],
-    //   ['Transition', 86.4, 65.2, 82.5],
-    //    ['', 72.4, 53.9, 39.1]
-    // })
-   console.log(responseMessage);   //这里的console 是网页控制台打印
-});
+    const requestConfig = {
+        method:'GET',
+        url:'/api/bills/getBillChart',
+        contentType:'application/json',
+        data:{
+            userId: userid_form_page.html(),
+            dateTs
+        }
+    };
+    $.ajax(requestConfig).then(res =>{
+        window.chartData = res.data
+        const myChart = echarts.init(document.getElementById('chartContainer01'));
+        myChart.clear()
+        const names = ['food', 'entertainment', 'transportation', 'other', 'total']
+        const series = names.map(name => {
+            console.log(name)
+            const data = window.chartData.map(item => {
+                return item[name]
+            })
+            return {
+                name,
+                type: 'bar',
+                data
+            }
+        })
+        const xData = window.chartData.map(item => {
+            return item.date
+        })
+        const option = {
+            title: {
+                text: ''
+              },
+            tooltip: {},
+            series,
+            legend: { data: names },
+            yAxis: {},
+            xAxis: { data: xData }
+        };
+        myChart.setOption(option);
+    });
+  }
 
-  })
-
+  changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*365)
+    $('#bill_option').change(function(){
+        if(this.value == 'week'){
+            var  dateTs = Date.parse(new Date()) - 1000*60*60*24*7;
+        }else if(this.value == 'month'){
+            var  dateTs = Date.parse(new Date()) - 1000*60*60*24*30;
+        }else if(this.value == 'year'){
+            var  dateTs = Date.parse(new Date()) - 1000*60*60*24*365;
+        }
+        changeTimeOption(dateTs)
+  }) 
 })(window.jQuery)
+
+
+// const series = [{
+//     name: 'food',
+//     type: 'bar',
+//     data: [320, 332, 301, 334, 390]
+// },
+// {
+//     name: 'entertainment',
+//     type: 'bar',
+//     data: [220, 182, 191, 234, 290]
+// },
+// {
+//     name: 'transition',
+//     type: 'bar',
+//     data: [320, 332, 301, 334, 390]
+// },
+// {
+//     name: 'other',
+//     type: 'bar',
+//     data: [320, 332, 301, 334, 390]
+// },
+// {
+//     name: 'total',
+//     type: 'bar',
+//     data: [320, 332, 301, 334, 390]
+// }]
