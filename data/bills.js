@@ -6,20 +6,20 @@ const uuid = require("uuid/v1");
 const exportedMethods = {
   async addNewBill(billInfo) {
     const billCollection = await bills();
-    if(Array.isArray(billInfo)){
-        console.log('billInfo isArray')
-        const newBillList = billInfo.map(item => {
-          const total = item.food + item.entertainment + item.transition + item.other
-          return {
-            userId: billInfo.userId,
-            dateTs: new Date(item.date).getTime(),
-            createTime: new Date().getTime(),
-            total,
-            ...item
-          }
-        })
-        return await billCollection.insert(newBillList)
-    }
+    // if(Array.isArray(billInfo)){
+    //     console.log('billInfo isArray')
+    //     const newBillList = billInfo.map(item => {
+    //       const total = item.food + item.entertainment + item.transition + item.other
+    //       return {
+    //         userId: billInfo.userId,
+    //         dateTs: new Date(item.date).getTime(),
+    //         createTime: new Date().getTime(),
+    //         total,
+    //         ...item
+    //       }
+    //     })
+    //     return await billCollection.insert(newBillList)
+    // }
     if (!billInfo) {
       throw `cannot receive any data`;
       return;
@@ -86,13 +86,13 @@ const exportedMethods = {
         } else if (!params.dateTs && !params.date) {
             console.log("case 1");
             chartBillData = await billCollection
-            .find({ userId: params.userId })
+            .find({ userId: params.userId }).sort({ dateTs: 1 })
             .toArray();
         } else if (params.dateTs) {
             console.log("case 2");
             const ts = params.dateTs;
         const query = { dateTs: { $gte: ts * 1 } };
-            chartBillData = await billCollection.find(query).toArray();
+            chartBillData = await billCollection.find(query).sort({ dateTs: 1 }).toArray();
         } else if (params.date) {
             chartBillData = await billCollection.findOne({ date: params.date });
         }

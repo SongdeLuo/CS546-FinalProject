@@ -12,73 +12,6 @@
             dateTs
         }
     };
-  //点击新建bill界面下面的add 按钮发送ajax请求，把bill数据加到数据库
-  $("#new-bill-addbtn").click(function (event) {
-    let newbill_date = $("#new-bill-date");
-    let newbill_food = $("#new-bill-food");
-    let newbill_entertainment = $("#new-bill-entertainment");
-    let newbill_transition = $("#new-bill-transition");
-    let newbill_other = $("#new-bill-other");
-    let newbill_note = $("#new-bill-note");
-
-    let requestConfig = {
-      method: "POST",
-      url: "/api/bills/newBill",
-      contentType: "application/json",
-
-      data: JSON.stringify({
-        date: newbill_date.val(),
-        food: newbill_food.val(),
-        entertainment: newbill_entertainment.val(),
-        transportation: newbill_transition.val(),
-        other: newbill_other.val(),
-        notes: newbill_note.val(),
-      }),
-    };
-
-    $.ajax(requestConfig).then(function (responseMessage) {
-      alert("添加成功！！！");
-      console.log(JSON.stringify(responseMessage));
-      var bill_data = $(responseMessage);
-    //   myChart.setOption({
-    //     legend: {},
-    //     tooltip: {},
-    //     dataset: { source: bill_data[0], source: bill_data[1] },
-
-    //     // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
-    //     xAxis: { type: "category" },
-    //     // 声明一个 Y 轴，数值轴。
-    //     yAxis: {},
-    //     // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
-    //     series: [
-    //       { type: "bar" },
-    //       { type: "bar" },
-    //       { type: "bar" },
-    //       { type: "bar" },
-    //     ],
-    //   });
-
-      newbill_date.val(""),
-        newbill_food.val(""),
-        newbill_entertainment.val(""),
-        newbill_transition.val(""),
-        newbill_other.val(""),
-        newbill_note.val(""),
-        billshow.empty();
-    });
-    changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*7)
-    //billshow.append(newElement);
-    // $.ajax({
-        //     type: "get",
-        //     url: '/api/bills/newBill',
-        //     success: function (data) {
-        //         var bill = $(data);
-        //         console.log(bill);
-                
-                
-        //     }
-        // });
-  });
 
   $("#addTestBtn").on('click',function (event) {
       console.log('new-bill-addTestBtn')
@@ -130,52 +63,7 @@
         changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*7)
       })
   })
-  $("#bill-infor-weeks").click(function (event) {
-    let requestConfig = {
-      method: "GET",
-      url: "/api/bills/getBillday",
-      contentType: "application/json",
-    };
-
-    $.ajax(requestConfig).then(function (responseMessage) {
-      // console.log(responseMessage);
-      let newElement = $(responseMessage);
-      if (newElement) {
-        billshow.empty();
-        echarts.init(document.getElementById("main")).setOption({
-          legend: {},
-          tooltip: {},
-          dataset: {
-            // 提供一份数据。
-            // source: [
-            //     ['bill',11],
-            //     ['Food', 43.3],
-            //     ['Entertainment', 83.1],
-            //     ['Transition', 86.4],
-            //     ['Other', 72.4]
-            // ]
-            source: [
-              ["bill", "Food", "Entertainment", "Transition", "Other"],
-              newElement[0],
-              //['first day', 43.3, 85.8, 93.7,0],
-              newElement[1],
-              //['second day', 83.1, 73.4,0, 55.1],
-              newElement[2],
-              //['third day', 86.4, 65.2, 78,82.5],
-            ],
-          }, // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
-          xAxis: { type: "category" }, // 声明一个 Y 轴，数值轴。
-          yAxis: {}, // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
-          series: [
-            { type: "bar" },
-            { type: "bar" },
-            { type: "bar" },
-            { type: "bar" },
-          ],
-        });
-      }
-    });
-  });
+ 
 
   
     $.ajax(requestConfig).then(res =>{
@@ -209,9 +97,16 @@
         };
         newBillChart.setOption(option);
     });
+    
   }
 
-  changeTimeOption(Date.parse(Date.parse(new Date()) - 1000*60*60*24*7))
+  
+    
+  
+    changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*7)
+   
+  
+
     $('#billTimeOption').change(function(){
         if(this.value == 'week'){
             var  dateTs = Date.parse(new Date()) - 1000*60*60*24*7;
@@ -222,6 +117,50 @@
         }
         changeTimeOption(dateTs)
   }) 
+
+//点击新建bill界面下面的add 按钮发送ajax请求，把bill数据加到数据库
+$("#new-bill-addbtn").click(function (event) {
+  let newbill_date = $("#new-bill-date");
+  let newbill_food = $("#new-bill-food");
+  let newbill_entertainment = $("#new-bill-entertainment");
+  let newbill_transition = $("#new-bill-transition");
+  let newbill_other = $("#new-bill-other");
+  let newbill_note = $("#new-bill-note");
+
+  let requestConfig = {
+    method: "POST",
+    url: "/api/bills/newBill",
+    contentType: "application/json",
+
+    data: JSON.stringify({
+      date: newbill_date.val(),
+      food: newbill_food.val(),
+      entertainment: newbill_entertainment.val(),
+      transportation: newbill_transition.val(),
+      other: newbill_other.val(),
+      notes: newbill_note.val(),
+    }),
+  };
+
+  $.ajax(requestConfig).then(function (responseMessage) {
+    alert("添加成功！！！");
+    console.log(JSON.stringify(responseMessage));
+    var bill_data = $(responseMessage);
+  
+    newbill_date.val(""),
+      newbill_food.val(""),
+      newbill_entertainment.val(""),
+      newbill_transition.val(""),
+      newbill_other.val(""),
+      newbill_note.val(""),
+      billshow.empty();
+  });
+  changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*7)
+
+  
+});
+
+
 
   $('#billTypeOption').change(function(){
     const oldOption = newBillChart.getOption()
@@ -256,28 +195,3 @@
 })(window.jQuery)
 
 
-// const series = [{
-//     name: 'food',
-//     type: 'bar',
-//     data: [320, 332, 301, 334, 390]
-// },
-// {
-//     name: 'entertainment',
-//     type: 'bar',
-//     data: [220, 182, 191, 234, 290]
-// },
-// {
-//     name: 'transition',
-//     type: 'bar',
-//     data: [320, 332, 301, 334, 390]
-// },
-// {
-//     name: 'other',
-//     type: 'bar',
-//     data: [320, 332, 301, 334, 390]
-// },
-// {
-//     name: 'total',
-//     type: 'bar',
-//     data: [320, 332, 301, 334, 390]
-// }]
