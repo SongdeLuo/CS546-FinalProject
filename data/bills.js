@@ -6,6 +6,20 @@ const uuid = require("uuid/v1");
 const exportedMethods = {
   async addNewBill(billInfo) {
     const billCollection = await bills();
+    if(Array.isArray(billInfo)){
+        console.log('billInfo isArray')
+        const newBillList = billInfo.map(item => {
+          const total = item.food + item.entertainment + item.transition + item.other
+          return {
+            userId: billInfo.userId,
+            dateTs: new Date(item.date).getTime(),
+            createTime: new Date().getTime(),
+            total,
+            ...item
+          }
+        })
+        return await billCollection.insert(newBillList)
+    }
     if (!billInfo) {
       throw `cannot receive any data`;
       return;

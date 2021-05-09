@@ -25,8 +25,8 @@
       <input class="input-info" type="text" name="user_note" id="new-bill-note"><br>
 
       <div>
-        <button class="addbutton1" type="botton" id="new-bill-addbtn" @click="onCreateBill">add</button>
-        <button class="addbutton2" type="submit" @click="onAddTestData"> Click To Add Test Data</button>
+        <button class="addbutton1" type="button" id="new-bill-addbtn" @click="onCreateBill">add</button>
+        <button class="addbutton2" type="button" id="addTestBtn" @click="onAddTestData"> Click To Add Test Data</button>
       </div>
     </div>
 
@@ -34,13 +34,12 @@
       <div class="right-contontainer-chart">
 
         <div class="select-container">
-          <select id="bill_option" @change="onChangeTimeFrame">
-
+          <select id="billTimeOption" @change="onChangeTimeFrame">
             <option value="week">LAST WEEK</option>
             <option value="month">LAST MONTH</option>
             <option value="year">LAST YEAR</option>
           </select>
-          <select @change="onChangeType">
+          <select id="billTypeOption" @change="onChangeType">
             <option value="line">LINE CHART</option>
             <option value="bar">BAR CHART</option>
             <option value="stack">STACK CHART</option>
@@ -48,75 +47,12 @@
         </div>
 
         <div ref="chartContainer01" class="chartContainer01" id="chartContainer01" />
-
-
         <div id="main" class="showchart" style="width: 850px;height:450px; position:absolute"></div>
       </div>
     </div>
   </div>
 </div>
-
 <script>
-(function ($) {
-    debugger
-    const changeTimeOption = (dateTs) => {
-    const userid_form_page = $("#p_userId");
-    alert(userid_form_page.html());
-    const requestConfig = {
-        method:'GET',
-        url:'/api/bills/getBillChart',
-        contentType:'application/json',
-        data:{
-            userId: userid_form_page.html(),
-            dateTs
-        }
-    };
-    $.ajax(requestConfig).then(res =>{
-        window.chartData = res.data
-        const myChart = echarts.init(document.getElementById('chartContainer01'));
-        myChart.clear()
-        const names = ['food', 'entertainment', 'transportation', 'other', 'total']
-        const series = names.map(name => {
-            console.log(name)
-            const data = window.chartData.map(item => {
-                return item[name]
-            })
-            return {
-                name,
-                type: 'bar',
-                data
-            }
-        })
-        const xData = window.chartData.map(item => {
-            return item.date
-        })
-        const option = {
-            title: {
-                text: ''
-              },
-            tooltip: {},
-            series,
-            legend: { data: names },
-            yAxis: {},
-            xAxis: { data: xData }
-        };
-        myChart.setOption(option);
-    });
-  }
-
-  changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*365)
-    $('#bill_option').change(function(){
-        if(this.value == 'week'){
-            var  dateTs = Date.parse(new Date()) - 1000*60*60*24*7;
-        }else if(this.value == 'month'){
-            var  dateTs = Date.parse(new Date()) - 1000*60*60*24*30;
-        }else if(this.value == 'year'){
-            var  dateTs = Date.parse(new Date()) - 1000*60*60*24*365;
-        }
-        changeTimeOption(dateTs)
-  })    
-})(window.jQuery)
-
 </script> 
 
 

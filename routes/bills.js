@@ -7,7 +7,14 @@ const billData = data.bills;
 // create a new bill
 router.post("/newBill", async (req, res) => {
   const billInfo = req.body;
-
+  if(Array.isArray(billInfo)){
+    try {
+        const newBill = await billData.addNewBill(billInfo);
+        res.send(newBill.ops);
+    }catch{
+        res.status(404).json({ error: "Post not found" });
+    }
+  }
   billInfo.food = parseInt(billInfo.food);
   billInfo.entertainment = parseInt(billInfo.entertainment);
   billInfo.transportation = parseInt(billInfo.transportation);
