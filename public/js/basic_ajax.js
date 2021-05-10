@@ -70,7 +70,7 @@
         window.chartData = res.data
         newBillChart = echarts.init(document.getElementById('chartContainer01'));
         newBillChart.clear()
-        const names = ['food', 'entertainment', 'transportation', 'other']
+        const names = ['food', 'entertainment', 'transportation', 'other', 'total']
         const series = names.map(name => {
             console.log(name)
             const data = window.chartData.map(item => {
@@ -154,7 +154,9 @@ $("#new-bill-addbtn").click(function (event) {
       newbill_other.val(""),
       newbill_note.val(""),
       billshow.empty();
-  });
+  }, rej => {
+      alert(rej.responseJSON.error)
+  })
   changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*7)
 
   

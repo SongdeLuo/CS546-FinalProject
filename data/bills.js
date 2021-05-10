@@ -53,6 +53,11 @@ const exportedMethods = {
       throw `type of notes  must be a string`;
       return;
     }
+    // 添加之前查一下库，如果日期有了就不添加
+    const hasDate = await billCollection.findOne({ date: billInfo.date, userId: billInfo.userId });
+    if(hasDate){
+        return 
+    }
     const newBill = await billCollection.insertOne({
       userId: billInfo.userId,
       date: billInfo.date,
@@ -69,7 +74,6 @@ const exportedMethods = {
         billInfo.transportation,
         notes: billInfo.notes,
     });
-
     return newBill;
     },
 
@@ -85,20 +89,20 @@ const exportedMethods = {
             throw "userId is required";
         } else if (!params.dateTs && !params.date) {
             console.log("case 1");
-            chartBillData = await billCollection
-            .find({ userId: params.userId }).sort({ dateTs: 1 })
-            .toArray();
+            chartBillData = await billCollection.find({ userId: params.userId }).sort({ dateTs: 1 }).toArray();
         } else if (params.dateTs) {
             console.log("case 2");
             const ts = params.dateTs;
-        const query = { dateTs: { $gte: ts * 1 } };
+            const query = { 
+                dateTs: { $gte: ts * 1 },
+                userId: params.userId
+            };
             chartBillData = await billCollection.find(query).sort({ dateTs: 1 }).toArray();
         } else if (params.date) {
-            chartBillData = await billCollection.findOne({ date: params.date });
+            chartBillData = await billCollection.findOne({ date: params.date, userId: params.userId });
         }
         return chartBillData;
     },
-
     async deleteBill(date, dateTs) {
         const billCollection = await bills();
         const deleteInfo = await billCollection.deleteOne({ date: date });

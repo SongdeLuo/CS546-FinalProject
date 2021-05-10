@@ -66,6 +66,12 @@ router.post("/newBill", async (req, res) => {
   console.log(billInfo);
   try {
     const newBill = await billData.addNewBill(billInfo);
+    console.log('**********')
+    console.log(newBill)
+    console.log('**********')
+    if(!newBill){
+        throw 'Add Fail ! There is already a bill at this date !'
+    }
     // res.render('posts/new-bill',{
     //   title:"New Bill"
     //  });
@@ -88,58 +94,12 @@ router.post("/newBill", async (req, res) => {
         ["Transition", billInfo.transportation],
         ["Other", billInfo.other],
       ],
-    //   [
-    //     ["bill", "Food", "Entertainment", "Transition", "Other"],
-    //     [
-    //       "first day",1,2,3,4
-    //     //   getBillday().food,
-    //     //   getBillday().entertainment,
-    //     //   getBillday().transportation,
-    //     //   getBillday().other
-    //     ],
-    //     ["second day",4,3,2,
-    //     //  getBillday(),
-    //     // getBillday(),
-    //     // getBillday(),
-    //     // getBillday()
-    //     ],
-    //     ["third day",5,6,7
-    //     // getBillday().food,
-    //     // getBillday().entertainment,
-    //     // getBillday().transportation,
-    //     // getBillday().other
-    //     ],
-    //     ["fourth day",5,6,7
-    //     // getBillday(),
-    //     // getBillday(),
-    //     // getBillday(),
-    //     // getBillday()
-    //     ],
-    //     ["fifth day",5,6,7,8,1,2,3
-    //     // getBillday(),
-    //     // getBillday(),
-    //     // getBillday(),
-    //     // getBillday()
-    //     ],
-    //     ["sixth day",5,6,7,8,1,2,3
-    //     // getBillday(),
-    //     // getBillday(),
-    //     // getBillday(),
-    //     // getBillday()
-    //     ],
-    //     ["seventh day",5,6,7,8,1,2,3
-    //     // getBillday(),
-    //     // getBillday(),
-    //     // getBillday(),
-    //     // getBillday()
-    //     ]
-    // ],
     ];
     res.send(fake_data);
     return;
   } catch (e) {
     console.log(e);
-    res.status(404).json({ error: "Post not found" });
+    res.status(404).json({ error: e });
   }
 });
 
