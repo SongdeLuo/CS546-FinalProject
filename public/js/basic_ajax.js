@@ -70,7 +70,7 @@
         window.chartData = res.data
         newBillChart = echarts.init(document.getElementById('chartContainer01'));
         newBillChart.clear()
-        const names = ['food', 'entertainment', 'transportation', 'other', 'total']
+        const names = ['food', 'entertainment', 'transportation', 'other']
         const series = names.map(name => {
             console.log(name)
             const data = window.chartData.map(item => {
