@@ -24,9 +24,9 @@ let exportedMethods = {
         //     throw 'age is null or age is not number';
         // }
 
-        
-        else if ( Mail == null) {
-            
+
+        else if (Mail == null) {
+
             //|| !Mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/)  在测试邮箱的时候出错我先把这个拿掉 --罗松德
             throw 'Mail is not a Mail format or Mail is null';
         } else if (!Phone || Phone == null) {
@@ -35,7 +35,7 @@ let exportedMethods = {
             throw 'Mial or phone is exit';
         } //!Phone.match(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/) ||
 
-        Password = await bcrypt.hash(Password,saltRounds);
+        Password = await bcrypt.hash(Password, saltRounds);
         let newPost = {
             Username: Username,
             Password: Password,
@@ -44,7 +44,7 @@ let exportedMethods = {
             age: null,
             Mail: Mail,
             Phone: Phone,
-            
+
         };
         let insertInfo = await userCollection.insertOne(newPost);
         if (insertInfo.insertedCount === 0) {
@@ -245,6 +245,51 @@ let exportedMethods = {
 
             return await this.getUserByMail(mail);
         }
+    },
+    async updateInfo(id, updatedInfo) {
+        //已改----------------put无效,patch有效
+        // if (!id) throw ('You must provide an id to search for');            //正确的码事200
+        // if (typeof (id) != 'string') throw ('Id must be a string');          //已改--patch至少提供一个需要修改的field，注意看要求中的genre
+        // if (await this.isNull(id)) throw ('update id is empty');
+        // if (!updatedInfo) throw ('you must provide a new updatedInfo');
+
+        // if (!ObjectId.isValid(id)) throw ('id is not valid');
+
+        let { ObjectId } = require('mongodb');
+        let newObjectId = ObjectId(id);
+
+        const userCollection = await users();
+        const updatedInfoData = {};
+        //FirstName 
+
+        if (updatedInfo.FirstName) {
+            // if (typeof (updatedInfo.FirstName) != 'string') throw ('new FirstName must be a string');
+            // if (await this.isNull(updatedInfo.FirstName)) throw ('new FirstName is empty');
+            updatedInfoData.FirstName = updatedInfo.FirstName;
+        }
+
+        if (updatedInfo.LastName) {
+            // if (typeof (updatedInfo.LastName) != 'string') throw ('new LastName must be a string');
+            // if (await this.isNull(updatedInfo.LastName)) throw ('new LastName is empty');
+            updatedInfoData.LastName = updatedInfo.LastName;
+        }
+
+        if (updatedInfo.age) {
+            // if (typeof (updatedInfo.age) != 'string') throw ('new age must be a string');
+            // if (await this.isNull(updatedInfo.age)) throw ('new age is empty');
+            updatedInfoData.age = updatedInfo.age;
+        }
+        console.log('----updatedInfoData-----');
+        console.log(updatedInfoData);
+        const newupdatedInfo = await userCollection.updateOne(
+            { _id: newObjectId },
+            { $set: updatedInfoData }
+        );
+        if (newupdatedInfo.modifiedCount === 0) {
+            throw ('could not update FirstName successfully');
+        }
+
+        return await this.get(id);
     },
 };
 

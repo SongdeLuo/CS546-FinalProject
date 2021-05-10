@@ -346,97 +346,149 @@ router.post("/signUp", async (req, res) => {
 });
 
 //change infor
-router.patch("/:id", async (req, res) => {
-  let userpa = req.body;
-  let id = req.params.id;
+// router.patch("/:id", async (req, res) => {
+//   let userpa = req.body;
+//   let id = req.params.id;
 
-  if (userpa.hasOwnProperty("Username")) {
-    if (
-      !userpa.Username ||
-      typeof userpa.Username != "string" ||
-      userpa.Username == null ||
-      userpa.Username == ""
-    ) {
-      res
-        .status(400)
-        .json({ error: "Username is null or Username is not string" });
-      return;
-    } else if (await users.checkUserByName(userpa.Username)) {
-      res.status(400).json({ error: "Username is exit" });
-      return;
-    }
-  }
+//   if (userpa.hasOwnProperty("Username")) {
+//     if (
+//       !userpa.Username ||
+//       typeof userpa.Username != "string" ||
+//       userpa.Username == null ||
+//       userpa.Username == ""
+//     ) {
+//       res
+//         .status(400)
+//         .json({ error: "Username is null or Username is not string" });
+//       return;
+//     } else if (await users.checkUserByName(userpa.Username)) {
+//       res.status(400).json({ error: "Username is exit" });
+//       return;
+//     }
+//   }
 
-  if (userpa.hasOwnProperty("FirstName")) {
-    if (
-      !userpa.FirstName ||
-      typeof userpa.FirstName != "string" ||
-      userpa.FirstName == null ||
-      userpa.FirstName == ""
-    ) {
-      res
-        .status(400)
-        .json({ error: "FirstName is null or FirstName is not string" });
-      return;
-    }
-  }
+//   if (userpa.hasOwnProperty("FirstName")) {
+//     if (
+//       !userpa.FirstName ||
+//       typeof userpa.FirstName != "string" ||
+//       userpa.FirstName == null ||
+//       userpa.FirstName == ""
+//     ) {
+//       res
+//         .status(400)
+//         .json({ error: "FirstName is null or FirstName is not string" });
+//       return;
+//     }
+//   }
 
-  if (userpa.hasOwnProperty("LastName")) {
-    if (
-      !userpa.LastName ||
-      typeof userpa.LastName != "string" ||
-      userpa.LastName == null ||
-      userpa.LastName == ""
-    ) {
-      res
-        .status(400)
-        .json({ error: "LastName is null or LastName is not string" });
-      return;
-    }
-  }
+//   if (userpa.hasOwnProperty("LastName")) {
+//     if (
+//       !userpa.LastName ||
+//       typeof userpa.LastName != "string" ||
+//       userpa.LastName == null ||
+//       userpa.LastName == ""
+//     ) {
+//       res
+//         .status(400)
+//         .json({ error: "LastName is null or LastName is not string" });
+//       return;
+//     }
+//   }
 
-  if (userpa.hasOwnProperty("age")) {
-    if (
-      !userpa.age ||
-      typeof userpa.age != "number" ||
-      userpa.age == null ||
-      userpa.age == ""
-    ) {
-      res.status(400).json({ error: "age is null or age is not number" });
-      return;
-    }
-  }
+//   if (userpa.hasOwnProperty("age")) {
+//     if (
+//       !userpa.age ||
+//       typeof userpa.age != "number" ||
+//       userpa.age == null ||
+//       userpa.age == ""
+//     ) {
+//       res.status(400).json({ error: "age is null or age is not number" });
+//       return;
+//     }
+//   }
 
-  if (id == null || !id || id == "") {
-    res.status(400).json({ message: "id is null" });
-    return;
-  }
+//   if (id == null || !id || id == "") {
+//     res.status(400).json({ message: "id is null" });
+//     return;
+//   }
 
-  if (!id.match(/^([0-9a-fA-F]{24})$/)) {
-    res.status(400).json({ message: "id format error" });
-    return;
-  }
+//   if (!id.match(/^([0-9a-fA-F]{24})$/)) {
+//     res.status(400).json({ message: "id format error" });
+//     return;
+//   }
 
-  // try {
-  let pauserid = await users.patchUserById(id, userpa);
-  res.json(pauserid);
-  // } catch (e) {
-  //     res.status(404).json({ message: e });
-  // }
-});
+//   // try {
+//   let pauserid = await users.patchUserById(id, userpa);
+//   res.json(pauserid);
+//   // } catch (e) {
+//   //     res.status(404).json({ message: e });
+//   // }
+// });
 
 router.post("/editUserInfo", async (req, res) => {
-    let newUserInfo = req.body;
-    console.log(newUserInfo)
+  let requestBody = req.body;
+  console.log('-------userpa------');
+  console.log(requestBody);
+
+  let id = req.session.user.userId;
+  
+
+
+  let updatedObject = {};
+  try {
+    
+    //title, author, genre, datePublished, summary, reviews
+    const oldInfo = await users.getUserByName(requestBody.username);
+    console.log('----oldInfo-1----');
+    console.log(oldInfo);
+    console.log('------requestBody-2-------');
+    console.log(requestBody);
+   
+
+    if (requestBody.firstName && requestBody.firstName !== oldInfo.FirstName)
+      updatedObject.FirstName = requestBody.firstName;
+
+    if (requestBody.lastName && requestBody.lastName !== oldInfo.LastName)
+      updatedObject.LastName = requestBody.lastName;
+
+    if (requestBody.age && requestBody.age !== oldInfo.age)
+      updatedObject.age = requestBody.age;
+
+      console.log('------updatedObject-3----');
+      console.log(updatedObject);
+
+
+
+  } catch (e) {
+    res.status(404).json({ error: 'Post not found' });
+    return;
+  }
+  console.log('---id---');
+  console.log(id);
+  console.log(typeof(id));
+  console.log('---userpa---');
+  console.log(requestBody);
+    try {
+      const updatedInfo= await users.updateInfo(
+        id,
+        updatedObject
+      );
+    
+    } catch (e) {
+      res.status(500).json({ error: e });
+  }
+});
+
+
     // ***********************
     // 在这里加入后端修改用户信息的逻辑
     // ***********************
 
-    res.json({
-        code: 200,
-        msg: 'Login Success'
-    })
-})
+    // res.json({
+    //     code: 200,
+    //     msg: 'Login Success'
+    // })
+
 
 router.get("*", async (req, res) => {
   res.status(404).json({ error: "Not found" });
