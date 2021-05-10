@@ -425,6 +425,19 @@ router.patch("/:id", async (req, res) => {
   // }
 });
 
+router.post("/editUserInfo", async (req, res) => {
+    let newUserInfo = req.body;
+    console.log(newUserInfo)
+    // ***********************
+    // 在这里加入后端修改用户信息的逻辑
+    // ***********************
+
+    res.json({
+        code: 200,
+        msg: 'Login Success'
+    })
+})
+
 router.get("*", async (req, res) => {
   res.status(404).json({ error: "Not found" });
 });

@@ -27,44 +27,87 @@
     </div>
 </div>
 
-<div class='mycenter-content'>
+<div class='mycenter-content' style='padding: 0 63px;'>
+    <div id='hideUserName' style='display: none'>{{info.Username}}</div>
+    <div id='hideMail' style='display: none'>{{info.Mail}}</div>
+    <div id='hidePhone' style='display: none'>{{info.Phone}}</div>
+    <div id='hideFirstName' style='display: none'>{{info.firstName:}}</div>
+    <div id='hideLastName' style='display: none'>{{info.lastName:}}</div>
+    <div id='hideAge' style='display: none'>{{info.age:}}</div>
 
-    <ul>
-        <li>username: {{info.Username}}</li>
-        <li>email: {{info.Mail}}</li>
-        <li>telephone: {{info.Phone}}</li>
-
-        <form action='mycenter'>
-            <li>
-                <label for="sex">Sex:</label>
-                <label for="male">Male</label>
-                <input type="radio" name="sex" id="male" />
-
-                <label for="female">Female</label>
-                <input type="radio" name="sex" id="female" />
-            </li>
-            <li>
-                <label for="birthday">date of birth：</label><input id="birthday" type="date" />
-            </li>
-
-        </form>
-
-
-    </ul>
-
-
-</div>
-
-<div>
-    <input type="reset" value="reset" />
-
-    <input type="submit" value="submit" onclick="reminder()" />
+    <form action='mycenter' id='mycenterForm'>
+        <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+            <span>username:</span>
+            <input type="text" id='userNameInput' disabled>
+        </div>
+         <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+            <span>email:</span>
+            <input type="text" id='emailInput'>
+        </div>
+         <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+            <span>telephone:</span>
+            <input type="text" id='telephoneInput'>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+            <span>First Name:</span>
+            <input type="text" id='firstNameInput'>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+            <span>Last Name:</span>
+            <input type="text" id='lastNameInput'>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+            <span>Age:</span>
+            <input type="text" id='ageInput'>
+        </div>
+    </form>
+    <button id='mycenterSubmit' style='width: 80px; height: 30px'>submit</button>
 </div>
 
 <div class="user">
     <img src="profile picture还没加入" alt="">
-
-
     <div class="signout"><a href="logout">Sign Out</a></div>
 </div>
+
+<script>
+    window.onload=function(){
+        const mycenterUserName = $('#hideUserName').html()
+        const mycenterMail = $('#hideMail').html()
+        const mycenterPhone = $('#hidePhone').html()
+        const hideFirstName = $('#hidePhone').html()
+        const hideLastName = $('#hidePhone').html()
+        const hideAge = $('#hidePhone').html()
+
+        $('#userNameInput').attr( "placeholder" , mycenterUserName)
+        $('#emailInput').attr( "placeholder" , mycenterMail)
+        $('#telephoneInput').attr( "placeholder" , mycenterPhone)
+        $('#firstNameInput').attr( "placeholder" , mycenterPhone)
+        $('#lastNameInput').attr( "placeholder" , mycenterPhone)
+        $('#ageInput').attr( "placeholder" , mycenterPhone)
+        const $form = $('#mycenterForm')[0]
+        
+        $('#mycenterSubmit').on('click', e => {
+            const newUserInfo = {
+                username: $form[0].value || $form[0].placeholder,
+                email: $form[1].value || $form[1].placeholder,
+                telephone: $form[2].value || $form[2].placeholder,
+                firstName: $form[3].value || $form[3].placeholder,
+                lastName: $form[4].value || $form[4].placeholder,
+                age: $form[5].value || $form[5].placeholder,
+            }
+            $.ajax({
+                method: "POST",
+                url: "/api/users/editUserInfo",
+                contentType: "application/json",
+                data: JSON.stringify(newUserInfo)
+            }).then(res => {
+                if(res.code == '200'){
+                    location.reload();
+                }
+            })
+        })
+
+    }
+</script>
+
 

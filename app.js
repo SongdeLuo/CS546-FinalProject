@@ -38,17 +38,17 @@ app.use('/api/users/new-bill', (req, res, next) => {
   }
 });
 
-app.use('/api/users/mycenter', (req, res, next) => {
-  //console.log(req.session.user);
-  if (req.session.user) {
-      res.render('posts/mycenter');
-      next();
-  } else {
+// app.use('/api/users/mycenter', (req, res, next) => {
+//   //console.log(req.session.user);
+//   if (req.session.user) {
+//       res.render('posts/mycenter');
+//       next();
+//   } else {
     
-      res.redirect('/api/users/login');
-      next();
-  }
-});
+//       res.redirect('/api/users/login');
+//       next();
+//   }
+// });
 
 
 app.use('/api/users/allbills', (req, res, next) => {
