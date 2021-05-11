@@ -99,8 +99,7 @@ body {
   } 
 
   p {
-    margin: 15px auto;
-    padding: 0;
+    padding: 18px 0px;
     font-size: 16px;
     color: white;
     display: block;
@@ -207,16 +206,14 @@ a {
 
 /* newbills部分-echart */
 .layout-border-top{
+    margin-top: 20px;
   background-color: rgb(238, 177, 127);
-  border-top: 3.25rem;
-  margin-top: 3.25rem;
 }
 .layout-newbills{
-  margin-top: .625rem;
-  display: flex;
-  justify-content: space-between;
-  overflow: hidden;
-
+    padding: 10px 10px 10px 0;
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
 }
 
 .left-container-createInfo  {
@@ -233,7 +230,7 @@ a {
 .label-info {
   /* float: left; */
   display: inline-block;
-  width: 100px;
+  width: 110px;
   
 }
 .input-info{
@@ -242,7 +239,7 @@ a {
   height: 20px;
   margin-top: 15px; */
   display: inline-block;
-  width: 270px;
+  width: 260px;
 
 }
 
@@ -386,4 +383,26 @@ display: inline-block;
       display: inline-block;
       font-size: 16px;
       border-radius: 15px;
+}
+
+
+.left-container-table table{
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+}
+.left-container-table tbody{
+   
+}
+
+.left-container-table tbody tr{
+    
+}
+
+.left-container-table tbody tr th{
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 5px;
+}
+.layout-albills{
+    margin-top: 20px;
 }

@@ -99,13 +99,7 @@
     });
     
   }
-
-  
-    
-  
     changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*7)
-   
-  
 
     $('#billTimeOption').change(function(){
         if(this.value == 'week'){
@@ -159,22 +153,18 @@ $("#new-bill-addbtn").click(function (event) {
   }, rej => {
       alert(rej.responseJSON.error)
   })
-  
-
-  
 });
-
-
 
   $('#billTypeOption').change(function(){
     const oldOption = newBillChart.getOption()
     const oldSeries = oldOption.series
     let newSeries;
     if(this.value === 'bar' || this.value === 'line'){
-        newSeries = oldSeries.map(item => {
+        newSeries = oldSeries.map((item, index) => {
             return {
                 ...item,
-                type: this.value
+                type: this.value,
+                stack: `stack${index}`
             }
         })
     }else if(this.value === 'stack'){
@@ -196,6 +186,7 @@ $("#new-bill-addbtn").click(function (event) {
         series: newSeries
     })
   }) 
+  
 })(window.jQuery)
 
 

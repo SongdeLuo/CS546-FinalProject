@@ -40,8 +40,8 @@
             <option value="year">LAST YEAR</option>
           </select>
           <select id="billTypeOption" @change="onChangeType">
-            <option value="line">LINE CHART</option>
             <option value="bar">BAR CHART</option>
+            <option value="line">LINE CHART</option>
             <option value="stack">STACK CHART</option>
           </select>
         </div>
@@ -54,7 +54,19 @@
 </div>
 
 
-
+<script>
+    window.onload = function(){
+        $('#new-bill-date').on('change', e => {
+            console.log(e)
+            const newDate = new Date(e.currentTarget.value).getTime()
+            const todayTs = new Date().getTime()
+            if(newDate > todayTs){
+                alert("Can't add later than today")
+                $('#new-bill-date').val("")
+            }
+        })
+    }
+</script>
 
 
 

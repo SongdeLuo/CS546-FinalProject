@@ -22,24 +22,14 @@ router.post("/newBill", async (req, res) => {
   billInfo.userId = req.session.user.userId;
   billInfo.userName = req.session.user.username;
 
-  // console.log('postbill');
-  // console.log(billInfo.food);
-
   if (!billInfo) {
     res.status(400).json({ error: "cannot receive any data " });
     return;
   }
   if (!billInfo.date || typeof billInfo.date !== "string") {
-    res
-      .status(400)
-      .json({ error: "You must provide a bill date and it must be a string " });
+    res.status(400).json({ error: "You must provide a bill date and it must be a string " });
     return;
   }
-  // if (!billInfo.userId || typeof billInfo.userId !== 'string' ) {
-  //   res.status(400).json({ error: 'You must provide a userId and it must be a string ' });
-  //   return;
-  // }
-
   if (typeof billInfo.food !== "number") {
     res.status(400).json({ error: "type of food  must be a number " });
     return;
@@ -49,9 +39,7 @@ router.post("/newBill", async (req, res) => {
     return;
   }
   if (typeof billInfo.transportation !== "number") {
-    res
-      .status(400)
-      .json({ error: "type of transportation  must be a number " });
+    res.status(400).json({ error: "type of transportation  must be a number " });
     return;
   }
   if (typeof billInfo.other !== "number") {
@@ -66,9 +54,6 @@ router.post("/newBill", async (req, res) => {
   console.log(billInfo);
   try {
     const newBill = await billData.addNewBill(billInfo);
-    console.log('**********')
-    console.log(newBill)
-    console.log('**********')
     if(!newBill){
         throw 'Add Fail ! There is already a bill at this date !'
     }
@@ -86,7 +71,6 @@ router.post("/newBill", async (req, res) => {
 
     // extraxt the recent three day bills from chart_billdata,
     // the actual format should be same as fake_data
-
     var fake_data = [
       [
         ["Food", billInfo.food],
@@ -98,19 +82,14 @@ router.post("/newBill", async (req, res) => {
     res.send(fake_data);
     return;
   } catch (e) {
-    console.log(e);
     res.status(404).json({ error: e });
   }
 });
 
 router.get("/newBill", async (req, res) => {
-  console.log("______________");         //ruiqi0505
   if (req.session.user) {
     //let name = req.session.user.userId;
     const billInfo = req.body;
-
-    console.log("______________");
-
     //let user = await users.getUserByName(name);
     //   const newBill = await billData.addNewBill(billInfo);
     //   res.render('posts/new-bill',{
@@ -127,7 +106,6 @@ router.get("/newBill", async (req, res) => {
 
 router.get("/getBillChart", async (req, res) => {
   const billInfo = req.query;
-  console.log(billInfo);
   if (!billInfo) {
     res.status(400).json({ error: "cannot receive any data " });
     return;
