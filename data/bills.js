@@ -1,5 +1,6 @@
 const mongoCollections = require("../config/mongoCollections");
 const bills = mongoCollections.bills;
+const todoList = mongoCollections.todoList;
 const users = require("./users");
 const uuid = require("uuid/v1");
 const { ObjectId } = require('mongodb');
@@ -207,10 +208,31 @@ const exportedMethods = {
 //     //这里需要写方法，获取近一年账单数据
 //   },
 // };
-
     async getAllBill(userId) {
         const billCollection = await bills();
         return await billCollection.find({ userId:userId }).toArray();
     },
+    async newTodoList(todoListInfo) {
+        const todoListCollection = await todoList();
+        return await todoListCollection.insertOne({
+            userId: todoListInfo.userId,
+            date: todoListInfo.date,
+            content: todoListInfo.content
+        });
+    },
+    async getTodoList(userId) {
+        const todoListCollection = await todoList();
+        return await todoListCollection.find({ userId: userId }).toArray();
+    },
+    async deleteTodoList(id) {
+        console.log('************data delet')
+        console.log(id)
+        console.log('************data delet')
+
+        const todoListCollection = await todoList();
+        const deleteRes = await todoListCollection.deleteOne({ _id: ObjectId(id) })
+        console.log(deleteRes)
+        return deleteRes
+    }
 };
 module.exports = exportedMethods;

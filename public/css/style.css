@@ -425,3 +425,30 @@ a.login {
 .layout-albills {
   margin-top: 20px;
 }
+
+.todo-container{
+    display: flex;
+    padding: 20px;
+}
+.todo-left{
+    flex: 1;
+    display: inline-block;
+}
+.todo-input-info{
+}
+.todo-content{
+    width: 500px;
+    height: 200px;
+}
+.todo-label-info{
+    width: 80px;
+}
+.todo-right{
+    flex: 1;
+    display: inline-block;
+}
+.todo-right li{
+    list-style-type: circle;
+    display: flex;
+    justify-content: space-between;
+}

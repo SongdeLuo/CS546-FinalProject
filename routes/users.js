@@ -29,12 +29,12 @@ router.post("/login", async (req, res) => {
   let userInfo = req.body;
 
   const { VerificationCode } = req.body;
-  if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
-    res.render("posts/login", {
-      title: "LOGIN",
-      warn: "验证码错误请重试",
-    });
-  }
+//   if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
+//     res.render("posts/login", {
+//       title: "LOGIN",
+//       warn: "验证码错误请重试",
+//     });
+//   }
 
   //console.log(userInfo);
   if (

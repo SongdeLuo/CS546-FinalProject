@@ -111,9 +111,7 @@ router.get("/getBillChart", async (req, res) => {
     return;
   }
   if (!billInfo.userId || typeof billInfo.userId !== "string") {
-    res
-      .status(400)
-      .json({ error: "You must provide a  userId and it must be a string  " });
+    res.status(400).json({ error: "You must provide a  userId and it must be a string  " });
     return;
   }
   //billInfo.dataTs && 松德说加在底下的括号里 但我不明白为啥
@@ -204,6 +202,47 @@ router.get("/getAllBill", async (req, res) => {
       const allBill = await billData.getAllBill(billInfo.userId);
 
       res.status(200).json(allBill);
+    } catch (e) {
+      res.status(404).json({ error: e });
+    }
+});
+
+router.post("/newTodoList", async (req, res) => {
+    try {
+    
+      const todoListInfo = req.body
+      console.log('************')
+      console.log(todoListInfo)
+
+      console.log('************')
+
+      const allTodoList = await billData.newTodoList(todoListInfo);
+      res.status(200).json(allTodoList);
+    } catch (e) {
+      res.status(404).json({ error: e });
+    }
+});
+router.get("/getTodoList", async (req, res) => {
+    try {
+      const todoListInfo = req.query
+      const allTodoList = await billData.getTodoList(todoListInfo.userId);
+      res.status(200).json(allTodoList);
+    } catch (e) {
+      res.status(404).json({ error: e });
+    }
+});
+router.delete("/deleteTodoList", async (req, res) => {
+    try {
+      const id = req.body.id
+      console.log('***********')
+      console.log(id)
+      console.log('***********')
+
+      const deleteRes = await billData.deleteTodoList(id);
+      res.status(200).json({
+          code: 200,
+          data: deleteRes
+      });
     } catch (e) {
       res.status(404).json({ error: e });
     }
