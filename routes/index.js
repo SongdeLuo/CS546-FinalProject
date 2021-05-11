@@ -16,11 +16,20 @@ const constructorMethod = (app) => {
 
   });
 
+  app.get('/todolist', function (request, response) {
+    response.render('todolist', {
+      pageTitle: 'So Much ToDo!',
+      todoItems: todoData.getAll()
+    });
+  });
+
   app.get('/400',(req, res) =>{
     res.render('posts/400',{
       title:'400 Error'
     });
   });
+
+
 
   app.get('/404',(req, res) =>{
     res.render('posts/404',{

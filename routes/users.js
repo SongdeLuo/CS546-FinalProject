@@ -183,6 +183,39 @@ router.get('/allbills', async(req, res) =>{              //ruiqi0505
  
 });
 
+router.get('/todolist', async(req, res) =>{              //ruiqi0505
+  if (req.session.user) {
+    res.render('posts/todolist',{
+        userId: req.session.user.userId
+    });
+    return;
+  } else{
+     res.render('posts/login',{
+    title:'login'
+  });
+  }
+ 
+});
+
+router.post('/todo', function(request, response) {
+	todoData.makeToDo(xss(request.body.name), xss(request.body.description));
+
+	// response.json({ success: true, message: request.body.description });
+	response.json({ success: true, message: xss(request.body.description) });
+});
+
+router.post('/todo/complete/:id', function(request, response) {
+	const updatedData = todoData.finishToDo(parseInt(request.params.id));
+	response.render('partials/todo_item', { layout: null, ...updatedData });
+});
+
+router.post('/todo.html', function(request, response) {
+	const newTodo = todoData.makeToDo(xss(request.body.name), xss(request.body.description));
+
+	response.render('partials/todo_item', { layout: null, ...newTodo });
+});
+
+
 router.get("/logout", (req, res) => {
   res.clearCookie("AuthCookie");
   res.render("posts/login", {
