@@ -4,7 +4,7 @@
 <div class="mainbody middle">
     <h3>{{warn}}</h3>
     <form class="form-box front" action="/api/users/login" method="POST">
-    
+
         <div>
             <h1>Login</h1>
         </div>
@@ -14,14 +14,14 @@
             <input class="input-normal-l" type="password" name="Password" placeholder="PassWord" />
 
             <input id="text-verification" class="input-normal-l" type="text" name="VerificationCode" placeholder="" />
-            <img id="login_VerificationCode" style='padding: 0px 70px;margin-bottom: 10px;' src="http://www.localhost:3000/api/users/login_img_code" alt="VerificationCode">
+            <img id="login_VerificationCode" style='padding: 0px 70px;margin-bottom: 10px;'
+                src="http://www.localhost:3000/api/users/login_img_code" alt="VerificationCode">
 
             <button id="btn-login" class="btn-submit" type="submit">LOGIN</button>
         </div>
         <div>
             <p style="margin-top: 40px">If you don't have account.Please</p>
-            <p >Click here to <a id="signin" href="/api/users/register" style='z-index: 999'>Sign Up</a></p>
+            <p>Click here to <a id="signin" href="/api/users/register" style='z-index: 999'>Sign Up</a></p>
         </div>
     </form>
 </div>
-

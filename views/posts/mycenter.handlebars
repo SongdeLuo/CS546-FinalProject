@@ -1,24 +1,6 @@
-{{!-- 
 <h1 style='text-align: center'>My Center</h1>
 
-<link rel="stylesheet" href="public/js/echarts.min.css">
 
-
-<div class="nav">
-  <ul>
-    <li><a href="mycenter">My Center</a></li>
-    <li><a href="new-bill">New Bill</a></li>
-    <li><a href="allbills">All Bills</a></li>
-  </ul>
-</div> --}}
-
-
-
-<div class="header w">
-    <!-- logo -->
-    <div class="logo">
-        <!-- <img src="logo图片地址" alt=""> -->
-    </div>
     <div class="nav">
         <ul>
             <li><a href="mycenter">My Center</a></li>
@@ -26,7 +8,8 @@
             <li><a href="allbills">All Bills</a></li>
         </ul>
     </div>
-</div>
+
+<link rel="stylesheet" href="public/js/echarts.min.css">
 
 <div class='mycenter-content' style='padding: 0 63px;'>
     <div id='hideUserName' style='display: none'>{{info.Username}}</div>
@@ -41,11 +24,11 @@
             <span>username:</span>
             <input type="text" id='userNameInput' disabled>
         </div>
-         <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+        <div style="display: flex; justify-content: space-between; margin: 10px 0;">
             <span>email:</span>
             <input type="text" id='emailInput' disabled>
         </div>
-         <div style="display: flex; justify-content: space-between; margin: 10px 0;">
+        <div style="display: flex; justify-content: space-between; margin: 10px 0;">
             <span>telephone:</span>
             <input type="text" id='telephoneInput' disabled>
         </div>
@@ -71,7 +54,7 @@
 </div>
 
 <script>
-    window.onload=function(){
+    window.onload = function () {
         const mycenterUserName = $('#hideUserName').html()
         const mycenterMail = $('#hideMail').html()
         const mycenterPhone = $('#hidePhone').html()
@@ -79,14 +62,14 @@
         const hideLastName = $('#hideLastName').html()
         const hideAge = $('#hideAge').html()
 
-        $('#userNameInput').attr( "placeholder" , mycenterUserName)
-        $('#emailInput').attr( "placeholder" , mycenterMail)
-        $('#telephoneInput').attr( "placeholder" , mycenterPhone)
-        $('#firstNameInput').attr( "placeholder" , hideFirstName)
-        $('#lastNameInput').attr( "placeholder" , hideLastName)
-        $('#ageInput').attr( "placeholder" , hideAge)
+        $('#userNameInput').attr("placeholder", mycenterUserName)
+        $('#emailInput').attr("placeholder", mycenterMail)
+        $('#telephoneInput').attr("placeholder", mycenterPhone)
+        $('#firstNameInput').attr("placeholder", hideFirstName)
+        $('#lastNameInput').attr("placeholder", hideLastName)
+        $('#ageInput').attr("placeholder", hideAge)
         const $form = $('#mycenterForm')[0]
-        
+
         $('#mycenterSubmit').on('click', e => {
             const newUserInfo = {
                 username: $form[0].value || $form[0].placeholder,
@@ -102,7 +85,7 @@
                 contentType: "application/json",
                 data: JSON.stringify(newUserInfo)
             }).then(res => {
-                if(res.code == '200'){
+                if (res.code == '200') {
                     location.reload();
                 }
             })

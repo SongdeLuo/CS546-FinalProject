@@ -5,7 +5,9 @@
     <li><a href="mycenter">My Center</a></li>
     <li><a href="new-bill">New Bill</a></li>
     <li><a href="allbills">All Bills</a></li>
-      <li><p id="p_userId" style="display:none;">{{userId}}</p></li>
+    <li>
+      <p id="p_userId" style="display:none;">{{userId}}</p>
+    </li>
   </ul>
 </div>
 <div class="layout-border-top">
@@ -24,9 +26,10 @@
       <label class="label-info" for="new-bill-note">Note</label>
       <input class="input-info" type="text" name="user_note" id="new-bill-note"><br>
 
-      <div>
+      <div class="addbutton-f">
         <button class="addbutton1" type="button" id="new-bill-addbtn" @click="onCreateBill">add</button>
-        <button class="addbutton2" type="button" id="addTestBtn" @click="onAddTestData"> Click To Add Test Data</button>
+        {{!-- <button class="addbutton2" type="button" id="addTestBtn"="onAddTestData"> Click To Add Test Data</button>
+        --}}
       </div>
     </div>
 
@@ -55,75 +58,15 @@
 
 
 <script>
-    window.onload = function(){
-        $('#new-bill-date').on('change', e => {
-            console.log(e)
-            const newDate = new Date(e.currentTarget.value).getTime()
-            const todayTs = new Date().getTime()
-            if(newDate > todayTs){
-                alert("Can't add later than today")
-                $('#new-bill-date').val("")
-            }
-        })
-    }
+  window.onload = function () {
+    $('#new-bill-date').on('change', e => {
+      console.log(e)
+      const newDate = new Date(e.currentTarget.value).getTime()
+      const todayTs = new Date().getTime()
+      if (newDate > todayTs) {
+        alert("Can't add later than today")
+        $('#new-bill-date').val("")
+      }
+    })
+  }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{!--
-        <script type="text/javascript">
-          //echarts.init(document.getElementById('main')).setOption({
-          legend: { },
-          tooltip: { },
-
-          dataset: {
-            // 提供一份数据。
-            source: [
-              ['bill', 'first day', 'second day', 'third day'],
-              ['Food', 43.3, 83.8, 93.7],
-              ['Entertainment', 82.1, 71.4, 55.1],
-              ['Transition', 86.4, 65.2, 82.5],
-              ['Other', 72.4, 53.9, 39.1]
-            ]
-
-            source: [
-              ['bill', 'Food', 'Entertainment', 'Transition', 'Other'],
-              ['first day', 43.3, 85.8, 93.7, 0],
-              ['second day', 83.1, 73.4, 0, 55.1],
-              ['third day', 86.4, 65.2, 78, 82.5],
-
-            ]
-
-            // 声明一个 X 轴，类目轴（category）。默认情况下，类目轴对应到 dataset 第一列。
-            xAxis: { type: 'category' },
-            // 声明一个 Y 轴，数值轴。
-            yAxis: { },
-          },
-          // 声明多个 bar 系列，默认情况下，每个系列会自动对应到 dataset 的每一列。
-          series: [
-            { type: 'bar' },
-            { type: 'bar' },
-            { type: 'bar' },
-            { type: 'bar' }
-          ]
-                });
-        </script> --}}

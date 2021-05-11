@@ -1,48 +1,51 @@
-<h1>This is the all bills page but I haven't finished it yet</h1>
+<h1>Billing detail Table and Chart</h1>
 <link rel="stylesheet" href="/public/css/style.css" media="all">
 <div class="nav">
     <ul>
         <li><a href="mycenter">My Center</a></li>
         <li><a href="new-bill">New Bill</a></li>
         <li><a href="/api/users/allbills">All Bills</a></li>
-        <li><p id="p_userId" style="display:none;">{{userId}}</p></li>
+        <li>
+            <p id="p_userId" style="display:none;">{{userId}}</p>
+        </li>
     </ul>
 </div>
 
-<div class="layout-albills">
-    <div class="left-container-table">
-        <table id='all-bill-table'>
-            <tr>
-                <th>date</th>
-                <th>food</th>
-                <th>entertainment</th>
-                <th>trainsition</th>
-                <th>other</th>
-                <th>total</th>
-                <th>note</th>
-                <th>operation</th>
-            </tr>
-        </table>
-    </div>
-    <div class="right-container-table">
-        <div id="allBillChart" class="all-bill-chart"></div>
+<div class="layout-border-top">
+    <div class="layout-albills">
+        <div class="left-container-table">
+            <table id='all-bill-table'>
+                <tr>
+                    <th>date</th>
+                    <th>food</th>
+                    <th>entertainment</th>
+                    <th>trainsition</th>
+                    <th>other</th>
+                    <th>total</th>
+                    <th>note</th>
+                    <th>operation</th>
+                </tr>
+            </table>
+        </div>
+        <div class="right-container-table">
+            <div id="allBillChart" class="all-bill-chart"></div>
+        </div>
     </div>
 </div>
-
 
 <script>
     const deleteChartBy = id => {
         $.ajax({
-            method:'DELETE',
-            url:'/api/bills/delete',
-            contentType:'application/json',
-            data:JSON.stringify({ id })
+            method: 'DELETE',
+            url: '/api/bills/delete',
+            contentType: 'application/json',
+            data: JSON.stringify({ id })
         }).then(res => {
             location.reload();
         })
     }
     const loadChartById = id => {
-        const currentChartData = window.chartData.find(item => {return item._id === id})
+        const currentChartData = window.chartData.find(item => { return item._id === id })
         const data = [
             { value: currentChartData.food, name: 'Food' },
             { value: currentChartData.entertainment, name: 'Entertainment' },
@@ -75,8 +78,8 @@
                     type: 'pie',
                     avoidLabelOverlap: false,
                     label: {
-                    show: false,
-                    position: 'center'
+                        show: false,
+                        position: 'center'
                     },
                     data
                 }
@@ -84,17 +87,17 @@
         };
         myChart.setOption(option);
     }
-    window.onload=function(){
-      let userid_form_page = $("#p_userId");
+    window.onload = function () {
+        let userid_form_page = $("#p_userId");
         $.ajax({
-            method:'GET',
-            url:'/api/bills/getAllBill',
-            contentType:'application/json',
-            data:{
+            method: 'GET',
+            url: '/api/bills/getAllBill',
+            contentType: 'application/json',
+            data: {
                 userId: userid_form_page.html(),
             }
         }).then(res => {
-           console.log("后端已经返回数据看看这里拿到了吗");
+            console.log("The back end has returned the data, so I've got it here");
             console.log(res)
             window.chartData = res
             loadChartById(res[0]._id)
@@ -118,19 +121,15 @@
                 `
             })
             table.append($(tableCells))
-            table.on('click',e => {
+            table.on('click', e => {
                 const id = e.target.parentNode.id
-                 if(e.target.innerHTML === 'View'){
-                   loadChartById(id)
-                }else if(e.target.innerHTML === 'Delete'){
-                    // 执行删除操作
+                if (e.target.innerHTML === 'View') {
+                    loadChartById(id)
+                } else if (e.target.innerHTML === 'Delete') {
                     deleteChartBy(id)
-                }else if(e.target.innerHTML === 'Edit'){
-                    // 执行编辑操作
                 }
             })
         });
-        
+
     }
 </script>
-

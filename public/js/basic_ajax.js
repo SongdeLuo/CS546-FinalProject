@@ -137,7 +137,7 @@ $("#new-bill-addbtn").click(function (event) {
   };
 
   $.ajax(requestConfig).then(function (responseMessage) {
-    alert("添加成功！！！");
+    alert("Added Successfully！！！");
     console.log(JSON.stringify(responseMessage));
     var bill_data = $(responseMessage);
   
