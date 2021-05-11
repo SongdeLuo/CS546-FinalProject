@@ -136,6 +136,9 @@ li {
   
 }
 
+.nav{
+    height: 40px;
+}
 .nav ul li{
   /* float:left; */
     display: inline-block;
