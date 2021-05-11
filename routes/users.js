@@ -151,7 +151,9 @@ router.get('/mycenter', async(req, res) =>{
 
 router.get('/new-bill', async(req, res) =>{              //ruiqi0505
   if (req.session.user) {
-    res.render('posts/new-bill');
+    res.render('posts/new-bill',{
+        userId: req.session.user.userId
+    });
     return;
   } else{
      res.render('posts/login',{
@@ -169,7 +171,9 @@ router.get('/new-bill', async(req, res) =>{              //ruiqi0505
 
 router.get('/allbills', async(req, res) =>{              //ruiqi0505
   if (req.session.user) {
-    res.render('posts/allbills');
+    res.render('posts/allbills',{
+        userId: req.session.user.userId
+    });
     return;
   } else{
      res.render('posts/login',{
@@ -427,24 +431,10 @@ router.post("/signUp", async (req, res) => {
 
 router.post("/editUserInfo", async (req, res) => {
   let requestBody = req.body;
-  console.log('-------userpa------');
-  console.log(requestBody);
-
   let id = req.session.user.userId;
-  
-
-
   let updatedObject = {};
   try {
-    
-    //title, author, genre, datePublished, summary, reviews
     const oldInfo = await users.getUserByName(requestBody.username);
-    console.log('----oldInfo-1----');
-    console.log(oldInfo);
-    console.log('------requestBody-2-------');
-    console.log(requestBody);
-   
-
     if (requestBody.firstName && requestBody.firstName !== oldInfo.FirstName)
       updatedObject.FirstName = requestBody.firstName;
 
@@ -454,26 +444,16 @@ router.post("/editUserInfo", async (req, res) => {
     if (requestBody.age && requestBody.age !== oldInfo.age)
       updatedObject.age = requestBody.age;
 
-      console.log('------updatedObject-3----');
-      console.log(updatedObject);
-
-
-
   } catch (e) {
     res.status(404).json({ error: 'Post not found' });
     return;
   }
-  console.log('---id---');
-  console.log(id);
-  console.log(typeof(id));
-  console.log('---userpa---');
-  console.log(requestBody);
+
     try {
       const updatedInfo= await users.updateInfo(
         id,
         updatedObject
       );
-    
     } catch (e) {
       res.status(500).json({ error: e });
   }

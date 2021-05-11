@@ -24,7 +24,6 @@ app.use(
 );
 
 app.use('/api/users/new-bill', (req, res, next) => {
-  //console.log(req.session.user);
   if (req.session.user) {
       res.render('posts/new-bill',{
         title:"new Bills",
@@ -32,7 +31,6 @@ app.use('/api/users/new-bill', (req, res, next) => {
       });
       next();
   } else {
-    
       res.redirect('/api/users/login');
       next();
   }

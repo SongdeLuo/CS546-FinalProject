@@ -154,10 +154,12 @@ $("#new-bill-addbtn").click(function (event) {
       newbill_other.val(""),
       newbill_note.val(""),
       billshow.empty();
+
+      changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*7)
   }, rej => {
       alert(rej.responseJSON.error)
   })
-  changeTimeOption(Date.parse(new Date()) - 1000*60*60*24*7)
+  
 
   
 });

@@ -31,6 +31,16 @@
 
 
 <script>
+    const deleteChartBy = id => {
+        $.ajax({
+            method:'DELETE',
+            url:'/api/bills/delete',
+            contentType:'application/json',
+            data:JSON.stringify({ id })
+        }).then(res => {
+            location.reload();
+        })
+    }
     const loadChartById = id => {
         const currentChartData = window.chartData.find(item => {return item._id === id})
         const data = [
@@ -76,7 +86,6 @@
     }
     window.onload=function(){
       let userid_form_page = $("#p_userId");
-        alert(userid_form_page.html());
         $.ajax({
             method:'GET',
             url:'/api/bills/getAllBill',
@@ -104,7 +113,6 @@
                         <th id='${item._id}'>
                             <button>View</button>
                             <button>Delete</button>
-                            <button>Edit</button>
                         </th>
                     </tr>
                 `
@@ -112,10 +120,11 @@
             table.append($(tableCells))
             table.on('click',e => {
                 const id = e.target.parentNode.id
-                if(e.target.innerHTML === 'View'){
-                    loadChartById(id)
+                 if(e.target.innerHTML === 'View'){
+                   loadChartById(id)
                 }else if(e.target.innerHTML === 'Delete'){
                     // 执行删除操作
+                    deleteChartBy(id)
                 }else if(e.target.innerHTML === 'Edit'){
                     // 执行编辑操作
                 }

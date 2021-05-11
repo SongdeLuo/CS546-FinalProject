@@ -2,6 +2,7 @@ const mongoCollections = require("../config/mongoCollections");
 const bills = mongoCollections.bills;
 const users = require("./users");
 const uuid = require("uuid/v1");
+const { ObjectId } = require('mongodb');
 
 const exportedMethods = {
   async addNewBill(billInfo) {
@@ -103,9 +104,9 @@ const exportedMethods = {
         }
         return chartBillData;
     },
-    async deleteBill(date, dateTs) {
+    async deleteBill(id) {
         const billCollection = await bills();
-        const deleteInfo = await billCollection.deleteOne({ date: date });
+        return await billCollection.deleteOne({ _id: ObjectId(id) })
     },
 
 
