@@ -11,8 +11,8 @@ body {
 
 
 footer {
-  line-height: 100px;
-  height: 100px;
+  line-height: 40px;
+  height: 60px;
   width: 100%;
   position: absolute;
   bottom: 0
@@ -170,9 +170,9 @@ a {
 
 .user {
   float: right;
-  line-height: 40px;
-  margin-right: 30px;
-  margin-top: 20px;
+  line-height: 23px;
+  margin-right: 50px;
+  margin-top: 70px;
 }
 
 .tuichuanniu {
@@ -234,7 +234,7 @@ a {
 .left-container-createInfo {
   flex: 1;
   padding: 0 20px;
-
+  line-height: 80px;
 }
 
 
@@ -247,7 +247,6 @@ a {
 .input-info {
   display: inline-block;
   width: 260px;
-
 }
 
 .right-contontainer-chart {
@@ -374,7 +373,7 @@ a {
   border: none;
   border-radius: 50px;
   font: 30px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  text-shadow: 1px 1px 1px #444;
+  text-shadow: 19px -12px 8px rgb(60, 71, 170);
   color: #D3D3D3;
   margin-top: 150px;
 
@@ -426,29 +425,42 @@ a.login {
   margin-top: 20px;
 }
 
-.todo-container{
-    display: flex;
-    padding: 20px;
+.todo-container {
+  display: flex;
+  padding: 20px;
 }
-.todo-left{
-    flex: 1;
-    display: inline-block;
+
+.todo-left {
+  flex: 1;
+  display: inline-block;
 }
-.todo-input-info{
+
+.todo-input-info {}
+
+.todo-content {
+  width: 500px;
+  height: 860px;
 }
-.todo-content{
-    width: 500px;
-    height: 200px;
+
+.todo-label-info {
+  width: 80px;
 }
-.todo-label-info{
-    width: 80px;
+
+.todo-right {
+  flex: 1;
+  display: inline-block;
 }
-.todo-right{
-    flex: 1;
-    display: inline-block;
+
+.todo-right li {
+  list-style-type: circle;
+  display: flex;
+  justify-content: space-between;
 }
-.todo-right li{
-    list-style-type: circle;
-    display: flex;
-    justify-content: space-between;
+
+.label-info {
+  /* font-size: large; */
+  font-weight: 600;
+  color: purple;
+  /* font-size: larger; */
+  text-shadow: 8px -8px 8px rgb(175, 106, 41);
 }

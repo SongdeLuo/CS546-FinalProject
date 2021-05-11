@@ -1,57 +1,45 @@
-{{!-- <h1>this is todo list</h1>
-<div class="row">
-    <div class="col-sm-12 col-md-6" id="todo-area">
-        {{#each todoItems}} {{> todo_item }} {{/each}}
-    </div>
-    <div id="new-content">
-    </div>
-    <div class="col-sm-12 col-md-4">
-        <form id="new-item-form">
-            <label>Duedate <input id="Duedate" type="date" /></label>
-            <label>Content <textarea id="todolist-Content"></textarea></label>
-            <input type="submit" value="add new todolist" />
-        </form>
-    </div>
-</div> --}}
-
+<h1>To Do List</h1>
+<link rel="stylesheet" href="/public/css/style.css" media="all">
 <div class="nav">
     <ul>
         <li><a href="mycenter">My Center</a></li>
         <li><a href="new-bill">New Bill</a></li>
         <li><a href="/api/users/allbills">All Bills</a></li>
-        <li><a href="todolist">To do list</a></li>
+        <li><a href="todolist">To Do list</a></li>
         <li>
             <p id="p_userId" style="display:none;">{{userId}}</p>
         </li>
     </ul>
 </div>
-<div class='todo-container'>
-    <div class='todo-left'> 
-        <form action="todo">
-            <div class="todo-label-info" for="todo-date">Date</div>
-            <input class="todo-input-info" type="date" id="todo-date" required /><br>
-            <div class="todo-label-info" for="todo-content">Content</div>
-            <textarea class="todo-input-info todo-content" type="number" id="todo-content"></textarea>
-        </form> 
-        <button id='todoSubmit' style='width: 80px; height: 30px;'>Submit</button>
-    </div>
-    <div class='todo-right'>
-        <ol id='todolist-table'>
-            <li style='padding-right: 150px;'>
-                <div style="display: inline-block;">
-                    <div style="display: inline-block;width: 20px"></div>
-                    <span style='margin-right: 64px'>Date</span>
-                    <span>Content</span>
-                </div>
-                <div>Operation</div>
-            </li>
-        </ol>
+
+<div class="layout-border-top">
+    <div class='todo-container'>
+        <div class='todo-left'>
+            <form action="todo">
+                <div class="todo-label-info" for="todo-date">Date</div>
+                <input class="todo-input-info" type="date" id="todo-date" required /><br>
+                <div class="todo-label-info" for="todo-content">Content</div>
+                <textarea class="todo-input-info todo-content" type="number" id="todo-content"></textarea>
+            </form>
+            <button id='todoSubmit' style='width: 80px; height: 30px;'>Submit</button>
+        </div>
+        <div class='todo-right'>
+            <ol id='todolist-table'>
+                <li style='padding-right: 150px;'>
+                    <div style="display: inline-block;">
+                        <div style="display: inline-block;width: 20px"></div>
+                        <span style='margin-right: 64px'>Date</span>
+                        <span>Content</span>
+                    </div>
+                    {{!-- <div>Operation</div> --}}
+                </li>
+            </ol>
+        </div>
     </div>
 </div>
-
 <script>
-    window.onload = function(){
-// deleteTodoList
+    window.onload = function () {
+        // deleteTodoList
         const userId = $("#p_userId").html();
         const getTodoList = (userId) => {
             $.ajax({
@@ -60,7 +48,7 @@
                 contentType: 'application/json',
                 data: {
                     userId
-                 }
+                }
             }).then(res => {
                 window.todoListData = res
                 const table = $('#todolist-table')
@@ -69,11 +57,11 @@
                     tableCells += `
                         <li style='padding-right: 150px;'>
                             <div style="display: inline-block;">
-                                <div style="display: inline-block;width: 20px">${index+1}</div>
+                                <div style="display: inline-block;width: 20px">${index + 1}</div>
                                 <span style='margin-right: 10px'>${item.date}</span>
                                 <span>${item.content}</span>
                             </div>
-                            <button id='done${item._id}'>DONE</button>
+                            {{!-- <button id='done${item._id}'>DONE</button> --}}
                         </li>
                     `
                 })
@@ -92,10 +80,10 @@
                 contentType: 'application/json',
                 data: JSON.stringify({ id })
             }).then(res => {
-               getTodoList(userId)
+                getTodoList(userId)
             })
         }
-        
+
         getTodoList(userId)
         $('#todoSubmit').on('click', e => {
             console.log('todoSubmit')
@@ -106,11 +94,11 @@
                 method: 'POST',
                 url: '/api/bills/newTodoList',
                 contentType: 'application/json',
-                data: JSON.stringify({ 
+                data: JSON.stringify({
                     userId,
                     date,
                     content
-                 })
+                })
             }).then(res => {
                 location.reload();
             })
