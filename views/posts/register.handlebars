@@ -2,19 +2,20 @@
   <p class='logo' style="text-align: left;">logo</p>
 </div>
 <div class="mainbody middle">
-
-
-  <form class="form-box back" action="/api/users/signUp" method="POST">
+ <h3>{{warn}}</h3>
+{{!-- <form class="form-box back" id="register-form"> --}}
+  <form class="form-box back" action="/api/users/signUp" method="POST" id="register-form">
     <div>
       <h1>Register</h1>
     </div>
     <div>
-      <input class="input-normal-r" type="text" name="Username" placeholder="UserAccount" />
-      <input class="input-normal-r" type="password" name="Password" placeholder="PassWord" />
-      <input class="input-normal-r" type="email" name="Mail" placeholder="Email" />
-      <input class="input-normal-r" type="text" name="Phone" placeholder="Telphone" />
 
-      <button class="btn-submit" type="submit">
+      <input class="input-normal-r" type="text" name="Username" placeholder="UserAccount" id="register-un"/>
+      <input class="input-normal-r" type="password" name="Password" placeholder="PassWord" id="register-pw"/>
+      <input class="input-normal-r" type="email" name="Mail" placeholder="Email" id="register-em"/>
+      <input class="input-normal-r" type="text" name="Phone" placeholder="Telphone" id="register-te"/>
+
+      <button class="btn-submit" type="submit" >
         Register
       </button>
     </div>
