@@ -23,8 +23,6 @@ let exportedMethods = {
         // } else if (!age || typeof age != 'number' || age == null || age == "") {
         //     throw 'age is null or age is not number';
         // }
-
-
         else if (Mail == null) {
 
             //|| !Mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/)  在测试邮箱的时候出错我先把这个拿掉 --罗松德
@@ -85,7 +83,7 @@ let exportedMethods = {
     },
 
     async getUserByMail(mail) {
-        if (!mail || !mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/) || mail == null) {
+        if (!mail || !mail.match(/^[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/) || mail == null) {
             throw 'Mail is not a Mail format or Mail is null';
         }
         let userCollection = await users();
@@ -99,7 +97,7 @@ let exportedMethods = {
     },
 
     async checkUserByMail(mail, phone) {
-        if (!mail || !mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/) || mail == null) {
+        if (!mail || !mail.match(/^[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/) || mail == null) {
             throw 'Mail is not a Mail format or Mail is null';
         }
 
@@ -263,28 +261,25 @@ let exportedMethods = {
         //FirstName 
 
         if (updatedInfo.FirstName) {
-            // if (typeof (updatedInfo.FirstName) != 'string') throw ('new FirstName must be a string');
-            // if (await this.isNull(updatedInfo.FirstName)) throw ('new FirstName is empty');
+            if (typeof(updatedInfo.FirstName) != 'string') throw ('new FirstName must be a string');
+            if (await this.isNull(updatedInfo.FirstName)) throw ('new FirstName is empty');
             updatedInfoData.FirstName = updatedInfo.FirstName;
         }
 
         if (updatedInfo.LastName) {
-            // if (typeof (updatedInfo.LastName) != 'string') throw ('new LastName must be a string');
-            // if (await this.isNull(updatedInfo.LastName)) throw ('new LastName is empty');
+            if (typeof(updatedInfo.LastName) != 'string') throw ('new LastName must be a string');
+            if (await this.isNull(updatedInfo.LastName)) throw ('new LastName is empty');
             updatedInfoData.LastName = updatedInfo.LastName;
         }
 
         if (updatedInfo.age) {
-            // if (typeof (updatedInfo.age) != 'string') throw ('new age must be a string');
-            // if (await this.isNull(updatedInfo.age)) throw ('new age is empty');
+            if (typeof(updatedInfo.age) != 'string') throw ('new age must be a string');
+            if (await this.isNull(updatedInfo.age)) throw ('new age is empty');
             updatedInfoData.age = updatedInfo.age;
         }
         console.log('----updatedInfoData-----');
         console.log(updatedInfoData);
-        const newupdatedInfo = await userCollection.updateOne(
-            { _id: newObjectId },
-            { $set: updatedInfoData }
-        );
+        const newupdatedInfo = await userCollection.updateOne({ _id: newObjectId }, { $set: updatedInfoData });
         if (newupdatedInfo.modifiedCount === 0) {
             throw ('could not update FirstName successfully');
         }
