@@ -3,10 +3,18 @@ const express = require("express");
 const router = express.Router();
 const data = require("../data");
 const billData = data.bills;
+const xss = require("xss");
 
 // create a new bill
 router.post("/newBill", async (req, res) => {
   const billInfo = req.body;
+  
+  options = {whiteList: {
+    
+  }};  // 自定义规则
+  myxss = new xss.FilterXSS(options);
+  // 以后直接调用 myxss.process() 来处理即可
+  
   // if(Array.isArray(billInfo)){
   //   try {
   //       const newBill = await billData.addNewBill(billInfo);
@@ -15,13 +23,16 @@ router.post("/newBill", async (req, res) => {
   //       res.status(404).json({ error: "Post not found" });
   //   }
   // }
+
   billInfo.food = parseInt(billInfo.food);
   billInfo.entertainment = parseInt(billInfo.entertainment);
   billInfo.transportation = parseInt(billInfo.transportation);
   billInfo.other = parseInt(billInfo.other);
   billInfo.userId = req.session.user.userId;
   billInfo.userName = req.session.user.username;
-
+  billInfo.notes = myxss.process(billInfo.notes);
+  console.log(billInfo.notes);
+  
   if (!billInfo) {
     res.status(400).json({ error: "cannot receive any data " });
     return;
@@ -52,6 +63,7 @@ router.post("/newBill", async (req, res) => {
   }
  
   console.log(billInfo);
+ 
   try {
     const newBill = await billData.addNewBill(billInfo);
     if(!newBill){
@@ -209,8 +221,12 @@ router.get("/getAllBill", async (req, res) => {
 
 router.post("/newTodoList", async (req, res) => {
     try {
+      options = {whiteList: {
     
+      }};  // 自定义规则
+      myxss = new xss.FilterXSS(options);
       const todoListInfo = req.body
+      todoListInfo.content = myxss.process(todoListInfo.content)
       console.log('************')
       console.log(todoListInfo)
 
