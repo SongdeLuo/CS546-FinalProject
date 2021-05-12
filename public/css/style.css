@@ -18,6 +18,20 @@ footer {
   bottom: 0
 }
 
+.div-login {
+  background: url(../../public/image/mainpageimage.jpg) transparent no-repeat;
+  background-size: cover;
+  width: 1366px;
+  height: 728px;
+  position: relative;
+
+
+}
+
+.div-login p {
+  border-top: .375rem;
+}
+
 h1 {
   text-align: center;
   color: #dcd6d0
@@ -234,7 +248,7 @@ a {
 .left-container-createInfo {
   flex: 1;
   padding: 0 20px;
-  line-height: 80px;
+  line-height: 65px;
 }
 
 
@@ -402,8 +416,7 @@ a.login {
 .left-container-table table {
   border-top: 1px solid black;
   border-left: 1px solid black;
-
-  margin-top: 100px;
+  margin-top: 45px;
 }
 
 /* .left-container-table tbody{
@@ -434,12 +447,12 @@ a.login {
   flex: 1;
   display: inline-block;
 }
-
-.todo-input-info {}
+/* 
+.todo-input-info {} */
 
 .todo-content {
   width: 500px;
-  height: 860px;
+  height: 570px;
 }
 
 .todo-label-info {
