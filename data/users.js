@@ -262,23 +262,23 @@ let exportedMethods = {
 
         if (updatedInfo.FirstName) {
             if (typeof(updatedInfo.FirstName) != 'string') throw ('new FirstName must be a string');
-            if (await this.isNull(updatedInfo.FirstName)) throw ('new FirstName is empty');
+            //if (await this.isNull(updatedInfo.FirstName)) throw ('new FirstName is empty');
             updatedInfoData.FirstName = updatedInfo.FirstName;
         }
 
         if (updatedInfo.LastName) {
             if (typeof(updatedInfo.LastName) != 'string') throw ('new LastName must be a string');
-            if (await this.isNull(updatedInfo.LastName)) throw ('new LastName is empty');
+            //if (await this.isNull(updatedInfo.LastName)) throw ('new LastName is empty');
             updatedInfoData.LastName = updatedInfo.LastName;
         }
 
         if (updatedInfo.age) {
             if (typeof(updatedInfo.age) != 'string') throw ('new age must be a string');
-            if (await this.isNull(updatedInfo.age)) throw ('new age is empty');
+            //if (await this.isNull(updatedInfo.age)) throw ('new age is empty');
             updatedInfoData.age = updatedInfo.age;
         }
-        console.log('----updatedInfoData-----');
-        console.log(updatedInfoData);
+        //console.log('----updatedInfoData-----');
+        //console.log(updatedInfoData);
         const newupdatedInfo = await userCollection.updateOne({ _id: newObjectId }, { $set: updatedInfoData });
         if (newupdatedInfo.modifiedCount === 0) {
             throw ('could not update FirstName successfully');
