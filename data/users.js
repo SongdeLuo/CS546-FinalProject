@@ -31,7 +31,11 @@ let exportedMethods = {
             throw 'Phone is not a Phone format or Phone is null';
         } else if (await userCollection.findOne({ Mail: Mail }) != null || await userCollection.findOne({ Phone: Phone }) != null) {
             throw 'Mial or phone is exit';
-        } //!Phone.match(/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/) ||
+        } else if (Username.length > 18) {
+            throw 'LastName is too long, must less 18 word';
+        } else if (Password.length > 18 || Password.length < 6) {
+            throw 'Password must less 18 or more than 6 ';
+        }
 
         Password = await bcrypt.hash(Password, saltRounds);
         let newPost = {
@@ -58,6 +62,8 @@ let exportedMethods = {
     async getUserByName(name) {
         if (!name || typeof name != 'string' || name == null || name == "") {
             throw 'Username is null or Username is not string';
+        } else if (name.length > 18) {
+            throw 'LastName is too long, must less 18 word';
         }
         let userCollection = await users();
         let userget = await userCollection.findOne({ Username: name });
@@ -262,19 +268,20 @@ let exportedMethods = {
 
         if (updatedInfo.FirstName) {
             if (typeof(updatedInfo.FirstName) != 'string') throw ('new FirstName must be a string');
-            //if (await this.isNull(updatedInfo.FirstName)) throw ('new FirstName is empty');
+            //let fn = updatedInfo.FirstName;
+            if (updatedInfo.FirstName.length > 18) throw ('FirstName is too long, must less 18 word');
             updatedInfoData.FirstName = updatedInfo.FirstName;
         }
 
         if (updatedInfo.LastName) {
             if (typeof(updatedInfo.LastName) != 'string') throw ('new LastName must be a string');
-            //if (await this.isNull(updatedInfo.LastName)) throw ('new LastName is empty');
+            if (updatedInfo.LastName.length > 18) throw ('LastName is too long, must less 18 word');
             updatedInfoData.LastName = updatedInfo.LastName;
         }
 
         if (updatedInfo.age) {
             if (typeof(updatedInfo.age) != 'string') throw ('new age must be a string');
-            //if (await this.isNull(updatedInfo.age)) throw ('new age is empty');
+            if (updatedInfo.age.length > 2) throw ('FirstName is too long, must less 2 word');
             updatedInfoData.age = updatedInfo.age;
         }
         //console.log('----updatedInfoData-----');

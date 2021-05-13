@@ -29,12 +29,12 @@ router.post("/login", async(req, res) => {
     let userInfo = req.body;
 
     const { VerificationCode } = req.body;
-      if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
+    if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
         res.render("posts/login", {
-          title: "LOGIN",
-          warn: "Verification code error",
+            title: "LOGIN",
+            warn: "Verification code error",
         });
-      }
+    }
 
     //console.log(userInfo);
     if (!userInfo.Username ||
@@ -58,6 +58,22 @@ router.post("/login", async(req, res) => {
         res.render("posts/login", {
             title: "LOGIN",
             warn: "Password is null or Password is not string",
+        });
+        return;
+    }
+
+    if (userInfo.Username.length > 18) {
+        res.render("posts/login", {
+            title: "LOGIN",
+            warn: "UserName is too long, must less 18 word",
+        });
+        return;
+    }
+
+    if (userInfo.Password.length > 18 || userInfo.Password.length < 6) {
+        res.render("posts/login", {
+            title: "LOGIN",
+            warn: "Password must less 18 or more than 6 ",
         });
         return;
     }
@@ -85,9 +101,9 @@ router.post("/login", async(req, res) => {
             };
             res.redirect("new-bill");
         } else {
-            res.json({
-                code: 403,
-                msg: "Error",
+            res.render("posts/login", {
+                title: "LOGIN",
+                warn: "password is wrong",
             });
         }
     } catch (e) {
@@ -392,6 +408,22 @@ router.post("/signUp", async(req, res) => {
         return;
     }
 
+    if (newuser.Username.length > 18) {
+        res.render("posts/Register", {
+            title: "Register",
+            warn: "userName is too long, must less 18 word",
+        });
+        return;
+    }
+
+    if (newuser.Password.length > 18 || newuser.Password.length < 6) {
+        res.render("posts/Register", {
+            title: "Register",
+            warn: "Password must less 18 or more than 6 ",
+        });
+        return;
+    }
+
     //let { Username, Password, FirstName, LastName, age, Mail, Phone } = newuser;
 
 
@@ -494,14 +526,44 @@ router.post("/editUserInfo", async(req, res) => {
     let updatedObject = {};
     try {
         const oldInfo = await users.getUserByName(requestBody.username);
-        if (requestBody.firstName && requestBody.firstName !== oldInfo.FirstName)
+
+        if (requestBody.firstName && requestBody.firstName !== oldInfo.FirstName && requestBody.firstName != " ") {
+            if (requestBody.firstName.length > 18) {
+                //console.log("Firstname")
+                res.render("posts/mycenter", {
+                    title: "mycenter",
+                    warn: "firstName is too long, must less 18 word",
+                });
+                return;
+            }
             updatedObject.FirstName = requestBody.firstName;
+        }
 
-        if (requestBody.lastName && requestBody.lastName !== oldInfo.LastName)
+
+        if (requestBody.lastName && requestBody.lastName !== oldInfo.LastName && requestBody.lastName != " ") {
+            if (requestBody.lastName.length > 18) {
+                //console.log("lastname")
+                res.render("posts/mycenter", {
+                    title: "mycenter",
+                    warn: "lastName is too long, must less 18 word",
+                });
+                return;
+            }
             updatedObject.LastName = requestBody.lastName;
+        }
 
-        if (requestBody.age && requestBody.age !== oldInfo.age)
+
+        if (requestBody.age && requestBody.age !== oldInfo.age && requestBody.age != " ") {
+            if (requestBody.age.length > 2) {
+                //console.log("age")
+                res.render("posts/mycenter", {
+                    title: "mycenter",
+                    warn: "age is too long, must less 2 word",
+                });
+                return;
+            }
             updatedObject.age = requestBody.age;
+        }
 
     } catch (e) {
         res.status(404).json({ error: 'Post not found' });
@@ -513,6 +575,12 @@ router.post("/editUserInfo", async(req, res) => {
             id,
             updatedObject
         );
+        if (updatedInfo) {
+            res.render("posts/mycenter", {
+                title: "mycenter",
+                warn: "Succefully",
+            });
+        }
     } catch (e) {
         res.status(500).json({ error: e });
     }
