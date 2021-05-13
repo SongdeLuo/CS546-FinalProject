@@ -447,12 +447,10 @@ a.login {
   flex: 1;
   display: inline-block;
 }
-/* 
-.todo-input-info {} */
 
 .todo-content {
   width: 500px;
-  height: 570px;
+  height: 380px;
 }
 
 .todo-label-info {
