@@ -9,6 +9,7 @@ let exportedMethods = {
 
     async addPost(Username, Password, Mail, Phone) {
         let userCollection = await users();
+        let isnum = /^\d+(\.\d+)?$/.test(Phone);
         if (!Username || typeof Username != 'string' || Username == null || Username == "") {
             throw 'Username is null or Username is not string';
         } else if (await userCollection.findOne({ Username: Username }) != null) {
@@ -23,7 +24,7 @@ let exportedMethods = {
         // } else if (!age || typeof age != 'number' || age == null || age == "") {
         //     throw 'age is null or age is not number';
         // }
-        else if (Mail == null) {
+        else if (Mail == null || !Mail.match(/^[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/)) {
 
             //|| !Mail.match(/^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/)  在测试邮箱的时候出错我先把这个拿掉 --罗松德
             throw 'Mail is not a Mail format or Mail is null';
@@ -35,6 +36,8 @@ let exportedMethods = {
             throw 'LastName is too long, must less 18 word';
         } else if (Password.length > 18 || Password.length < 6) {
             throw 'Password must less 18 or more than 6 ';
+        } else if (!isnum) {
+            throw 'phone must be number ';
         }
 
         Password = await bcrypt.hash(Password, saltRounds);

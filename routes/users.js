@@ -424,6 +424,15 @@ router.post("/signUp", async(req, res) => {
         return;
     }
 
+    let isnum = /^\d+(\.\d+)?$/.test(newuser.Phone);
+    if (!isnum) {
+        res.render("posts/Register", {
+            title: "Register",
+            warn: "Password must be number ",
+        });
+        return;
+    }
+
     //let { Username, Password, FirstName, LastName, age, Mail, Phone } = newuser;
 
 
