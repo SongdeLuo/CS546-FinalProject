@@ -6,6 +6,7 @@ const users = data.users;
 const bcrypt = require("bcryptjs");
 const svgCaptcha = require("svg-captcha");
 const saltRounds = 10;
+let image_code = 0;
 
 
 // login
@@ -13,7 +14,8 @@ router.post("/login", async(req, res) => {
     let userInfo = req.body;
 
     const { VerificationCode } = req.body;
-    if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
+    //if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
+    if (VerificationCode.toLocaleUpperCase() !== image_code) {
         res.render("posts/login", {
             title: "LOGIN",
             warn: "Verification code error",
@@ -95,7 +97,7 @@ router.post("/login", async(req, res) => {
         //    console.log(e);
         res.status(404).json({ error: e });
     }
-    
+
 });
 
 router.get("/login", (req, res) => {
@@ -116,7 +118,10 @@ router.get("/login_img_code", (req, res) => {
         background: "#ff5033", // 背景颜色
     });
     // 将图片的验证码存入到 session 中
-    req.session.img_code = captcha.text.toLocaleUpperCase(); // 将验证码装换为大写
+    //req.session.img_code = captcha.text.toLocaleUpperCase(); // 将验证码装换为大写
+    image_code = captcha.text.toLocaleUpperCase();
+    //console.log("woyouma");
+    //console.log(req.session);
     res.type("svg");
     res.status(200).send(captcha.data);
 });
@@ -183,15 +188,15 @@ router.get('/todolist', async(req, res) => { //ruiqi0505
             userId: req.session.user.userId
         });
         return;
-    // } 
-    // if (!todoListInfo.date || typeof todoListInfo.date !== "string") {
-    //     res.status(400).json({ error: "You must provide a todolist date." });
-    //     return;
-    // }
-    // if (!todoListInfo.content) {
-    //     res.status(400).json({ error: "You must provide a todolist content." });
-    //     return;
-    }else {
+        // } 
+        // if (!todoListInfo.date || typeof todoListInfo.date !== "string") {
+        //     res.status(400).json({ error: "You must provide a todolist date." });
+        //     return;
+        // }
+        // if (!todoListInfo.content) {
+        //     res.status(400).json({ error: "You must provide a todolist content." });
+        //     return;
+    } else {
         res.render('posts/login', {
             title: 'login'
         });
