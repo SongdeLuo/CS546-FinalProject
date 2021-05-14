@@ -111,14 +111,14 @@ router.get("/login", (req, res) => {
     }
 });
 
-//获取验证码的接口
+
 router.get("/login_img_code", (req, res) => {
     const captcha = svgCaptcha.create({
-        noise: 3, // 干扰线条的数量
-        background: "#ff5033", // 背景颜色
+        noise: 3,
+        background: "#ff5033",
     });
-    // 将图片的验证码存入到 session 中
-    //req.session.img_code = captcha.text.toLocaleUpperCase(); // 将验证码装换为大写
+
+    //req.session.img_code = captcha.text.toLocaleUpperCase(); 
     image_code = captcha.text.toLocaleUpperCase();
     //console.log("woyouma");
     //console.log(req.session);
@@ -369,7 +369,7 @@ router.post("/signUp", async(req, res) => {
     if (await users.checkUserByMail(newuser.Mail, newuser.Phone)) {
         res.render("posts/Register", {
             title: "Register",
-            warn: "Mial or phone is exit",
+            warn: "Mail or phone is exit",
         });
         return;
     }
@@ -394,7 +394,7 @@ router.post("/signUp", async(req, res) => {
     if (!isnum) {
         res.render("posts/Register", {
             title: "Register",
-            warn: "Password must be number ",
+            warn: "Phone must be number ",
         });
         return;
     }

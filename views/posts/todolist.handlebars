@@ -101,6 +101,8 @@
                 })
             }).then(res => {
                 location.reload();
+            }, rej => {
+                    alert(rej.responseJSON.error)
             })
         })
     }
