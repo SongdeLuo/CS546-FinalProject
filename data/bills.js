@@ -195,7 +195,7 @@ const exportedMethods = {
             throw "You must provide a todolist date.";
             return;
         }
-        if (!todoListInfo.content) {
+        if (!todoListInfo.content || todoListInfo.content == " " || todoListInfo.content.split(" ").join("").length == 0) {
             throw "You must provide a todolist content.";
             return;
         }
