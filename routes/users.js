@@ -7,22 +7,6 @@ const bcrypt = require("bcryptjs");
 const svgCaptcha = require("svg-captcha");
 const saltRounds = 10;
 
-// router.get('/', async(req, res) => {
-//     try {
-//         let user = await users.getAll();
-//         res.json(user);
-//     } catch (e) {
-//         res.status(404).json({ message: e });
-//     }
-// });
-
-// router.post('/verify_code', async(req, res) => {
-//     //console.log("我又被访问吗");
-//     const {verificationcode} = req.body;
-//     if(verificationcode.toLocaleUpperCase() !== req.session.img_code) {
-//         res.send("Verification code error");
-//     }
-// });
 
 // login
 router.post("/login", async(req, res) => {
@@ -142,11 +126,7 @@ router.get("/register", (req, res) => {
     });
 });
 
-// router.get("/mycenter", (req, res) => {
-//   res.render("posts/mycenter", {
-//     title: "My Center",
-//   });
-// });
+
 router.get('/mycenter', async(req, res) => {
     //ruiqi0505
     if (req.session.user) {
@@ -167,12 +147,6 @@ router.get('/mycenter', async(req, res) => {
 });
 
 
-// router.get("/new-bill", (req, res) => {
-//   res.render("posts/new-bill", {
-//     title: "New Bill",
-//   });
-// });
-
 router.get('/new-bill', async(req, res) => { //ruiqi0505
     if (req.session.user) {
         res.render('posts/new-bill', {
@@ -187,11 +161,6 @@ router.get('/new-bill', async(req, res) => { //ruiqi0505
 
 });
 
-// router.get("/allbills", (req, res) => {
-//   res.render("posts/allbills", {
-//     title: "All Bills",
-//   });
-// });
 
 router.get('/allbills', async(req, res) => { //ruiqi0505
     if (req.session.user) {
@@ -223,7 +192,6 @@ router.get('/todolist', async(req, res) => { //ruiqi0505
 
 router.post('/todo', function(request, response) {
     todoData.makeToDo(xss(request.body.name), xss(request.body.description));
-
     // response.json({ success: true, message: request.body.description });
     response.json({ success: true, message: xss(request.body.description) });
 });
@@ -235,7 +203,6 @@ router.post('/todo/complete/:id', function(request, response) {
 
 router.post('/todo.html', function(request, response) {
     const newTodo = todoData.makeToDo(xss(request.body.name), xss(request.body.description));
-
     response.render('partials/todo_item', { layout: null, ...newTodo });
 });
 
@@ -360,21 +327,6 @@ router.post("/signUp", async(req, res) => {
         return;
     }
 
-    // if (!newuser.FirstName || typeof newuser.FirstName != 'string' || newuser.FirstName == null || newuser.FirstName == "") {
-    //     res.status(400).json({ error: 'FirstName is null or FirstName is not string' });
-    //     return;
-    // }
-    //我看前端网页的注册界面只要填账户，密码，邮箱，电话，暂时先把名字啥的注释掉  到时候再看 ---罗松德
-
-    // if (!newuser.LastName || typeof newuser.LastName != 'string' || newuser.LastName == null || newuser.LastName == "") {
-    //     res.status(400).json({ error: 'LastName is null or LastName is not string' });
-    //     return;
-    // }
-
-    // if (!newuser.age || typeof newuser.age != 'number' || newuser.age == null || newuser.age == "") {
-    //     res.status(400).json({ error: 'age is null or age is not number' });
-    //     return;
-    // }
 
     if (!newuser.Mail ||
         !newuser.Mail.match(
@@ -433,101 +385,16 @@ router.post("/signUp", async(req, res) => {
         return;
     }
 
-    //let { Username, Password, FirstName, LastName, age, Mail, Phone } = newuser;
-
 
     try {
-        let { Username, Password, Mail, Phone } = newuser; //这里也相应把名字啥的注释掉了 ---罗松德
-        //let pouserid = await users.addPost(Username, Password, FirstName, LastName, age, Mail, Phone);
+        let { Username, Password, Mail, Phone } = newuser;
         let pouserid = await users.addPost(Username, Password, Mail, Phone);
         res.redirect("login");
-        // let { Username, Password, FirstName, LastName, age, Mail, Phone } = newuser;
-        // let pouserid = await users.addPost(Username, Password, FirstName, LastName, age, Mail, Phone);
-        // res.json(pouserid);
     } catch (e) {
         res.status(404).json({ message: e });
     }
 });
 
-//change infor
-// router.patch("/:id", async (req, res) => {
-//   let userpa = req.body;
-//   let id = req.params.id;
-
-//   if (userpa.hasOwnProperty("Username")) {
-//     if (
-//       !userpa.Username ||
-//       typeof userpa.Username != "string" ||
-//       userpa.Username == null ||
-//       userpa.Username == ""
-//     ) {
-//       res
-//         .status(400)
-//         .json({ error: "Username is null or Username is not string" });
-//       return;
-//     } else if (await users.checkUserByName(userpa.Username)) {
-//       res.status(400).json({ error: "Username is exit" });
-//       return;
-//     }
-//   }
-
-//   if (userpa.hasOwnProperty("FirstName")) {
-//     if (
-//       !userpa.FirstName ||
-//       typeof userpa.FirstName != "string" ||
-//       userpa.FirstName == null ||
-//       userpa.FirstName == ""
-//     ) {
-//       res
-//         .status(400)
-//         .json({ error: "FirstName is null or FirstName is not string" });
-//       return;
-//     }
-//   }
-
-//   if (userpa.hasOwnProperty("LastName")) {
-//     if (
-//       !userpa.LastName ||
-//       typeof userpa.LastName != "string" ||
-//       userpa.LastName == null ||
-//       userpa.LastName == ""
-//     ) {
-//       res
-//         .status(400)
-//         .json({ error: "LastName is null or LastName is not string" });
-//       return;
-//     }
-//   }
-
-//   if (userpa.hasOwnProperty("age")) {
-//     if (
-//       !userpa.age ||
-//       typeof userpa.age != "number" ||
-//       userpa.age == null ||
-//       userpa.age == ""
-//     ) {
-//       res.status(400).json({ error: "age is null or age is not number" });
-//       return;
-//     }
-//   }
-
-//   if (id == null || !id || id == "") {
-//     res.status(400).json({ message: "id is null" });
-//     return;
-//   }
-
-//   if (!id.match(/^([0-9a-fA-F]{24})$/)) {
-//     res.status(400).json({ message: "id format error" });
-//     return;
-//   }
-
-//   // try {
-//   let pauserid = await users.patchUserById(id, userpa);
-//   res.json(pauserid);
-//   // } catch (e) {
-//   //     res.status(404).json({ message: e });
-//   // }
-// });
 
 router.post("/editUserInfo", async(req, res) => {
     let requestBody = req.body;
@@ -539,10 +406,13 @@ router.post("/editUserInfo", async(req, res) => {
         if (requestBody.firstName && requestBody.firstName !== oldInfo.FirstName && requestBody.firstName != " ") {
             if (requestBody.firstName.length > 18) {
                 //console.log("Firstname")
-                res.render("posts/mycenter", {
-                    title: "mycenter",
-                    warn: "firstName is too long, must less 18 word",
-                });
+                res.status(400).json({ error: "Firstname too long, must less than 18 letter" });
+                return;
+            }
+            let isletter = /^[a-zA-Z]+$/.test(requestBody.firstName);
+            if (!isletter) {
+                //console.log("firstName")
+                res.status(400).json({ error: "firstName must be letter " });
                 return;
             }
             updatedObject.FirstName = requestBody.firstName;
@@ -552,10 +422,13 @@ router.post("/editUserInfo", async(req, res) => {
         if (requestBody.lastName && requestBody.lastName !== oldInfo.LastName && requestBody.lastName != " ") {
             if (requestBody.lastName.length > 18) {
                 //console.log("lastname")
-                res.render("posts/mycenter", {
-                    title: "mycenter",
-                    warn: "lastName is too long, must less 18 word",
-                });
+                res.status(400).json({ error: "lastname too long, must less than 18 letter" });
+                return;
+            }
+            let isletter = /^[a-zA-Z]+$/.test(requestBody.lastName);
+            if (!isletter) {
+                //console.log("lastname")
+                res.status(400).json({ error: "lastname must be letter " });
                 return;
             }
             updatedObject.LastName = requestBody.lastName;
@@ -565,10 +438,14 @@ router.post("/editUserInfo", async(req, res) => {
         if (requestBody.age && requestBody.age !== oldInfo.age && requestBody.age != " ") {
             if (requestBody.age.length > 2) {
                 //console.log("age")
-                res.render("posts/mycenter", {
-                    title: "mycenter",
-                    warn: "age is too long, must less 2 word",
-                });
+                res.status(400).json({ error: "age must less than 3 letter" });
+                return;
+            }
+
+            let isnum = /^\d+(\.\d+)?$/.test(requestBody.age);
+            if (!isnum) {
+                //console.log("age")
+                res.status(400).json({ error: "age must be number" });
                 return;
             }
             updatedObject.age = requestBody.age;
@@ -584,26 +461,13 @@ router.post("/editUserInfo", async(req, res) => {
             id,
             updatedObject
         );
-        if (updatedInfo) {
-            res.render("posts/mycenter", {
-                title: "mycenter",
-                warn: "Succefully",
-            });
-        }
+        // if (updatedInfo) {
+        //     res.status(200).json({ message: "Add successful" });
+        // }
     } catch (e) {
         res.status(500).json({ error: e });
     }
 });
-
-
-// ***********************
-// 在这里加入后端修改用户信息的逻辑
-// ***********************
-
-// res.json({
-//     code: 200,
-//     msg: 'Login Success'
-// })
 
 
 router.get("*", async(req, res) => {
