@@ -34,6 +34,7 @@ router.post("/login", async(req, res) => {
             title: "LOGIN",
             warn: "Verification code error",
         });
+        return;
     }
 
     //console.log(userInfo);
@@ -314,7 +315,6 @@ router.get("/:id", async(req, res) => {
 // sign up
 router.post("/signUp", async(req, res) => {
     let newuser = req.body;
-    console.log("我被请求了");
     console.log(req.body);
 
     if (newuser == null || typeof newuser != "object") {
