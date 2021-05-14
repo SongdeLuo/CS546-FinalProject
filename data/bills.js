@@ -191,6 +191,14 @@ const exportedMethods = {
     },
     async newTodoList(todoListInfo) {
         const todoListCollection = await todoList();
+        if (!todoListInfo.date || typeof todoListInfo.date !== "string") {
+            throw "You must provide a todolist date.";
+            return;
+        }
+        if (!todoListInfo.content) {
+            throw "You must provide a todolist content.";
+            return;
+        }
         return await todoListCollection.insertOne({
             userId: todoListInfo.userId,
             date: todoListInfo.date,

@@ -13,13 +13,13 @@ router.post("/login", async(req, res) => {
     let userInfo = req.body;
 
     const { VerificationCode } = req.body;
-    if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
-        res.render("posts/login", {
-            title: "LOGIN",
-            warn: "Verification code error",
-        });
-        return;
-    }
+    // if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
+    //     res.render("posts/login", {
+    //         title: "LOGIN",
+    //         warn: "Verification code error",
+    //     });
+    //     return;
+    // }
 
     //console.log(userInfo);
     if (!userInfo.Username ||
@@ -182,7 +182,15 @@ router.get('/todolist', async(req, res) => { //ruiqi0505
             userId: req.session.user.userId
         });
         return;
-    } else {
+    // } 
+    // if (!todoListInfo.date || typeof todoListInfo.date !== "string") {
+    //     res.status(400).json({ error: "You must provide a todolist date." });
+    //     return;
+    // }
+    // if (!todoListInfo.content) {
+    //     res.status(400).json({ error: "You must provide a todolist content." });
+    //     return;
+    }else {
         res.render('posts/login', {
             title: 'login'
         });
