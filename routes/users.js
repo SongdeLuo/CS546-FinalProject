@@ -13,7 +13,13 @@ router.post("/login", async(req, res) => {
     let userInfo = req.body;
 
     const { VerificationCode } = req.body;
-    
+    if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
+        res.render("posts/login", {
+            title: "LOGIN",
+            warn: "Verification code error",
+        });
+        return;
+    }
 
     //console.log(userInfo);
     if (!userInfo.Username ||
@@ -89,13 +95,7 @@ router.post("/login", async(req, res) => {
         //    console.log(e);
         res.status(404).json({ error: e });
     }
-    if (VerificationCode.toLocaleUpperCase() !== req.session.img_code) {
-        res.render("posts/login", {
-            title: "LOGIN",
-            warn: "Verification code error",
-        });
-        return;
-    }
+    
 });
 
 router.get("/login", (req, res) => {
