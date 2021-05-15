@@ -23,23 +23,27 @@ const constructorMethod = (app) => {
     });
   });
 
-  app.get('/400',(req, res) =>{
-    res.render('posts/400',{
-      title:'400 Error'
-    });
-  });
+  // app.get('/400',(req, res) =>{
+  //   res.render('posts/400',{
+  //     title:'400 Error'
+  //   });
+  // });
 
 
 
-  app.get('/404',(req, res) =>{
-    res.render('posts/404',{
-      title:'404 Error'
-    });
-  });
+  // app.get('/404',(req, res) =>{
+  //   res.render('posts/404',{
+  //     title:'404 Error'
+  //   });
+  // });
   
 
   app.use('*', (req, res) => {
-    res.status(404).json({ error:'page not found'});
+    res.status(404).render('posts/404',{
+      title:'404 Error'
+    });
+
+  //   res.status(404).json({ error:'page not found'});
   });
 };
 

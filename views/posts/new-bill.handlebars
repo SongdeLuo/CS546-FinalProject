@@ -28,9 +28,7 @@
       <input class="input-info" type="text" name="user_note" id="new-bill-note"><br>
 
       <div class="addbutton-f">
-        <button class="addbutton1" type="button" id="new-bill-addbtn" @click="onCreateBill">add</button>
-        {{!-- <button class="addbutton2" type="button" id="addTestBtn"="onAddTestData"> Click To Add Test Data</button>
-        --}}
+        <button class="addbutton1" type="button" id="new-bill-addbtn" >add</button>
       </div>
     </div>
 
@@ -38,23 +36,24 @@
       <div class="right-contontainer-chart">
 
         <div class="select-container">
-          <select id="billTimeOption" @change="onChangeTimeFrame">
+          <select id="billTimeOption" >   
             <option value="week">LAST WEEK</option>
             <option value="month">LAST MONTH</option>
             <option value="year">LAST YEAR</option>
           </select>
-          <select id="billTypeOption" @change="onChangeType">
+          <select id="billTypeOption">  
             <option value="bar">BAR CHART</option>
             <option value="line">LINE CHART</option>
             <option value="stack">STACK CHART</option>
           </select>
         </div>
 
-        <div ref="chartContainer01" class="chartContainer01" id="chartContainer01" />
+        <div class="chartContainer01" id="chartContainer01"> 
         <div id="main" class="showchart" style="width: 850px;height:450px; position:absolute"></div>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 

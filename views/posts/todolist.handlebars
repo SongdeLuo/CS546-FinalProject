@@ -16,10 +16,10 @@
     <div class='todo-container'>
         <div class='todo-left'>
             <form action="todo">
-                <div class="todo-label-info" for="todo-date">Date</div>
+                <div class="todo-label-info" >Date</div>
                 <input class="todo-input-info" type="date" id="todo-date" required /><br>
-                <div class="todo-label-info" for="todo-content">Content</div>
-                <textarea class="todo-input-info todo-content" type="number" id="todo-content" required></textarea>
+                <div class="todo-label-info">Content</div>
+                <textarea class="todo-input-info todo-content" id="todo-content" required></textarea>
             </form>
             <button id='todoSubmit' style='width: 80px; height: 30px;'>Submit</button>
         </div>
@@ -31,7 +31,7 @@
                         <span style='margin-right: 64px'>Date</span>
                         <span>Content</span>
                     </div>
-                    {{!-- <div>Operation</div> --}}
+
                 </li>
             </ol>
         </div>
@@ -39,7 +39,7 @@
 </div>
 <script>
     window.onload = function () {
-        // deleteTodoList
+
         const userId = $("#p_userId").html();
         const getTodoList = (userId) => {
             $.ajax({
