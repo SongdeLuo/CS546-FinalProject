@@ -69,7 +69,12 @@ router.post("/newBill", async(req, res) => {
         return;
     }
 
-    if (billInfo.notes == " ") {
+    if (billInfo.notes == "" || billInfo.notes == null) {
+        res.status(400).json({ error: "note can not be empty" });
+        return;
+    }
+
+    if (billInfo.notes == " " || billInfo.notes.split(" ").join("").length == 0) {
         res.status(400).json({ error: "note can not only add space" });
         return;
     }
