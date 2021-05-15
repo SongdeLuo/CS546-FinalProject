@@ -540,23 +540,17 @@ router.post("/editUserInfo", async(req, res) => {
 
 
 router.get("*", async(req, res) => {
-    res.status(404).json({ error: "Not found" });
+    res.status(404).render('posts/404',{
+        title:'404 Error'
+      });
+  
 });
 
-router.put("*", async(req, res) => {
-    res.status(404).json({ error: "Not found" });
-});
 
 router.post("*", async(req, res) => {
     res.status(404).json({ error: "Not found" });
 });
 
-router.patch("*", async(req, res) => {
-    res.status(404).json({ error: "Not found" });
-});
 
-router.delete("*", async(req, res) => {
-    res.status(404).json({ error: "Not found" });
-});
 
 module.exports = router;

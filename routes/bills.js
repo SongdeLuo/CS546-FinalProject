@@ -256,4 +256,11 @@ router.delete("/deleteTodoList", async(req, res) => {
     }
 });
 
+router.get("*", async(req, res) => {
+    res.status(404).render('posts/404',{
+        title:'404 Error'
+      });
+  
+});
+
 module.exports = router;
