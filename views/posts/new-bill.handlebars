@@ -25,7 +25,7 @@
       <label class="label-info" for="new-bill-other">Other</label>
       <input class="input-info" type="number" name="user_other" id="new-bill-other" /><br>
       <label class="label-info" for="new-bill-note">Note</label>
-      <input class="input-info" type="text" name="user_note" id="new-bill-note"><br>
+      <input class="input-info" type="text" name="user_note" id="new-bill-note" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"><br>
 
       <div class="addbutton-f">
         <button class="addbutton1" type="button" id="new-bill-addbtn" @click="onCreateBill">add</button>
