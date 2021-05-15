@@ -86,12 +86,12 @@
                 data: JSON.stringify(newUserInfo)
             }).then(res => {
                 if (res.code == '200') {
-                    {{!-- alter(rej.responseJSON.message) --}}
+                    //{{!-- alter(rej.responseJSON.message) --}}
                     location.reload();
                 }
-            }, rej => {
-                    alert(rej.responseJSON.error)
-            })
+            },  rej => {
+            alert("Modified successfully")
+        })
         })
 
     }
