@@ -49,10 +49,28 @@ router.post("/login", async(req, res) => {
         return;
     }
 
+    if (userInfo.Password == " " || userInfo.Password.split(" ").join("").length == 0) {
+        res.render("posts/login", {
+            title: "LOGIN",
+            warn: "Password is only space",
+        });
+        return;
+    }
+
     if (userInfo.Username.length > 18) {
         res.render("posts/login", {
             title: "LOGIN",
             warn: "UserName is too long, must less 18 word",
+        });
+        return;
+    }
+
+    let reg = /^[0-9a-zA-Z]+$/
+    let nl = reg.test(userInfo.Username);
+    if (!nl) {
+        res.render("posts/login", {
+            title: "LOGIN",
+            warn: "username must be a letter or number ",
         });
         return;
     }
@@ -341,6 +359,14 @@ router.post("/signUp", async(req, res) => {
         return;
     }
 
+    if (newuser.Password == " " || newuser.Password.split(" ").join("").length == 0) {
+        res.render("posts/Register", {
+            title: "Register",
+            warn: "Password is only space",
+        });
+        return;
+    }
+
 
     if (!newuser.Mail ||
         !newuser.Mail.match(
@@ -382,6 +408,22 @@ router.post("/signUp", async(req, res) => {
         return;
     }
 
+    if (newuser.Phone.length > 18) {
+        res.render("posts/Register", {
+            title: "Register",
+            warn: "Phone is too long, must less 18 word",
+        });
+        return;
+    }
+
+    if (newuser.Mail.length > 30) {
+        res.render("posts/Register", {
+            title: "Register",
+            warn: "Phone is too long, must less 30 word",
+        });
+        return;
+    }
+
     if (newuser.Password.length > 18 || newuser.Password.length < 6) {
         res.render("posts/Register", {
             title: "Register",
@@ -395,6 +437,16 @@ router.post("/signUp", async(req, res) => {
         res.render("posts/Register", {
             title: "Register",
             warn: "Phone must be number ",
+        });
+        return;
+    }
+
+    let reg = /^[0-9a-zA-Z]+$/
+    let nl = reg.test(newuser.Username);
+    if (!nl) {
+        res.render("posts/Register", {
+            title: "Register",
+            warn: "username must be a letter or number ",
         });
         return;
     }
@@ -416,7 +468,10 @@ router.post("/editUserInfo", async(req, res) => {
     let updatedObject = {};
     try {
         const oldInfo = await users.getUserByName(requestBody.username);
-
+        // if (requestBody.firstName == null && requestBody.lastName == null && requestBody.age == null) {
+        //     res.status(400).json({ error: "submit nothing" });
+        //     return;
+        // }
         if (requestBody.firstName && requestBody.firstName !== oldInfo.FirstName && requestBody.firstName != " ") {
             if (requestBody.firstName.length > 18) {
                 //console.log("Firstname")

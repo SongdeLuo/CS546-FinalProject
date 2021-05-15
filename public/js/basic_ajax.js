@@ -21,13 +21,12 @@
             const dateFormat = (fmt, date) => {
                 let ret;
                 const opt = {
-                    "Y+": date.getFullYear().toString(), // 年
-                    "m+": (date.getMonth() + 1).toString(), // 月
-                    "d+": date.getDate().toString(), // 日
-                    "H+": date.getHours().toString(), // 时
-                    "M+": date.getMinutes().toString(), // 分
-                    "S+": date.getSeconds().toString() // 秒
-                        // 有其他格式化字符需求可以继续添加，必须转化成字符串
+                    "Y+": date.getFullYear().toString(),
+                    "m+": (date.getMonth() + 1).toString(),
+                    "d+": date.getDate().toString(),
+                    "H+": date.getHours().toString(),
+                    "M+": date.getMinutes().toString(),
+                    "S+": date.getSeconds().toString()
                 };
                 for (let k in opt) {
                     ret = new RegExp("(" + k + ")").exec(fmt);
@@ -115,7 +114,7 @@
         changeTimeOption(dateTs)
     })
 
-    //点击新建bill界面下面的add 按钮发送ajax请求，把bill数据加到数据库
+
     $("#new-bill-addbtn").click(function(event) {
         let newbill_date = $("#new-bill-date");
         let newbill_food = $("#new-bill-food");

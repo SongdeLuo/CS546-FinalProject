@@ -10,6 +10,9 @@ let exportedMethods = {
     async addPost(Username, Password, Mail, Phone) {
         let userCollection = await users();
         let isnum = /^\d+(\.\d+)?$/.test(Phone);
+        let reg = /^[0-9a-zA-Z]+$/;
+        let nl = reg.test(Username);
+
         if (!Username || typeof Username != 'string' || Username == null || Username == "") {
             throw 'Username is null or Username is not string';
         } else if (await userCollection.findOne({ Username: Username }) != null) {
@@ -28,6 +31,14 @@ let exportedMethods = {
             throw 'Password must less 18 or more than 6 ';
         } else if (!isnum) {
             throw 'phone must be number ';
+        } else if (!nl) {
+            throw "username must be a letter or number ";
+        } else if (Mail.length > 30) {
+            throw 'Mail is too long, must less 30 word';
+        } else if (Phone.length > 18) {
+            throw 'Phone is too long, must less 18 word';
+        } else if (Password == " " || Password.split(" ").join("").length == 0) {
+            throw "Password is only space";
         }
 
         Password = await bcrypt.hash(Password, saltRounds);
@@ -53,10 +64,14 @@ let exportedMethods = {
     },
 
     async getUserByName(name) {
+        let reg = /^[0-9a-zA-Z]+$/;
+        let nl = reg.test(name);
         if (!name || typeof name != 'string' || name == null || name == "") {
             throw 'Username is null or Username is not string';
         } else if (name.length > 18) {
             throw 'LastName is too long, must less 18 word';
+        } else if (!nl) {
+            throw "username must be a letter or number ";
         }
         let userCollection = await users();
         let userget = await userCollection.findOne({ Username: name });
@@ -251,7 +266,9 @@ let exportedMethods = {
         const userCollection = await users();
         const updatedInfoData = {};
         //FirstName 
-
+        // if (requestBody.firstName && requestBody.lastName && requestBody.age) {
+        //     throw "submit nothing";
+        // }
         if (updatedInfo.FirstName) {
             if (typeof(updatedInfo.FirstName) != 'string') throw ('new FirstName must be a string');
             //let fn = updatedInfo.FirstName;

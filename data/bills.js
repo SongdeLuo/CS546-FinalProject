@@ -53,7 +53,12 @@ const exportedMethods = {
             throw "must less than 100000 ";
             return;
         }
-        // 添加之前查一下库，如果日期有了就不添加
+
+        if (billInfo.notes == " ") {
+            throw "note can not only add space";
+            return;
+        }
+
         const hasDate = await billCollection.findOne({ date: billInfo.date, userId: billInfo.userId });
         if (hasDate) {
             return
@@ -109,7 +114,7 @@ const exportedMethods = {
 
 
     async formatDate(val) {
-        // 格式化时间
+
         let start = new Date(val)
         let y = start.getFullYear()
         let m = (start.getMonth() + 1) > 10 ? (start.getMonth() + 1) : '0' + (start.getMonth() + 1)
@@ -119,7 +124,7 @@ const exportedMethods = {
 
 
     async mistiming(sDate1, sDate2) {
-        // 计算开始和结束的时间差
+
         let aDate, oDate1, oDate2, iDays
         aDate = sDate1.split('-')
         oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0])
@@ -131,7 +136,7 @@ const exportedMethods = {
 
 
     async countDate(start, end) {
-        // 判断开始和结束之间的时间差是否在90天内
+
         let days = mistiming(start, end)
         let stateT = days > 90 ? Boolean(0) : Boolean(1)
         return {
@@ -141,19 +146,19 @@ const exportedMethods = {
     },
 
     async timeForMat(count) {
-        // 拼接时间
+
         let time1 = new Date()
         time1.setTime(time1.getTime() - (24 * 60 * 60 * 1000))
         let Y1 = time1.getFullYear()
         let M1 = ((time1.getMonth() + 1) > 10 ? (time1.getMonth() + 1) : '0' + (time1.getMonth() + 1))
         let D1 = (time1.getDate() > 10 ? time1.getDate() : '0' + time1.getDate())
-        let timer1 = Y1 + '-' + M1 + '-' + D1 // 当前时间
+        let timer1 = Y1 + '-' + M1 + '-' + D1
         let time2 = new Date()
         time2.setTime(time2.getTime() - (24 * 60 * 60 * 1000 * count))
         let Y2 = time2.getFullYear()
         let M2 = ((time2.getMonth() + 1) > 10 ? (time2.getMonth() + 1) : '0' + (time2.getMonth() + 1))
         let D2 = (time2.getDate() > 10 ? time2.getDate() : '0' + time2.getDate())
-        let timer2 = Y2 + '-' + M2 + '-' + D2 // 之前的7天或者30天
+        let timer2 = Y2 + '-' + M2 + '-' + D2
         return {
             t1: timer1,
             t2: timer2
@@ -161,26 +166,26 @@ const exportedMethods = {
     },
 
     async yesterday(start, end) {
-        // 校验是不是选择的昨天
+
         let timer = timeForMat(1)
         return timer
     },
 
     async getBillday() {
-        // 获取最近1天
+
         let timer = timeForMat(1);
         let bill = this.getBill(id);
         return timer
     },
 
     async getBillmonth() {
-        // 获取最近30天
+
         let timer = timeForMat(30)
         return timer
     },
 
     async getBillyear() {
-        //获取最近一年
+
         let timer = timeForMat(365)
         return timer
     },

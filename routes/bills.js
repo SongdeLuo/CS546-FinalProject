@@ -69,6 +69,11 @@ router.post("/newBill", async(req, res) => {
         return;
     }
 
+    if (billInfo.notes == " ") {
+        res.status(400).json({ error: "note can not only add space" });
+        return;
+    }
+
     console.log(billInfo);
 
     try {
